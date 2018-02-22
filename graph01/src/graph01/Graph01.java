@@ -11,6 +11,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import java.util.LinkedList;
 
 import javax.swing.JButton;
@@ -149,6 +152,27 @@ public class Graph01 extends JComponent {
                 comp.zoomOut();
             }
         });
+
+        comp.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.NOBUTTON) {
+
+                }
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    System.out.println("Left Click!: " + e.getClickCount());
+                }
+                if (e.getButton() == MouseEvent.BUTTON2) {
+                    System.out.println("Middle Click!: " + e.getClickCount());
+                }
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    System.out.println("Right Click!: " + e.getClickCount());
+                }
+
+                System.out.println("Number of click: " + e.getClickCount());
+                System.out.println("Click position (X, Y):  " + e.getX() + ", " + e.getY());
+            }
+        });
+
         testFrame.pack();
         testFrame.setVisible(true);
     }
