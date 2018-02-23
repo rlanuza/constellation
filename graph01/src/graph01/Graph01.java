@@ -30,6 +30,10 @@ public class Graph01 extends JComponent {
     private double zoom = 1.0;
     private int zoomCenterX = 0;
     private int zoomCenterY = 0;
+
+    private static final int screenX = 1000;
+    private static final int screenY = 600;
+
     private double percentage = .1;
 
     private static class Line {
@@ -67,16 +71,16 @@ public class Graph01 extends JComponent {
 
     public void zoomIn() {
         zoom += percentage;
-        if (zoom > 1.66) {
-            zoom = 1.66;
+        if (zoom > 5.0) {
+            zoom = 5.0;
         }
         repaint();
     }
 
     public void zoomOut() {
         zoom -= percentage;
-        if (zoom < 0.2) {
-            zoom = 0.2;
+        if (zoom < 0.02) {
+            zoom = 0.02;
         }
         repaint();
     }
@@ -90,17 +94,18 @@ public class Graph01 extends JComponent {
     public void zoomOut(int zcX, int zcY) {
         zoomCenterX = zcX;
         zoomCenterY = zcY;
-        zoomIn();
+        zoomOut();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (Line line : lines) {
-            int x1 = (int) (line.x1 * zoom) + zoomCenterX;
-            int y1 = (int) (line.y1 * zoom) + zoomCenterY;
-            int x2 = (int) (line.x2 * zoom) + zoomCenterX;
-            int y2 = (int) (line.y2 * zoom) + zoomCenterY;
+            //int x1 = (int) (line.x1 * zoom) + zoomCenterX;
+            int x1 = (int) ((line.x1-zoomCenterX) * zoom) + zoomCenterX;
+            int y1 = (int) ((line.y1-zoomCenterY) * zoom) + zoomCenterY;
+            int x2 = (int) ((line.x2-zoomCenterX) * zoom) + zoomCenterX;
+            int y2 = (int) ((line.y2-zoomCenterY) * zoom) + zoomCenterY;
             g.setColor(line.color);
             g.drawLine(x1, y1, x2, y2);
             //g.drawOval((int) (line.x1 * zoom), (int) (line.y1 * zoom), (int) (line.x2 * zoom), (int) (line.x2 * zoom));
@@ -117,7 +122,7 @@ public class Graph01 extends JComponent {
         JFrame testFrame = new JFrame();
         testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         final Graph01 comp = new Graph01();
-        comp.setPreferredSize(new Dimension(1000, 600));
+        comp.setPreferredSize(new Dimension(screenX, screenY));
         testFrame.getContentPane().add(comp, BorderLayout.CENTER);
         JPanel buttonsPanel = new JPanel();
         JButton newLineButton = new JButton("New Line");
@@ -133,13 +138,13 @@ public class Graph01 extends JComponent {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                double x1 = Math.random() * 900 + 50;
-                double y1 = Math.random() * 500 + 50;
+                double x1 = Math.random() * screenX;
+                double y1 = Math.random() * screenY;
                 double x2, y2;
                 Color randomColor = new Color((float) Math.random(), (float) Math.random(), (float) Math.random());
-                for (int i = 0; i < 100; i++) {
-                    x2 = Math.random() * 900 + 50;
-                    y2 = Math.random() * 500 + 50;
+                for (int i = 0; i < 1000; i++) {
+                    x2 = Math.random() * screenX;
+                    y2 = Math.random() * screenY;
                     comp.addLine(x1, y1, x2, y2, randomColor);
                     x1 = x2;
                     y1 = y2;
