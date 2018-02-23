@@ -28,6 +28,8 @@ import javax.swing.JPanel;
 public class Graph01 extends JComponent {
 
     private double zoom = 1.0;
+    private int zoomCenterX = 0;
+    private int zoomCenterY = 0;
     private double percentage = .1;
 
     private static class Line {
@@ -68,8 +70,6 @@ public class Graph01 extends JComponent {
         if (zoom > 1.66) {
             zoom = 1.66;
         }
-        //this.setPreferredSize(new Dimension((int)zoom*this.getWidth(),(int)zoom*this.getHeight()));
-        //revalidate();     
         repaint();
     }
 
@@ -78,20 +78,35 @@ public class Graph01 extends JComponent {
         if (zoom < 0.2) {
             zoom = 0.2;
         }
-        //this.setPreferredSize(new Dimension((int)zoom*this.getWidth(),(int)zoom*this.getHeight()));
-        //this.setSize(new Dimension((int)zoom*this.getWidth(),(int)zoom*this.getHeight()));
-        //revalidate();     
         repaint();
+    }
+
+    public void zoomIn(int zcX, int zcY) {
+        zoomCenterX = zcX;
+        zoomCenterY = zcY;
+        zoomIn();
+    }
+
+    public void zoomOut(int zcX, int zcY) {
+        zoomCenterX = zcX;
+        zoomCenterY = zcY;
+        zoomIn();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (Line line : lines) {
+            int x1 = (int) (line.x1 * zoom) + zoomCenterX;
+            int y1 = (int) (line.y1 * zoom) + zoomCenterY;
+            int x2 = (int) (line.x2 * zoom) + zoomCenterX;
+            int y2 = (int) (line.y2 * zoom) + zoomCenterY;
             g.setColor(line.color);
-            g.drawLine((int) (line.x1 * zoom), (int) (line.y1 * zoom), (int) (line.x2 * zoom), (int) (line.y2 * zoom));
+            g.drawLine(x1, y1, x2, y2);
             //g.drawOval((int) (line.x1 * zoom), (int) (line.y1 * zoom), (int) (line.x2 * zoom), (int) (line.x2 * zoom));
         }
+        zoomCenterX = 0;
+        zoomCenterY = 0;
     }
 
     /**
@@ -160,12 +175,14 @@ public class Graph01 extends JComponent {
                 }
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     System.out.println("Left Click!: " + e.getClickCount());
+                    comp.zoomIn(e.getX(), e.getY());
                 }
                 if (e.getButton() == MouseEvent.BUTTON2) {
                     System.out.println("Middle Click!: " + e.getClickCount());
                 }
                 if (e.getButton() == MouseEvent.BUTTON3) {
                     System.out.println("Right Click!: " + e.getClickCount());
+                    comp.zoomOut(e.getX(), e.getY());
                 }
 
                 System.out.println("Number of click: " + e.getClickCount());
