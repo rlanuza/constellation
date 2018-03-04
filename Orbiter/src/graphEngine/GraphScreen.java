@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package graph01;
+package graphEngine;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,7 +25,7 @@ import javax.swing.JPanel;
  *
  * @author rlanuza
  */
-public class Graph01 extends JComponent {
+public class GraphScreen extends JComponent {
 
     private double zoom = 1.0;
     private int zoomCenterX = 0;
@@ -121,7 +121,7 @@ public class Graph01 extends JComponent {
         // TODO code application logic here
         JFrame testFrame = new JFrame();
         testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        final Graph01 comp = new Graph01();
+        final GraphScreen comp = new GraphScreen();
         comp.setPreferredSize(new Dimension(screenX, screenY));
         testFrame.getContentPane().add(comp, BorderLayout.CENTER);
         JPanel buttonsPanel = new JPanel();
