@@ -114,15 +114,14 @@ public class GraphScreen extends JComponent {
         zoomCenterY = 0;
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
+    public GraphScreen() {
+    
         // TODO code application logic here
         JFrame testFrame = new JFrame();
         testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        final GraphScreen comp = new GraphScreen();
+        GraphScreen comp = this;
         comp.setPreferredSize(new Dimension(screenX, screenY));
+        
         testFrame.getContentPane().add(comp, BorderLayout.CENTER);
         JPanel buttonsPanel = new JPanel();
         JButton newLineButton = new JButton("New Line");
@@ -135,7 +134,6 @@ public class GraphScreen extends JComponent {
         buttonsPanel.add(zoomOut);
         testFrame.getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
         newLineButton.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 double x1 = Math.random() * screenX;
@@ -145,7 +143,7 @@ public class GraphScreen extends JComponent {
                 for (int i = 0; i < 1000; i++) {
                     x2 = Math.random() * screenX;
                     y2 = Math.random() * screenY;
-                    comp.addLine(x1, y1, x2, y2, randomColor);
+                     comp.addLine(x1, y1, x2, y2, randomColor);
                     x1 = x2;
                     y1 = y2;
                 }

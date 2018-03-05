@@ -1,0 +1,9 @@
+*.class
+/graph01/build/classes/graph01/*.class
+/Orbiter/nbproject/private/
+/Orbiter/build/
+/graph01/nbproject/private/
+/graph02/nbproject/private/
+/graph01/dist/
+/graph01/build/built-jar.properties
+/graph01/build/test/results/TEST-orbitEngine.ConstellationTest.xml
