@@ -30,7 +30,7 @@ public class Constellation {
             if (line.startsWith("#")) {
                 LOG.info(String.format("Comment: %s", line));
             } else {
-                LOG.info(String.format("Body: %s", line));
+                LOG.info(String.format("Body:    %s", line));
                 String[] datas = line.split(",");
                 if (datas.length == ASTRO_STRING_FIELDS) {
                     String name = datas[0].trim();

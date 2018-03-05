@@ -45,7 +45,7 @@ public class ConstellationTest {
         System.out.println("loadConstellation");
         String constelationStr
                 = "# Name, mass (Kg),  radio(m),       x0 (m), y0 (m), z0 (m), vx0 (m/s), vy0 (m/s), vz0 (m/s)\n"
-                + "Sun,   1.98855e30, 695.700e6,           0,       0,      0,         0,         0,         0\n"
+                + "Sun,   1.98855e30, 695.700e6,            0,      0,      0,         0,         0,         0\n"
                 + "Tierra, 5.9722e24,  6.3710e6, 149.598023e9,      0,      0,         0,  29.780e3,         0\n"
                 + "#                            (149.598023e9 + 384.399e6)               (29.78e3 + 1.022e3)  \n"
                 + "Luna,    7.349e22,  1.7371e6, 149.982422e9,   1100,      0,         0,  30.802e3,         0\n"

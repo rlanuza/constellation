@@ -8,7 +8,6 @@ package orbitEngine;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,7 +29,7 @@ public class Engine {
         }
     }
     public void run(){
-        
+        /*TODO Calculate distances and distance proyeccion then acelerations and jerks */
         
     }
 }
