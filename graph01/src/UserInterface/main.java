@@ -20,7 +20,7 @@ public class main {
     public static void main(String[] args) {
 
         eng = new Engine("constellation.txt");
-       
+        
         screen = new GraphScreen();
 
     }

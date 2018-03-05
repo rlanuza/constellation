@@ -6,9 +6,12 @@ package orbitEngine;
  */
 public class Body {
 
-    float mass;
-    float diameter;
+    public static final float G_UNIVERSAL = (float) 6.6740831e-11; // m^3/(Kg*s^2)
+
     String name;
+    float mass;
+    float g_mass;
+    float radius;
 
     // Position by axis r(t)
     float x;
@@ -30,10 +33,11 @@ public class Body {
     float jy[];
     float jz[];
 
-    public Body(String name, float mass, float diameter, float x, float y, float z, float vx, float vy, float vz) {
+    public Body(String name, float mass, float radius, float x, float y, float z, float vx, float vy, float vz) {
         this.name = name;
         this.mass = mass;
-        this.diameter = diameter;
+        this.g_mass = mass * G_UNIVERSAL;
+        this.radius = radius;
         this.x = x;
         this.y = y;
         this.z = z;

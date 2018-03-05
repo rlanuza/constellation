@@ -102,10 +102,10 @@ public class GraphScreen extends JComponent {
         super.paintComponent(g);
         for (Line line : lines) {
             //int x1 = (int) (line.x1 * zoom) + zoomCenterX;
-            int x1 = (int) ((line.x1-zoomCenterX) * zoom) + zoomCenterX;
-            int y1 = (int) ((line.y1-zoomCenterY) * zoom) + zoomCenterY;
-            int x2 = (int) ((line.x2-zoomCenterX) * zoom) + zoomCenterX;
-            int y2 = (int) ((line.y2-zoomCenterY) * zoom) + zoomCenterY;
+            int x1 = (int) ((line.x1 - zoomCenterX) * zoom) + zoomCenterX;
+            int y1 = (int) ((line.y1 - zoomCenterY) * zoom) + zoomCenterY;
+            int x2 = (int) ((line.x2 - zoomCenterX) * zoom) + zoomCenterX;
+            int y2 = (int) ((line.y2 - zoomCenterY) * zoom) + zoomCenterY;
             g.setColor(line.color);
             g.drawLine(x1, y1, x2, y2);
             //g.drawOval((int) (line.x1 * zoom), (int) (line.y1 * zoom), (int) (line.x2 * zoom), (int) (line.x2 * zoom));
@@ -115,13 +115,13 @@ public class GraphScreen extends JComponent {
     }
 
     public GraphScreen() {
-    
+
         // TODO code application logic here
         JFrame testFrame = new JFrame();
         testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         GraphScreen comp = this;
         comp.setPreferredSize(new Dimension(screenX, screenY));
-        
+
         testFrame.getContentPane().add(comp, BorderLayout.CENTER);
         JPanel buttonsPanel = new JPanel();
         JButton newLineButton = new JButton("New Line");
@@ -143,7 +143,7 @@ public class GraphScreen extends JComponent {
                 for (int i = 0; i < 1000; i++) {
                     x2 = Math.random() * screenX;
                     y2 = Math.random() * screenY;
-                     comp.addLine(x1, y1, x2, y2, randomColor);
+                    comp.addLine(x1, y1, x2, y2, randomColor);
                     x1 = x2;
                     y1 = y2;
                 }
