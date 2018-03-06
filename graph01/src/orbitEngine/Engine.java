@@ -29,6 +29,9 @@ public class Engine {
         }
     }
     public void run(){
+        constellation.calculateDistances();
+        constellation.step();
+        
         /*TODO Calculate distances and distance proyeccion then acelerations and jerks */
         
     }

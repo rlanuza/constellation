@@ -20,8 +20,12 @@ public class Constellation {
     private static ArrayList<Body> bodies = new ArrayList<Body>();
 
     // Once we'll have all data loaded we'll convert o array and implement 2 copies to store old and new position each step
-    public static Body[] bodies_new;
-    public static Body[] bodies_old;
+    private static Body[] bodies_new;
+    private static Body[] bodies_old;
+    private static double[][] dist;
+    private static double[][] dist_x;
+    private static double[][] dist_y;
+    private static double[][] dist_z;
 
     public static boolean loadConstellation(String constelationStr) {
         // Load all constellation data from file
@@ -34,14 +38,14 @@ public class Constellation {
                 String[] datas = line.split(",");
                 if (datas.length == ASTRO_STRING_FIELDS) {
                     String name = datas[0].trim();
-                    float mass = Float.valueOf(datas[1].trim());
-                    float diameter = Float.valueOf(datas[2].trim());
-                    float x = Float.valueOf(datas[3].trim());
-                    float y = Float.valueOf(datas[4].trim());
-                    float z = Float.valueOf(datas[5].trim());
-                    float vx = Float.valueOf(datas[6].trim());
-                    float vy = Float.valueOf(datas[7].trim());
-                    float vz = Float.valueOf(datas[8].trim());
+                    double mass = Double.valueOf(datas[1].trim());
+                    double diameter = Double.valueOf(datas[2].trim());
+                    double x = Double.valueOf(datas[3].trim());
+                    double y = Double.valueOf(datas[4].trim());
+                    double z = Double.valueOf(datas[5].trim());
+                    double vx = Double.valueOf(datas[6].trim());
+                    double vy = Double.valueOf(datas[7].trim());
+                    double vz = Double.valueOf(datas[8].trim());
                     Body new_body = new Body(name, mass, diameter, x, y, z, vx, vy, vz);
                     bodies.add(new_body);
                 } else {
@@ -53,7 +57,31 @@ public class Constellation {
         // Now we'll generate array copies of the ArrayList (array is faster to be faster) for old and new position 
         bodies_new = bodies.toArray(new Body[bodies.size()]);
         bodies_old = bodies.toArray(new Body[bodies.size()]);
+        dist = new double[bodies.size()][bodies.size()];
+        dist_x = new double[bodies.size()][bodies.size()];
+        dist_y = new double[bodies.size()][bodies.size()];
+        dist_z = new double[bodies.size()][bodies.size()];
 
         return true;
     }
+
+    void calculateDistances() {
+        double dx, dy, dz, d2;
+        for (int i = 0; i < bodies_old.length; i++) {
+            for (int j = i + 1; i < bodies_old.length; j++) {
+                dx = bodies_old[j].x - bodies_old[i].x;
+                dy = bodies_old[j].y - bodies_old[i].y;
+                dz = bodies_old[j].z - bodies_old[i].z;
+                dist[i][j] = dx * dx + dy * dy + dz * dz;
+                dist_x[i][j] = dx;
+                dist_y[i][j] = dy;
+                dist_z[i][j] = dz;
+            }
+        }
+    }
+    
+    void step() {
+        
+    }
+    
 }
