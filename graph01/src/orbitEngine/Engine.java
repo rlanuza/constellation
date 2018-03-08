@@ -5,6 +5,7 @@
  */
 package orbitEngine;
 
+import graphEngine.GraphConstellation;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -19,12 +20,13 @@ public class Engine {
 
     private double stepTime = 3600;
 
-    private final Constellation constellation = new Constellation();
+    private final Constellation constellation;
 
-    public Engine(String constellationFile) {
-        String contents;
+    public Engine(GraphConstellation gconstell, String constellationFile) {
+
+        constellation = new Constellation(gconstell);
         try {
-            contents = new String(Files.readAllBytes(Paths.get(constellationFile)));
+            String contents = new String(Files.readAllBytes(Paths.get(constellationFile)));
             constellation.loadConstellation(contents);
         } catch (IOException ex) {
             Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
@@ -32,9 +34,14 @@ public class Engine {
     }
 
     public void run() {
-        constellation.step_basic(stepTime);
-        constellation.step_jerk(stepTime);
-        constellation.step_basic_Schwarzschild(stepTime);
-        constellation.step_jerk_Schwarzschild(stepTime);
+        for (int i = 0; i < 10; i++) {
+            constellation.step_basic(stepTime);
+            constellation.pushToGraphic();
+            //constellation.step_jerk(stepTime);
+            //constellation.step_basic_Schwarzschild(stepTime);
+            //constellation.step_jerk_Schwarzschild(stepTime);
+            
+        }
+        
     }
 }

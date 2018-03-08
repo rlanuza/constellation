@@ -4,6 +4,6 @@ package graphEngine;
  *
  * @author Roberto
  */
-public class GraphBody {
+public class GraphConstellation {
 
 }

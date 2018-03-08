@@ -5,6 +5,7 @@
  */
 package orbitEngine;
 
+import graphEngine.GraphConstellation;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -31,6 +32,12 @@ public class Constellation {
     double gx;
     double gy;
     double gz;
+
+    GraphConstellation grConstellation;
+
+    Constellation(GraphConstellation gconstell) {
+        grConstellation = gconstell;
+    }
 
     public boolean loadConstellation(String constelationStr) {
         // Load all constellation data from file
@@ -258,5 +265,13 @@ public class Constellation {
 
             body[i].addGravity(gx, gy, gx);
         }
+    }
+
+    void pushToGraphic() {
+        for (int i = 0; i < body.length; i++) {
+            grConstellation.
+        }
+                
+
     }
 }
