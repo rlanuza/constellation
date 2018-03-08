@@ -17,29 +17,29 @@ public class Constellation {
     public static final int ASTRO_STRING_FIELDS = 9;
     public static final double C = 299792458;
     public static final double C2 = C * C;
-    private static final Logger LOG = Logger.getLogger(Constellation.class.getName());
+    static final Logger LOG = Logger.getLogger(Constellation.class.getName());
     // To let us load sequentially
-    private static ArrayList<Body> bodyList = new ArrayList<Body>();
+    static ArrayList<Body> bodyList = new ArrayList<Body>();
 
     // Once we'll have all data loaded we'll convert o array and implement 2 copies to store old and new position each step
-    private static Body[] body;
-    private static double[][] dist;
-    private static double[][] dist3;
-    private static double[][] dist_x;
-    private static double[][] dist_y;
-    private static double[][] dist_z;
-    private double gx;
-    private double gy;
-    private double gz;
+    static Body[] body;
+    static double[][] dist;
+    static double[][] dist3;
+    static double[][] dist_x;
+    static double[][] dist_y;
+    static double[][] dist_z;
+    double gx;
+    double gy;
+    double gz;
 
     public boolean loadConstellation(String constelationStr) {
         // Load all constellation data from file
         String[] lines = constelationStr.split("\\r?\\n|\\r");;
         for (String line : lines) {
             if (line.startsWith("#")) {
-                LOG.info(String.format("Comment: %s", line));
+                //LOG.info(String.format("Comment: %s", line));
             } else {
-                LOG.info(String.format("Body:    %s", line));
+                //LOG.info(String.format("Body:    %s", line));
                 String[] datas = line.split(",");
                 if (datas.length == ASTRO_STRING_FIELDS) {
                     String name = datas[0].trim();
@@ -61,6 +61,7 @@ public class Constellation {
         }
         // Now we'll generate array copies of the ArrayList (array is faster to be faster) for old and new position
         body = bodyList.toArray(new Body[bodyList.size()]);
+        dist = new double[bodyList.size()][bodyList.size()];
         dist3 = new double[bodyList.size()][bodyList.size()];
         dist_x = new double[bodyList.size()][bodyList.size()];
         dist_y = new double[bodyList.size()][bodyList.size()];
@@ -70,7 +71,7 @@ public class Constellation {
         return true;
     }
 
-    private void calculateDistances() {
+    void calculateDistances() {
         double dx, dy, dz, d2, d;
         for (int i = 0; i < body.length; i++) {
             for (int j = i + 1; j < body.length; j++) {
@@ -89,7 +90,7 @@ public class Constellation {
         }
     }
 
-    private void calculateGravity(int i) {
+    void calculateGravity(int i) {
         // F=G*(m1*m2)/d^2; g1=F/m1;  g2=F/m2;
         //   where: G is gravitation constant, F is force between the masses
         //          m1 & m2 are mass 1 and mass 2
@@ -118,8 +119,8 @@ public class Constellation {
             gz += dist_z[i][j] * gm_d3;
         }
     }
-    
-    private void calculateGravity_Schwarzschild(int i) {
+
+    void calculateGravity_Schwarzschild(int i) {
         //   where: G is gravitation constant, F is force between the masses
         //          m1 & m2 are mass 1 and mass 2
         //          g1 & g2 gravity acceleration in mass 1 and mass 2
@@ -136,14 +137,14 @@ public class Constellation {
         gy = 0;
         gz = 0;
         for (int j = 0; j < i; j++) {
-            double gm_d3Swc = (body[j].g_mass / dist3[j][i]) *(1 + (body[j].g_mass)/(d(j,i)*C2));
+            double gm_d3Swc = (body[j].g_mass / dist3[j][i]) * (1 + (body[j].g_mass) / (dist[j][i] * C2));
             /*@Todo Here I probably lost signs, please check */
             gx -= dist_x[j][i] * gm_d3Swc;
             gy -= dist_y[j][i] * gm_d3Swc;
             gz -= dist_z[j][i] * gm_d3Swc;
         }
         for (int j = i + 1; j < body.length; j++) {
-            double gm_d3Swc = (body[j].g_mass / dist3[i][j]) *(1 + (body[j].g_mass)/(d(i,j)*C2));
+            double gm_d3Swc = (body[j].g_mass / dist3[i][j]) * (1 + (body[j].g_mass) / (dist[j][i] * C2));
             /*@Todo Here I probably lost signs, please check */
             gx += dist_x[i][j] * gm_d3Swc;
             gy += dist_y[i][j] * gm_d3Swc;
@@ -151,7 +152,7 @@ public class Constellation {
         }
     }
 
-    private void initGravity() {
+    void initGravity() {
         calculateDistances();
         for (int i = 0; i < body.length; i++) {
             calculateGravity(i);
@@ -207,6 +208,7 @@ public class Constellation {
 
             body[i].addGravity(gx, gy, gx);
         }
+    }
 
     void step_jerk_Schwarzschild(double deltaTime) {
         double delT_2 = deltaTime / 2;          // deltaTime/2
@@ -233,7 +235,7 @@ public class Constellation {
 
             body[i].addGravity(gx, gy, gx);
         }
-    }        
+    }
 
     void step_basic_Schwarzschild(double deltaTime) {
         double delT_2 = deltaTime / 2;          // deltaTime/2

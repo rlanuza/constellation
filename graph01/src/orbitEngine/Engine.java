@@ -32,6 +32,9 @@ public class Engine {
     }
 
     public void run() {
-        constellation.step(stepTime);
+        constellation.step_basic(stepTime);
+        constellation.step_jerk(stepTime);
+        constellation.step_basic_Schwarzschild(stepTime);
+        constellation.step_jerk_Schwarzschild(stepTime);
     }
 }
