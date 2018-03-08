@@ -61,6 +61,7 @@ public class Constellation {
         }
         // Now we'll generate array copies of the ArrayList (array is faster to be faster) for old and new position
         body = bodyList.toArray(new Body[bodyList.size()]);
+        dist = new double[bodyList.size()][bodyList.size()];
         dist3 = new double[bodyList.size()][bodyList.size()];
         dist_x = new double[bodyList.size()][bodyList.size()];
         dist_y = new double[bodyList.size()][bodyList.size()];
@@ -118,7 +119,7 @@ public class Constellation {
             gz += dist_z[i][j] * gm_d3;
         }
     }
-    
+
     private void calculateGravity_Schwarzschild(int i) {
         //   where: G is gravitation constant, F is force between the masses
         //          m1 & m2 are mass 1 and mass 2
@@ -136,14 +137,14 @@ public class Constellation {
         gy = 0;
         gz = 0;
         for (int j = 0; j < i; j++) {
-            double gm_d3Swc = (body[j].g_mass / dist3[j][i]) *(1 + (body[j].g_mass)/(d(j,i)*C2));
+            double gm_d3Swc = (body[j].g_mass / dist3[j][i]) * (1 + (body[j].g_mass) / (dist[j][i] * C2));
             /*@Todo Here I probably lost signs, please check */
             gx -= dist_x[j][i] * gm_d3Swc;
             gy -= dist_y[j][i] * gm_d3Swc;
             gz -= dist_z[j][i] * gm_d3Swc;
         }
         for (int j = i + 1; j < body.length; j++) {
-            double gm_d3Swc = (body[j].g_mass / dist3[i][j]) *(1 + (body[j].g_mass)/(d(i,j)*C2));
+            double gm_d3Swc = (body[j].g_mass / dist3[i][j]) * (1 + (body[j].g_mass) / (dist[j][i] * C2));
             /*@Todo Here I probably lost signs, please check */
             gx += dist_x[i][j] * gm_d3Swc;
             gy += dist_y[i][j] * gm_d3Swc;
@@ -207,6 +208,7 @@ public class Constellation {
 
             body[i].addGravity(gx, gy, gx);
         }
+    }
 
     void step_jerk_Schwarzschild(double deltaTime) {
         double delT_2 = deltaTime / 2;          // deltaTime/2
@@ -233,7 +235,7 @@ public class Constellation {
 
             body[i].addGravity(gx, gy, gx);
         }
-    }        
+    }
 
     void step_basic_Schwarzschild(double deltaTime) {
         double delT_2 = deltaTime / 2;          // deltaTime/2
