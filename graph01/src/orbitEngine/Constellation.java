@@ -5,6 +5,7 @@
  */
 package orbitEngine;
 
+import graphEngine.GraphConstellation;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -14,10 +15,10 @@ import java.util.logging.Logger;
  */
 public class Constellation {
 
-    public static final int ASTRO_STRING_FIELDS = 9;
-    public static final double C = 299792458;
-    public static final double C2 = C * C;
-    static final Logger LOG = Logger.getLogger(Constellation.class.getName());
+    static final int ASTRO_STRING_FIELDS = 9;
+    static final double C = 299792458;
+    static final double C2 = C * C;
+    final Logger LOG = Logger.getLogger(Constellation.class.getName());
     // To let us load sequentially
     static ArrayList<Body> bodyList = new ArrayList<Body>();
 
@@ -31,6 +32,12 @@ public class Constellation {
     double gx;
     double gy;
     double gz;
+
+    GraphConstellation grConstellation;
+
+    Constellation(GraphConstellation gconstell) {
+        grConstellation = gconstell;
+    }
 
     public boolean loadConstellation(String constelationStr) {
         // Load all constellation data from file
@@ -59,7 +66,7 @@ public class Constellation {
                 }
             }
         }
-        // Now we'll generate array copies of the ArrayList (array is faster to be faster) for old and new position
+        // Now we'll generate array copies (faster) of the ArrayList 
         body = bodyList.toArray(new Body[bodyList.size()]);
         dist = new double[bodyList.size()][bodyList.size()];
         dist3 = new double[bodyList.size()][bodyList.size()];
@@ -67,6 +74,10 @@ public class Constellation {
         dist_y = new double[bodyList.size()][bodyList.size()];
         dist_z = new double[bodyList.size()][bodyList.size()];
 
+        // Prepare the graph info
+        grConstellation.initConstellation(body);
+
+        // Calculate the initial gravity of the system
         initGravity();
         return true;
     }
@@ -75,9 +86,9 @@ public class Constellation {
         double dx, dy, dz, d2, d;
         for (int i = 0; i < body.length; i++) {
             for (int j = i + 1; j < body.length; j++) {
-                dx = body[j].x - body[i].x;
-                dy = body[j].y - body[i].y;
-                dz = body[j].z - body[i].z;
+                dx = body[j].getX() - body[i].getX();
+                dy = body[j].getY() - body[i].getY();
+                dz = body[j].getZ() - body[i].getZ();
                 d2 = dx * dx + dy * dy + dz * dz;
                 d = Math.sqrt(d2);
                 dist[i][j] = d;
@@ -258,5 +269,9 @@ public class Constellation {
 
             body[i].addGravity(gx, gy, gx);
         }
+    }
+
+    void pushToGraphic() {
+        grConstellation.updateConstellation(body);
     }
 }

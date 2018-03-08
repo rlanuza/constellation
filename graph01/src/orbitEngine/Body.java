@@ -1,5 +1,7 @@
 package orbitEngine;
 
+import java.awt.Color;
+
 /**
  *
  * @author Roberto
@@ -12,6 +14,7 @@ public class Body {
     double mass;
     double g_mass;
     double radius;
+    Color color;
 
     // Position by axis r(t)
     double x;
@@ -45,5 +48,29 @@ public class Body {
         this.gx = gx;
         this.gy = gy;
         this.gz = gz;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public double getZ() {
+        return z;
     }
 }
