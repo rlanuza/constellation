@@ -58,4 +58,29 @@ public class ConstellationTest {
 
     }
 
+    /**
+     * Test of calculateDistances method, of class Constellation.
+     */
+    @Test
+    public void testCalculateDistances() {
+        System.out.println("calculateDistances");
+        Constellation instance = new Constellation();
+        instance.calculateDistances();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of step method, of class Constellation.
+     */
+    @Test
+    public void testStep() {
+        System.out.println("step");
+        double deltaTime = 0.0;
+        Constellation instance = new Constellation();
+        instance.step(deltaTime);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
 }

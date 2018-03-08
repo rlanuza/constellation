@@ -17,6 +17,8 @@ import java.util.logging.Logger;
  */
 public class Engine {
 
+    private double stepTime = 3600;
+
     private final Constellation constellation = new Constellation();
 
     public Engine(String constellationFile) {
@@ -28,11 +30,8 @@ public class Engine {
             Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void run(){
-        constellation.calculateDistances();
-        constellation.step();
-        
-        /*TODO Calculate distances and distance proyeccion then acelerations and jerks */
-        
+
+    public void run() {
+        constellation.step(stepTime);
     }
 }
