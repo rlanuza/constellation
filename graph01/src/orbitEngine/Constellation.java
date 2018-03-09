@@ -19,7 +19,7 @@ public class Constellation {
     static final double C = 299792458;
     static final double C2 = C * C;
     final Logger LOG = Logger.getLogger(Constellation.class.getName());
-    // To let us load sequentially
+    // To let us load sequentially from file and then calculate the size
     static ArrayList<Body> bodyList = new ArrayList<Body>();
 
     // Once we'll have all data loaded we'll convert o array and implement 2 copies to store old and new position each step
@@ -66,7 +66,7 @@ public class Constellation {
                 }
             }
         }
-        // Now we'll generate array copies (faster) of the ArrayList 
+        // Now we'll generate array copies (faster) of the ArrayList
         body = bodyList.toArray(new Body[bodyList.size()]);
         dist = new double[bodyList.size()][bodyList.size()];
         dist3 = new double[bodyList.size()][bodyList.size()];
@@ -86,9 +86,9 @@ public class Constellation {
         double dx, dy, dz, d2, d;
         for (int i = 0; i < body.length; i++) {
             for (int j = i + 1; j < body.length; j++) {
-                dx = body[j].getX() - body[i].getX();
-                dy = body[j].getY() - body[i].getY();
-                dz = body[j].getZ() - body[i].getZ();
+                dx = body[j].x - body[i].x;
+                dy = body[j].y - body[i].y;
+                dz = body[j].z - body[i].z;
                 d2 = dx * dx + dy * dy + dz * dz;
                 d = Math.sqrt(d2);
                 dist[i][j] = d;
@@ -140,7 +140,7 @@ public class Constellation {
         //   where: G is gravitation constant, c the speed of the light
         //          dx is distance in x-axis and d is distance
         //          g1x & g2x gravity acceleration in axis-x in mass 1 and mass 2
-        //          
+        //
         // gx(i) = SUM[j=0..n, except j==i]((dx(i,j)*(Gm(j)/d(i,j)^3)*(1+(Gm(j))/(d(i,j)*C2)));
         // gy(i) = SUM[j=0..n, except j==i]((dy(i,j)*(Gm(j)/d(i,j)^3)*(1+(Gm(j))/(d(i,j)*C2)));
         // gz(i) = SUM[j=0..n, except j==i]((dz(i,j)*(Gm(j)/d(i,j)^3)*(1+(Gm(j))/(d(i,j)*C2)));

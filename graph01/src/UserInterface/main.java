@@ -16,16 +16,18 @@ import orbitEngine.Engine;
 public class main {
 
     private static GraphScreen screen;
-    private static GraphConstellation  gconstell;
+    private static GraphConstellation gconstell;
     private static Engine eng;
 
     public static void main(String[] args) {
         gconstell = new GraphConstellation();
-        eng = new Engine(gconstell,"constellation.txt");
-
+        eng = new Engine(gconstell, "constellation.txt");
+        screen = new GraphScreen();
         for (int i = 0; i < 10; i++) {
-            eng.run();
-            screen = new GraphScreen();
-       }
+            for (int j = 0; i < 10; i++) {
+                eng.run();
+            }
+            screen.paintConstellation(gconstell);
+        }
     }
 }

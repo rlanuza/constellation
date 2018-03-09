@@ -6,7 +6,7 @@ import java.awt.Color;
  *
  * @author Roberto
  */
-public class Body {
+public class Body extends Position {
 
     public static final double G_UNIVERSAL = 6.6740831e-11; // m^3/(Kg*s^2)
 
@@ -15,11 +15,6 @@ public class Body {
     double g_mass;
     double radius;
     Color color;
-
-    // Position by axis r(t)
-    double x;
-    double y;
-    double z;
 
     // Speed by axis: v(t)= d(r(t))/dt 
     double vx;
@@ -60,17 +55,5 @@ public class Body {
 
     public Color getColor() {
         return color;
-    }
-
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public double getZ() {
-        return z;
     }
 }

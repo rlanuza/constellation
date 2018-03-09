@@ -35,13 +35,15 @@ public class Engine {
 
     public void run() {
         for (int i = 0; i < 10; i++) {
-            constellation.step_basic(stepTime);
+            for (int j = 0; j < 10; j++) {
+                constellation.step_basic(stepTime);
+            }
             constellation.pushToGraphic();
             //constellation.step_jerk(stepTime);
             //constellation.step_basic_Schwarzschild(stepTime);
             //constellation.step_jerk_Schwarzschild(stepTime);
-            
+
         }
-        
+
     }
 }

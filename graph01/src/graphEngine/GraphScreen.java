@@ -13,9 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import java.util.LinkedList;
-
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -61,6 +59,17 @@ public class GraphScreen extends JComponent {
 
     public void addLine(double x1, double x2, double x3, double x4, Color color) {
         lines.add(new Line(x1, x2, x3, x4, color));
+        repaint();
+    }
+
+    public void paintConstellation(GraphConstellation gc) {
+        Graphics g = this.getGraphics();
+        for (GraphBody gBody : gc.gBody) {
+            int diameter = 2 * gBody.radius + 10;
+            int x = gBody.orbit.pointList.get(0).x;
+            int y = gBody.orbit.pointList.get(0).y;
+            g.drawOval(x, y, diameter, diameter);
+        }
         repaint();
     }
 
