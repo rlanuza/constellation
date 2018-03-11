@@ -37,7 +37,7 @@ public class GraphConstellation {
         }
     }
 
-    public void updateConstellation(Body[] body) {
+    public void updateGrConstellation(Body[] body) {
         int ix, iy;
         for (int i = 0; i < body.length; i++) {
             Position p_xyz = new Position();
@@ -46,7 +46,7 @@ public class GraphConstellation {
             p_xyz.z = body[i].z;
 
             ix = (int) (p_xyz.x * scale);
-            iy = (int) (p_xyz.y * scale);
+            iy = (int) -(p_xyz.y * scale);
             if (iy > lim_top) {
                 lim_top = iy;
             } else if (lim_bottom > iy) {

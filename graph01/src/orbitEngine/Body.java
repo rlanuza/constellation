@@ -1,14 +1,13 @@
 package orbitEngine;
 
 import java.awt.Color;
+import static orbitEngine.Constellation.G_UNIVERSAL;
 
 /**
  *
  * @author Roberto
  */
 public class Body extends Position {
-
-    public static final double G_UNIVERSAL = 6.6740831e-11; // m^3/(Kg*s^2)
 
     String name;
     double mass;

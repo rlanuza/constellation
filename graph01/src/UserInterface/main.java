@@ -11,7 +11,7 @@ import orbitEngine.Engine;
 
 /**
  *
- * @author Roberto
+ * @author Roberto Lanuza
  */
 public class main {
 
@@ -23,9 +23,9 @@ public class main {
         grConstellation = new GraphConstellation();
         eng = new Engine(grConstellation, "constellation.txt");
         screen = new GraphScreen();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 600; i++) {
             for (int j = 0; j < 10; j++) {
-                eng.run(100);
+                eng.run(1000);
             }
             screen.updateConstellation(grConstellation);
         }

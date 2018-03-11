@@ -12,13 +12,9 @@ import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Roberto
- */
 public class Engine {
 
-    private double stepTime = 600;
+    private double stepTime = 60;
 
     private final Constellation constellation;
 

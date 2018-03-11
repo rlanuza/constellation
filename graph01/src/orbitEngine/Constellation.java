@@ -9,14 +9,11 @@ import graphEngine.GraphConstellation;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Roberto
- */
 public class Constellation {
 
     static final int ASTRO_STRING_FIELDS = 9;
     static final double C = 299792458;
+    public static final double G_UNIVERSAL = 6.6740831e-11; // m^3/(Kg*s^2)
     static final double C2 = C * C;
     final Logger LOG = Logger.getLogger(Constellation.class.getName());
     // To let us load sequentially from file and then calculate the size
@@ -191,8 +188,8 @@ public class Constellation {
             body[i].z += body[i].vz * deltaTime + gz * delT2_2 + (gz - body[i].gz) * delT2_6;
             // New speed v(t)
             body[i].vx += gx * deltaTime + (gx - body[i].gx) * delT_2;
-            body[i].vx += gy * deltaTime + (gy - body[i].gy) * delT_2;
-            body[i].vx += gz * deltaTime + (gz - body[i].gz) * delT_2;
+            body[i].vy += gy * deltaTime + (gy - body[i].gy) * delT_2;
+            body[i].vz += gz * deltaTime + (gz - body[i].gz) * delT_2;
 
             body[i].addGravity(gx, gy, gx);
         }
@@ -214,14 +211,23 @@ public class Constellation {
             body[i].z += body[i].vz * deltaTime + gz * delT2_2;
             // New speed v(t)
             body[i].vx += gx * deltaTime;
-            body[i].vx += gy * deltaTime;
-            body[i].vx += gz * deltaTime;
+            body[i].vy += gy * deltaTime;
+            body[i].vz += gz * deltaTime;
 
             body[i].addGravity(gx, gy, gx);
+            /*
+            if (i == 1) {
+                double d = Math.sqrt(body[i].x * body[i].x + body[i].y * body[i].y + body[i].z * body[i].z);
+                double g = Math.sqrt(gx * gx + gy * gy + gz * gz);
+                System.out.println(String.format("x:%f  y:%f  d:%f g:%f ", body[i].x, body[i].y, d, g));
+            }
+             */
         }
+
     }
 
-    void step_jerk_Schwarzschild(double deltaTime) {
+    void step_jerk_Schwarzschild(double deltaTime
+    ) {
         double delT_2 = deltaTime / 2;          // deltaTime/2
         double delT2_2 = deltaTime * delT_2;    // deltaTime^2/2
         double delT2_6 = delT2_2 / 3;           // deltaTime^2/6
@@ -241,14 +247,15 @@ public class Constellation {
             body[i].z += body[i].vz * deltaTime + gz * delT2_2 + (gz - body[i].gz) * delT2_6;
             // New speed v(t)
             body[i].vx += gx * deltaTime + (gx - body[i].gx) * delT_2;
-            body[i].vx += gy * deltaTime + (gy - body[i].gy) * delT_2;
-            body[i].vx += gz * deltaTime + (gz - body[i].gz) * delT_2;
+            body[i].vy += gy * deltaTime + (gy - body[i].gy) * delT_2;
+            body[i].vz += gz * deltaTime + (gz - body[i].gz) * delT_2;
 
             body[i].addGravity(gx, gy, gx);
         }
     }
 
-    void step_basic_Schwarzschild(double deltaTime) {
+    void step_basic_Schwarzschild(double deltaTime
+    ) {
         double delT_2 = deltaTime / 2;          // deltaTime/2
         double delT2_2 = deltaTime * delT_2;    // deltaTime^2/2
         calculateDistances();
@@ -264,14 +271,14 @@ public class Constellation {
             body[i].z += body[i].vz * deltaTime + gz * delT2_2;
             // New speed v(t)
             body[i].vx += gx * deltaTime;
-            body[i].vx += gy * deltaTime;
-            body[i].vx += gz * deltaTime;
+            body[i].vy += gy * deltaTime;
+            body[i].vz += gz * deltaTime;
 
             body[i].addGravity(gx, gy, gx);
         }
     }
 
     void pushToGraphic() {
-        grConstellation.updateConstellation(body);
+        grConstellation.updateGrConstellation(body);
     }
 }
