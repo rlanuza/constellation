@@ -19,7 +19,7 @@ public class GraphConstellation {
 
     // Orbit list points
     GraphBody[] gBody;
-    double scale = 1e-7;
+    double scale = 1e-9;
 
     public void initConstellation(Body[] body) {
         gBody = new GraphBody[body.length];
@@ -63,5 +63,6 @@ public class GraphConstellation {
     }
 
     /*@Todo add re-scale comands*/
- /*@Todo calculate limits with lim_radius pad */
+ /*@Todo calculate screen limits with lim_radius pad */
+ /*@Todo add methods to synchronize the orbit xyz-double with the proyection: xi,yi*/
 }

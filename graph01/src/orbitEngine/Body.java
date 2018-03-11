@@ -16,7 +16,7 @@ public class Body extends Position {
     double radius;
     Color color;
 
-    // Speed by axis: v(t)= d(r(t))/dt 
+    // Speed by axis: v(t)= d(r(t))/dt
     double vx;
     double vy;
     double vz;
@@ -37,6 +37,8 @@ public class Body extends Position {
         this.vx = vx;
         this.vy = vy;
         this.vz = vz;
+        //@Todo this.color = new Color((int) Math.log(radius), (int) Math.log10(radius), 100);
+        this.color = new Color(100, 100, 100);
     }
 
     public void addGravity(double gx, double gy, double gz) {

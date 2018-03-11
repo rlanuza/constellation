@@ -6,14 +6,14 @@
 package graphEngine;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.LinkedList;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -28,68 +28,24 @@ public class GraphScreen extends JComponent {
     private double zoom = 1.0;
     private int zoomCenterX = 0;
     private int zoomCenterY = 0;
+    public static int screenWidth = 1000;
+    public static int screenHeight = 600;
 
-    private static final int screenX = 1000;
-    private static final int screenY = 600;
-
-    private double percentage = .1;
-
-    private static class Line {
-
-        final double x1;
-        final double y1;
-        final double x2;
-        final double y2;
-        final Color color;
-
-        public Line(double x1, double y1, double x2, double y2, Color color) {
-            this.x1 = x1;
-            this.y1 = y1;
-            this.x2 = x2;
-            this.y2 = y2;
-            this.color = color;
-        }
-    }
-
-    private final LinkedList<Line> lines = new LinkedList<Line>();
-
-    public void addLine(double x1, double x2, double x3, double x4) {
-        addLine(x1, x2, x3, x4, Color.black);
-    }
-
-    public void addLine(double x1, double x2, double x3, double x4, Color color) {
-        lines.add(new Line(x1, x2, x3, x4, color));
-        repaint();
-    }
-
-    public void paintConstellation(GraphConstellation gc) {
-        Graphics g = this.getGraphics();
-        for (GraphBody gBody : gc.gBody) {
-            int diameter = 2 * gBody.radius + 10;
-            int x = gBody.orbit.pointList.get(0).x;
-            int y = gBody.orbit.pointList.get(0).y;
-            g.drawOval(x, y, diameter, diameter);
-        }
-        repaint();
-    }
-
-    public void clearLines() {
-        lines.clear();
-        repaint();
-    }
+    private double percentage = 0.5;
+    private static GraphConstellation gc;
 
     public void zoomIn() {
         zoom += percentage;
-        if (zoom > 5.0) {
-            zoom = 5.0;
+        if (zoom > 10000.0) {
+            zoom = 10000.0;
         }
         repaint();
     }
 
     public void zoomOut() {
         zoom -= percentage;
-        if (zoom < 0.02) {
-            zoom = 0.02;
+        if (zoom < 0.0001) {
+            zoom = 0.0001;
         }
         repaint();
     }
@@ -106,21 +62,49 @@ public class GraphScreen extends JComponent {
         zoomOut();
     }
 
+    public void updateConstellation(GraphConstellation gc) {
+        this.gc = gc;
+        repaint();
+    }
+
+    private void paintConstellation(Graphics2D g2d) {
+        if (gc != null) {
+            for (GraphBody gBody : gc.gBody) {
+                if (gBody.orbit.proyectionPointList.size() > 0) {
+                    g2d.setColor(gBody.color);
+                    int diameter = 2 * gBody.radius + 4;
+                    int x0 = gBody.orbit.proyectionPointList.get(0).x;
+                    int y0 = gBody.orbit.proyectionPointList.get(0).y;
+                    for (Point orbitPoint : gBody.orbit.proyectionPointList) {
+                        int x1 = orbitPoint.x;
+                        int y1 = orbitPoint.y;
+                        g2d.drawLine(x0, y0, x1, y1);
+                        x0 = x1;
+                        y0 = y1;
+                    }
+                    g2d.drawOval(x0, y0, diameter, diameter);
+                    g2d.drawString(gBody.name, x0, y0);
+                }
+            }
+        }
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (Line line : lines) {
-            //int x1 = (int) (line.x1 * zoom) + zoomCenterX;
-            int x1 = (int) ((line.x1 - zoomCenterX) * zoom) + zoomCenterX;
-            int y1 = (int) ((line.y1 - zoomCenterY) * zoom) + zoomCenterY;
-            int x2 = (int) ((line.x2 - zoomCenterX) * zoom) + zoomCenterX;
-            int y2 = (int) ((line.y2 - zoomCenterY) * zoom) + zoomCenterY;
-            g.setColor(line.color);
-            g.drawLine(x1, y1, x2, y2);
-            //g.drawOval((int) (line.x1 * zoom), (int) (line.y1 * zoom), (int) (line.x2 * zoom), (int) (line.x2 * zoom));
-        }
-        zoomCenterX = 0;
-        zoomCenterY = 0;
+        Graphics2D g2d = (Graphics2D) g;
+        screenWidth = this.getWidth();
+        screenHeight = this.getHeight();
+        //double zoomWidth = screenWidth * zoom;
+        //double zoomHeight = screenHeight * zoom;
+        //double anchorX = (screenWidth - zoomWidth) / 2;
+        //double anchorY = (screenHeight - zoomHeight) / 2;
+        double anchorX = screenWidth / 2;
+        double anchorY = screenHeight / 2;
+
+        g2d.translate(anchorX, anchorY);
+        g2d.scale(zoom, -zoom);
+        paintConstellation(g2d);
     }
 
     public GraphScreen() {
@@ -129,51 +113,38 @@ public class GraphScreen extends JComponent {
         JFrame testFrame = new JFrame();
         testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         GraphScreen comp = this;
-        comp.setPreferredSize(new Dimension(screenX, screenY));
+        comp.setPreferredSize(new Dimension(screenWidth, screenHeight));
 
         testFrame.getContentPane().add(comp, BorderLayout.CENTER);
         JPanel buttonsPanel = new JPanel();
-        JButton newLineButton = new JButton("New Line");
-        JButton clearButton = new JButton("Clear");
-        JButton zoomIn = new JButton("+");
-        JButton zoomOut = new JButton("-");
-        buttonsPanel.add(newLineButton);
-        buttonsPanel.add(clearButton);
-        buttonsPanel.add(zoomIn);
-        buttonsPanel.add(zoomOut);
+        JButton centerButton = new JButton("C");
+        JButton resetButton = new JButton("R");
+        JButton inButton = new JButton("+");
+        JButton outButton = new JButton("-");
+        buttonsPanel.add(centerButton);
+        buttonsPanel.add(resetButton);
+        buttonsPanel.add(inButton);
+        buttonsPanel.add(outButton);
         testFrame.getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
-        newLineButton.addActionListener(new ActionListener() {
+        centerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                double x1 = Math.random() * screenX;
-                double y1 = Math.random() * screenY;
-                double x2, y2;
-                Color randomColor = new Color((float) Math.random(), (float) Math.random(), (float) Math.random());
-                for (int i = 0; i < 1000; i++) {
-                    x2 = Math.random() * screenX;
-                    y2 = Math.random() * screenY;
-                    comp.addLine(x1, y1, x2, y2, randomColor);
-                    x1 = x2;
-                    y1 = y2;
-                }
             }
         });
-        clearButton.addActionListener(new ActionListener() {
-
+        resetButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                comp.clearLines();
+                zoom = 1.0;
+                repaint();
             }
         });
-        zoomIn.addActionListener(new ActionListener() {
-
+        inButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 comp.zoomIn();
             }
         });
-        zoomOut.addActionListener(new ActionListener() {
-
+        outButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 comp.zoomOut();
@@ -183,7 +154,6 @@ public class GraphScreen extends JComponent {
         comp.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.NOBUTTON) {
-
                 }
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     System.out.println("Left Click!: " + e.getClickCount());
@@ -205,5 +175,4 @@ public class GraphScreen extends JComponent {
         testFrame.pack();
         testFrame.setVisible(true);
     }
-
 }

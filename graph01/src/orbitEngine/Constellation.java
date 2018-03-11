@@ -187,8 +187,8 @@ public class Constellation {
             // s(t) = s0 + v0*t + 1/2*g0*t^2 + 1/6*(g0-g_1)*t^2
             // New position s(t)
             body[i].x += body[i].vx * deltaTime + gx * delT2_2 + (gx - body[i].gx) * delT2_6;
-            body[i].y += body[i].vx * deltaTime + gy * delT2_2 + (gy - body[i].gy) * delT2_6;
-            body[i].z += body[i].vx * deltaTime + gz * delT2_2 + (gz - body[i].gz) * delT2_6;
+            body[i].y += body[i].vy * deltaTime + gy * delT2_2 + (gy - body[i].gy) * delT2_6;
+            body[i].z += body[i].vz * deltaTime + gz * delT2_2 + (gz - body[i].gz) * delT2_6;
             // New speed v(t)
             body[i].vx += gx * deltaTime + (gx - body[i].gx) * delT_2;
             body[i].vx += gy * deltaTime + (gy - body[i].gy) * delT_2;
@@ -210,8 +210,8 @@ public class Constellation {
             // s(t) = Integrate(v(t);dt) = s0 + v0*t + 1/2*g0*t^2
             // New position s(t)
             body[i].x += body[i].vx * deltaTime + gx * delT2_2;
-            body[i].y += body[i].vx * deltaTime + gy * delT2_2;
-            body[i].z += body[i].vx * deltaTime + gz * delT2_2;
+            body[i].y += body[i].vy * deltaTime + gy * delT2_2;
+            body[i].z += body[i].vz * deltaTime + gz * delT2_2;
             // New speed v(t)
             body[i].vx += gx * deltaTime;
             body[i].vx += gy * deltaTime;
@@ -237,8 +237,8 @@ public class Constellation {
             // s(t) = s0 + v0*t + 1/2*g0*t^2 + 1/6*(g0-g_1)*t^2
             // New position s(t)
             body[i].x += body[i].vx * deltaTime + gx * delT2_2 + (gx - body[i].gx) * delT2_6;
-            body[i].y += body[i].vx * deltaTime + gy * delT2_2 + (gy - body[i].gy) * delT2_6;
-            body[i].z += body[i].vx * deltaTime + gz * delT2_2 + (gz - body[i].gz) * delT2_6;
+            body[i].y += body[i].vy * deltaTime + gy * delT2_2 + (gy - body[i].gy) * delT2_6;
+            body[i].z += body[i].vz * deltaTime + gz * delT2_2 + (gz - body[i].gz) * delT2_6;
             // New speed v(t)
             body[i].vx += gx * deltaTime + (gx - body[i].gx) * delT_2;
             body[i].vx += gy * deltaTime + (gy - body[i].gy) * delT_2;
@@ -260,8 +260,8 @@ public class Constellation {
             // s(t) = Integrate(v(t);dt) = s0 + v0*t + 1/2*g0*t^2
             // New position s(t)
             body[i].x += body[i].vx * deltaTime + gx * delT2_2;
-            body[i].y += body[i].vx * deltaTime + gy * delT2_2;
-            body[i].z += body[i].vx * deltaTime + gz * delT2_2;
+            body[i].y += body[i].vy * deltaTime + gy * delT2_2;
+            body[i].z += body[i].vz * deltaTime + gz * delT2_2;
             // New speed v(t)
             body[i].vx += gx * deltaTime;
             body[i].vx += gy * deltaTime;

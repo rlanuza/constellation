@@ -7,11 +7,11 @@ import orbitEngine.Position;
 public class GraphOrbit {
 
     // Orbit list points
-    ArrayList<Point> pointList = new ArrayList<>();
+    ArrayList<Point> proyectionPointList = new ArrayList<>();
     ArrayList<Position> positionList = new ArrayList<>();
 
     public void addOrbitPoint(Point p,Position p_xyz) {
-        pointList.add(p);
+        proyectionPointList.add(p);
         positionList.add(p_xyz);
     }
 }

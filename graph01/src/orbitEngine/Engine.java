@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class Engine {
 
-    private double stepTime = 3600;
+    private double stepTime = 600;
 
     private final Constellation constellation;
 
@@ -33,17 +33,13 @@ public class Engine {
         }
     }
 
-    public void run() {
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                constellation.step_basic(stepTime);
-            }
-            constellation.pushToGraphic();
+    public void run(int stepsByGraph) {
+        for (int i = 0; i < stepsByGraph; i++) {
+            constellation.step_basic(stepTime);
             //constellation.step_jerk(stepTime);
             //constellation.step_basic_Schwarzschild(stepTime);
             //constellation.step_jerk_Schwarzschild(stepTime);
-
         }
-
+        constellation.pushToGraphic();
     }
 }
