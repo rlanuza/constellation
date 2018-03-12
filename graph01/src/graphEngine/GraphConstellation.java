@@ -1,5 +1,6 @@
 package graphEngine;
 
+import java.awt.Graphics2D;
 import java.awt.Point;
 import orbitEngine.Body;
 import orbitEngine.Position;
@@ -19,7 +20,10 @@ public class GraphConstellation {
 
     // Orbit list points
     GraphBody[] gBody;
-    double scale = 1e-9;
+    double scale = 1.3e-10;
+
+    public GraphConstellation() {
+    }
 
     public void initConstellation(Body[] body) {
         gBody = new GraphBody[body.length];
@@ -62,7 +66,30 @@ public class GraphConstellation {
         }
     }
 
+    private void drawCircle(Graphics2D g2d, int x, int y, int radius) {
+        int diameter = radius * 2;
+        g2d.drawOval(x - radius, y - radius, diameter, diameter);
+    }
+
     /*@Todo add re-scale comands*/
  /*@Todo calculate screen limits with lim_radius pad */
  /*@Todo add methods to synchronize the orbit xyz-double with the proyection: xi,yi*/
+    void paintConstellation(Graphics2D g2d) {
+        if (gBody != null) {
+            for (GraphBody grBody : gBody) {
+                g2d.setColor(grBody.color);
+                int x0 = grBody.orbit.proyectionPointList.get(0).x;
+                int y0 = grBody.orbit.proyectionPointList.get(0).y;
+                for (Point orbitPoint : grBody.orbit.proyectionPointList) {
+                    int x1 = orbitPoint.x;
+                    int y1 = orbitPoint.y;
+                    g2d.drawLine(x0, y0, x1, y1);
+                    x0 = x1;
+                    y0 = y1;
+                }
+                drawCircle(g2d, x0, y0, grBody.radius);
+                g2d.drawString(grBody.name, x0, y0);
+            }
+        }
+    }
 }

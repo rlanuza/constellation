@@ -1803,3 +1803,224 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+ Revised: Mar 01, 2018          Tesla Roadster (spacecraft)             -143205
+          (solution #9)
+ 
+ Tesla Roadster (AKA: Starman, 2018-017A)
+
+ NOTE:
+  The trajectory estimate will be updated here in the days ahead as more 
+  measurement data is reported. 
+
+  Visibility: 
+   20th magnitude until Feb 20, 
+   22nd magnitude through mid-April 
+   Brighter than 26th magnitude into mid-June
+
+  2018-Mar-01: Radial non-gravitational acceleration A1 estimated from data
+               (nominally solar radiation pressure)
+
+ LAUNCHED: 
+  2018-Feb-06 20:45 UTC by Falcon Heavy (FH-1) from Kennedy Space Center, USA 
+  (launchpad 39A)
+
+ BACKGROUND:
+  Dummy payload from the first launch of SpaceX Falcon Heavy launch vehicle. 
+  Consists of a standard Tesla Roadster automobile and a spacesuit-wearing 
+  mannequin nicknamed "Starman". 
+ 
+  Also includes a Hot Wheels toy model Roadster on the car's dash with a 
+  mini-Starman inside. A data storage device placed inside the car contains 
+  a copy of Isaac Asimov's "Foundation" novels. A plaque on the attachment 
+  fitting between the Falcon Heavy upper stage and the Tesla is etched with 
+  the names of more than 6,000 SpaceX employees.
+ 
+  After orbiting the Earth for 5 hours, a third burn by the second stage was 
+  completed at approximately 02:30 UTC Feb 7, placing the dummy payload in a 
+  heliocentric orbit having a perihelion of 0.99 au and aphelion ~1.67 au.
+
+  The object stack consists of a Merlin 1D Vacuum second stage with Extended 
+  Nozzle, Payload Attachment Fitting, and Tesla Roadster on mount.
+
+  Roadster mass: ~1250 kg (with batteries), ~800 kg (without ESS/batteries)
+
+ TRAJECTORY:
+  This trajectory is based on JPL solution #9, a fit to 353 ground-based 
+  optical astrometric measurements spanning 2018 Feb 8.2 to 22.4
+
+  Trajectory name                       Start (TDB)          Stop (TDB)
+  --------------------------------   -----------------   -----------------
+  tesla_s9                           2018-Feb-07 03:00   2090-Jan-01 00:00
+
+  Encounter predictions for s9 (w/radial 1/r^2 non-gravitational acceleration)
+
+   Date (TDB)       Body  CA Dist  MinDist  MaxDist  Vrel  TCA3Sg  Nsigs P_i/p
+  ----------------- ----- -------  -------  ------- ------ ------ ------ ------
+  2018 Feb 08.09687 Moon  .000936  .000936  .000936  3.961   0.43 40919. 0.000
+  2020 Oct 07.26779 Mars  .049522  .048882  .050279  8.149  29.14 2.18E5 0.000
+  2035 Apr 22.35803 Mars  .015673  .004108  .028912  8.222 179.58 9768.2 0.000
+  2047 Jan 11.88792 Earth .031917  .031290  .032543  4.493  77.22 1.45E5 0.000
+  2050 Mar 19.52340 Earth .119041  .112774  .125199  7.394 634.29 1.03E5 0.000
+  2052 Sep 05.17456 Mars  .176307  .171254  .181462  5.738 2841.0 4.00E5 0.000
+  2067 Apr 15.91313 Mars  .043515  .020638  .067527  7.188 1512.4 13010. 0.000
+  2084 Sep 17.91484 Mars  .117295  .085931  .149981  9.760 1027.7 2.98E5 0.000
+  2085 Jan 01.90969 Earth .083491  .036777  .121805  6.238 6854.3 41306. 0.000
+  2088 Mar 09.91344 Earth .048941  .027524  .067669  5.100 6089.9 1.36E5 0.000
+
+     Date    = Nominal encounter time (Barycentric Dynamical Time)
+     CA_Dist = Highest probability close approach distance to body, au
+     MinDist = 3-sigma minimum encounter distance, au
+     MaxDist = 3-sigma maximum encounter distance, au
+     Vrel    = Relative velocity at nominal encounter time, km/s
+     TCA3Sg  = 3-sigma uncertainty in close encounter time, minutes
+     Nsigs   = Number of sigmas to encounter body at nominal encounter time 
+     P_i/p   = Linearized probability of impact
+
+  NOTE: 
+  How to obtain optional statistical uncertainty output & generate an SPK file:
+
+  Since this is a spacecraft and not part of the asteroid and comet database 
+  which normally holds orbit covariance data, some functions like statistical 
+  output and SPK file generation aren't automatically available for this object.
+
+  However, such optional extended output is possible with some extra steps. 
+
+  To propagate statistical uncertainties for this object, the full statistical
+  orbit solution (given below) can be manually input back into Horizons as a 
+  "user-defined object" using the telnet or e-mail interfaces (not possible
+  with the browser interface).
+ 
+  To do this and activate statistical or SPK file output ...
+
+  Using the telnet interface (command-line "telnet ssd.jpl.nasa.gov 6775"),
+  enter ";" to drop into user-input mode then cut-and-paste each line shown 
+  below, one at a time. The lines of numbers after SRC must be in the order 
+  shown.
+
+  For SPK file generation, only the first four lines need be input: the
+  EPOCH, orbital element lines starting with "EC" and "OM", and  the
+  non-gravitational acceleration model (line starting with "A1").
+
+  SRC lines are needed only for (optional) statistical output and the 
+  H & G values only for (optional) visual magnitude output. 
+
+  EPOCH= 2458161.5
+   EC= .2596426923606575  QR= .9860610577079567  TP= 2458153.643073520101
+   OM= 317.3883085927433  W = 177.3075786522858  IN= 1.092793455129435
+   A1= 3.631714011290482E-9  R0= 1.  ALN= 1.  NM= 2.  NK= 0.
+   SRC= -2.097499807632137E-7  7.707442983664013E-9 -1.71826261392999E-9
+        -5.516672473474031E-7  2.45086166862229E-9  -1.385218152199068E-6
+        -2.481933824305033E-7 -3.876016196089613E-9 -1.964179501029089E-5
+        -3.405556661620339E-7 -5.900365994858873E-7 -5.208556048880531E-9
+         2.588477587602644E-5  1.834774807761068E-6 -1.487769163631568E-6
+        -2.63670509850621E-5  -2.441863341098205E-8  -.0002480620172814464
+        -1.973979674825551E-6 -2.18037807947027E-6  -1.783639120062843E-6
+         5.932160263014605E-6  9.530640908640829E-9  8.001574672093609E-5
+         1.465699231470927E-6 -1.524681753140474E-7  4.187849736442312E-7
+        -5.225703454541481E-10
+    H= 25.28 G= 0.15
+
+  When done, press a blank return to exit input mode. 
+
+  Enter "J" at the prompt to indicate heliocentric J2000 ecliptic data has 
+  been supplied. Then at the next prompt, input an arbitrary name 
+  (i.e., Roadster).
+ 
+  Horizons will then proceed as usual, but with statistical output and SPK 
+  file generation now available as options.
+
+  A basic and identical tracking ephemeris can be produced without doing any 
+  of this, but statistical uncertainty quantities requested will be marked
+  "n.a.", meaning not available, and SPK generation won't be an option.
+
+  NOTE: long-term predictions
+  Over time, trajectory prediction errors could increase more rapidly than 
+  the formal statistics indicate due to unmodeled thermal re-radiation or 
+  outgassing accelerations that are not currently characterized but may exist
+
+*******************************************************************************
+Ephemeris / WWW_USER Mon Mar 12 22:13:56 2018 Pasadena, USA      / Horizons    
+*******************************************************************************
+Target body name: SpaceX Roadster (spacecraft) (-143205) {source: tesla_s9}
+Center body name: Solar System Barycenter (0)     {source: DE431mx}
+Center-site name: BODY CENTER
+*******************************************************************************
+Start time      : A.D. 2018-Mar-06 00:00:00.0000 TDB
+Stop  time      : A.D. 2018-Mar-16 00:00:00.0000 TDB
+Step-size       : 2880 minutes
+*******************************************************************************
+Center geodetic : 0.00000000,0.00000000,0.0000000 {E-lon(deg),Lat(deg),Alt(km)}
+Center cylindric: 0.00000000,0.00000000,0.0000000 {E-lon(deg),Dxy(km),Dz(km)}
+Center radii    : (undefined)                                                  
+Output units    : KM-S                                                         
+Output type     : GEOMETRIC cartesian states
+Output format   : 2 (position and velocity)
+Reference frame : ICRF/J2000.0                                                 
+Coordinate systm: Ecliptic and Mean Equinox of Reference Epoch                 
+*******************************************************************************
+JDTDB
+   X     Y     Z
+   VX    VY    VZ
+*******************************************************************************
+$$SOE
+2458183.500000000 = A.D. 2018-Mar-06 00:00:00.0000 TDB 
+ X =-1.487903894200133E+08 Y = 3.361076990050651E+07 Z =-1.471912117300056E+06
+ VX=-1.061473412537197E+01 VY=-3.094466362152402E+01 VZ=-5.633669833236858E-01
+2458185.500000000 = A.D. 2018-Mar-08 00:00:00.0000 TDB 
+ X =-1.505414069113404E+08 Y = 2.824643610291716E+07 Z =-1.568418456067324E+06
+ VX=-9.651906089701127E+00 VY=-3.113639177864307E+01 VZ=-5.535265661964335E-01
+2458187.500000000 = A.D. 2018-Mar-10 00:00:00.0000 TDB 
+ X =-1.521262202476429E+08 Y = 2.285213788395773E+07 Z =-1.663184728188341E+06
+ VX=-8.691368521303236E+00 VY=-3.129157874227646E+01 VZ=-5.432318558320350E-01
+2458189.500000000 = A.D. 2018-Mar-12 00:00:00.0000 TDB 
+ X =-1.535453750758765E+08 Y = 1.743413225079354E+07 Z =-1.756134822822756E+06
+ VX=-7.734842024952329E+00 VY=-3.141090504646770E+01 VZ=-5.325107458619751E-01
+2458191.500000000 = A.D. 2018-Mar-14 00:00:00.0000 TDB 
+ X =-1.547997070091910E+08 Y = 1.199855002227655E+07 Z =-1.847197547832580E+06
+ VX=-6.783961039781031E+00 VY=-3.149514876680740E+01 VZ=-5.213921885670025E-01
+2458193.500000000 = A.D. 2018-Mar-16 00:00:00.0000 TDB 
+ X =-1.558903262419556E+08 Y = 6.551379952916281E+06 Z =-1.936306772771785E+06
+ VX=-5.840268367740054E+00 VY=-3.154517423083737E+01 VZ=-5.099057504091675E-01
+$$EOE
+*******************************************************************************
+Coordinate system description:
+
+  Ecliptic and Mean Equinox of Reference Epoch
+
+    Reference epoch: J2000.0
+    XY-plane: plane of the Earth's orbit at the reference epoch
+              Note: obliquity of 84381.448 arcseconds wrt ICRF equator (IAU76)
+    X-axis  : out along ascending node of instantaneous plane of the Earth's
+              orbit and the Earth's mean equator at the reference epoch
+    Z-axis  : perpendicular to the xy-plane in the directional (+ or -) sense
+              of Earth's north pole at the reference epoch.
+
+  Symbol meaning:
+
+    JDTDB    Julian Day Number, Barycentric Dynamical Time
+      X      X-component of position vector (km)                               
+      Y      Y-component of position vector (km)                               
+      Z      Z-component of position vector (km)                               
+      VX     X-component of velocity vector (km/sec)                           
+      VY     Y-component of velocity vector (km/sec)                           
+      VZ     Z-component of velocity vector (km/sec)                           
+
+Geometric states/elements have no aberrations applied.
+
+ Computations by ...
+     Solar System Dynamics Group, Horizons On-Line Ephemeris System
+     4800 Oak Grove Drive, Jet Propulsion Laboratory
+     Pasadena, CA  91109   USA
+     Information: http://ssd.jpl.nasa.gov/
+     Connect    : telnet://ssd.jpl.nasa.gov:6775  (via browser)
+                  http://ssd.jpl.nasa.gov/?horizons
+                  telnet ssd.jpl.nasa.gov 6775    (via command-line)
+     Author     : Jon.D.Giorgini@jpl.nasa.gov
+*******************************************************************************
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+

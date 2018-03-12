@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -23,11 +22,15 @@ public class GraphScreen extends JComponent {
     private double zoom = 1.0;
     private int zoomCenterX = 0;
     private int zoomCenterY = 0;
-    public static int screenWidth = 1000;
-    public static int screenHeight = 600;
+    public static int screenWidth = 2000;
+    public static int screenHeight = 1200;
 
     private double percentage = 0.5;
-    private static GraphConstellation gc;
+    private GraphConstellation gc;
+
+    public GraphConstellation getGraphConstellation() {
+        return this.gc;
+    }
 
     public void zoomIn() {
         zoom += percentage;
@@ -57,9 +60,7 @@ public class GraphScreen extends JComponent {
         zoomOut();
     }
 
-    public void updateConstellation(GraphConstellation gc) {
-        this.gc = gc;
-
+    public void updateConstellation() {
         int width = gc.lim_right - gc.lim_left;
         int height = gc.lim_bottom - gc.lim_top;
 //        if (width > screenWidth) {
@@ -71,27 +72,6 @@ public class GraphScreen extends JComponent {
 //            this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 //        }
         repaint();
-    }
-
-    synchronized private void paintConstellation(Graphics2D g2d) {
-        if (gc != null) {
-            for (GraphBody grBody : gc.gBody) {
-                g2d.setColor(grBody.color);
-                int diameter = 2 * grBody.radius + 4;
-                int x0 = grBody.orbit.proyectionPointList.get(0).x;
-                int y0 = grBody.orbit.proyectionPointList.get(0).y;
-                for (Point orbitPoint : grBody.orbit.proyectionPointList) {
-                    int x1 = orbitPoint.x;
-                    int y1 = orbitPoint.y;
-                    g2d.drawLine(x0, y0, x1, y1);
-                    x0 = x1;
-                    y0 = y1;
-                }
-
-                g2d.drawOval(x0, y0, diameter, diameter);
-                g2d.drawString(grBody.name, x0, y0);
-            }
-        }
     }
 
     @Override
@@ -109,7 +89,9 @@ public class GraphScreen extends JComponent {
 
         g2d.translate(anchorX, anchorY);
         g2d.scale(zoom, zoom);
-        paintConstellation(g2d);
+        if (gc != null) {
+            gc.paintConstellation(g2d);
+        }
     }
 
     public GraphScreen() {
@@ -179,5 +161,7 @@ public class GraphScreen extends JComponent {
 
         testFrame.pack();
         testFrame.setVisible(true);
+
+        gc = new GraphConstellation();
     }
 }

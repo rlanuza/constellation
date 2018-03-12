@@ -18,9 +18,9 @@ public class Engine {
 
     private final Constellation constellation;
 
-    public Engine(GraphConstellation gconstell, String constellationFile) {
+    public Engine(GraphConstellation graphConstellation, String constellationFile) {
 
-        constellation = new Constellation(gconstell);
+        constellation = new Constellation(graphConstellation);
         try {
             String contents = new String(Files.readAllBytes(Paths.get(constellationFile)));
             constellation.loadConstellation(contents);
@@ -31,10 +31,11 @@ public class Engine {
 
     public void run(int stepsByGraph) {
         for (int i = 0; i < stepsByGraph; i++) {
-            //constellation.step_basic(stepTime);
-            constellation.step_jerk(stepTime);
+            constellation.step_basic(stepTime);
+            //constellation.step_jerk(stepTime);
             //constellation.step_basic_Schwarzschild(stepTime);
             //constellation.step_jerk_Schwarzschild(stepTime);
+            //System.out.print("Izarbe es una petarda");
         }
         constellation.pushToGraphic();
     }

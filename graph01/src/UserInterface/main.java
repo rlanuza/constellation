@@ -5,7 +5,6 @@
  */
 package UserInterface;
 
-import graphEngine.GraphConstellation;
 import graphEngine.GraphScreen;
 import orbitEngine.Engine;
 
@@ -16,19 +15,19 @@ import orbitEngine.Engine;
 public class main {
 
     private static GraphScreen screen;
-    private static GraphConstellation grConstellation;
     private static Engine eng;
 
     public static void main(String[] args) {
         final long start = System.nanoTime();
-        grConstellation = new GraphConstellation();
-        eng = new Engine(grConstellation, "constellation.txt");
+
         screen = new GraphScreen();
-        for (int i = 0; i < 1000; i++) {
+        eng = new Engine(screen.getGraphConstellation(), "constellation.txt");
+
+        for (int i = 0; i < 100000; i++) {
             for (int j = 0; j < 10; j++) {
                 eng.run(1000);
             }
-            screen.updateConstellation(grConstellation);
+            screen.updateConstellation();
         }
         System.out.print(System.nanoTime() - start);
     }

@@ -30,10 +30,10 @@ public class Constellation {
     double gy;
     double gz;
 
-    GraphConstellation grConstellation;
+    GraphConstellation graphConstellation;
 
-    Constellation(GraphConstellation gconstell) {
-        grConstellation = gconstell;
+    Constellation(GraphConstellation graphConstellation) {
+        this.graphConstellation = graphConstellation;
     }
 
     public boolean loadConstellation(String constelationStr) {
@@ -49,12 +49,12 @@ public class Constellation {
                     String name = datas[0].trim();
                     double mass = Double.valueOf(datas[1].trim());
                     double diameter = Double.valueOf(datas[2].trim());
-                    double x = Double.valueOf(datas[3].trim());
-                    double y = Double.valueOf(datas[4].trim());
-                    double z = Double.valueOf(datas[5].trim());
-                    double vx = Double.valueOf(datas[6].trim());
-                    double vy = Double.valueOf(datas[7].trim());
-                    double vz = Double.valueOf(datas[8].trim());
+                    double x = Double.valueOf(datas[3].trim()) * 1000;
+                    double y = Double.valueOf(datas[4].trim()) * 1000;
+                    double z = Double.valueOf(datas[5].trim()) * 1000;
+                    double vx = Double.valueOf(datas[6].trim()) * 1000;
+                    double vy = Double.valueOf(datas[7].trim()) * 1000;
+                    double vz = Double.valueOf(datas[8].trim()) * 1000;
                     Body new_body = new Body(name, mass, diameter, x, y, z, vx, vy, vz);
                     bodyList.add(new_body);
                 } else {
@@ -72,7 +72,7 @@ public class Constellation {
         dist_z = new double[bodyList.size()][bodyList.size()];
 
         // Prepare the graph info
-        grConstellation.initConstellation(body);
+        graphConstellation.initConstellation(body);
 
         // Calculate the initial gravity of the system
         initGravity();
@@ -265,6 +265,6 @@ public class Constellation {
     }
 
     void pushToGraphic() {
-        grConstellation.updateGrConstellation(body);
+        graphConstellation.updateGrConstellation(body);
     }
 }
