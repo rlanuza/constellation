@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package graphEngine;
 
 import java.awt.BorderLayout;
@@ -81,22 +76,20 @@ public class GraphScreen extends JComponent {
     synchronized private void paintConstellation(Graphics2D g2d) {
         if (gc != null) {
             for (GraphBody grBody : gc.gBody) {
-                if (grBody.orbit.proyectionPointList.size() > 0) {
-                    g2d.setColor(grBody.color);
-                    int diameter = 2 * grBody.radius + 4;
-                    int x0 = grBody.orbit.proyectionPointList.get(0).x;
-                    int y0 = grBody.orbit.proyectionPointList.get(0).y;
-                    for (Point orbitPoint : grBody.orbit.proyectionPointList) {
-
-                        int x1 = orbitPoint.x;
-                        int y1 = orbitPoint.y;
-                        g2d.drawLine(x0, y0, x1, y1);
-                        x0 = x1;
-                        y0 = y1;
-                    }
-                    g2d.drawOval(x0, y0, diameter, diameter);
-                    g2d.drawString(grBody.name, x0, y0);
+                g2d.setColor(grBody.color);
+                int diameter = 2 * grBody.radius + 4;
+                int x0 = grBody.orbit.proyectionPointList.get(0).x;
+                int y0 = grBody.orbit.proyectionPointList.get(0).y;
+                for (Point orbitPoint : grBody.orbit.proyectionPointList) {
+                    int x1 = orbitPoint.x;
+                    int y1 = orbitPoint.y;
+                    g2d.drawLine(x0, y0, x1, y1);
+                    x0 = x1;
+                    y0 = y1;
                 }
+
+                g2d.drawOval(x0, y0, diameter, diameter);
+                g2d.drawString(grBody.name, x0, y0);
             }
         }
     }

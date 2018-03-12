@@ -114,14 +114,12 @@ public class Constellation {
         gz = 0;
         for (int j = 0; j < i; j++) {
             double gm_d3 = body[j].g_mass / dist3[j][i];
-            /*@Todo Here I probably lost signs, please check */
             gx -= dist_x[j][i] * gm_d3;
             gy -= dist_y[j][i] * gm_d3;
             gz -= dist_z[j][i] * gm_d3;
         }
         for (int j = i + 1; j < body.length; j++) {
             double gm_d3 = body[j].g_mass / dist3[i][j];
-            /*@Todo Here I probably lost signs, please check */
             gx += dist_x[i][j] * gm_d3;
             gy += dist_y[i][j] * gm_d3;
             gz += dist_z[i][j] * gm_d3;
@@ -146,14 +144,12 @@ public class Constellation {
         gz = 0;
         for (int j = 0; j < i; j++) {
             double gm_d3Swc = (body[j].g_mass / dist3[j][i]) * (1 + (body[j].g_mass) / (dist[j][i] * C2));
-            /*@Todo Here I probably lost signs, please check */
             gx -= dist_x[j][i] * gm_d3Swc;
             gy -= dist_y[j][i] * gm_d3Swc;
             gz -= dist_z[j][i] * gm_d3Swc;
         }
         for (int j = i + 1; j < body.length; j++) {
-            double gm_d3Swc = (body[j].g_mass / dist3[i][j]) * (1 + (body[j].g_mass) / (dist[j][i] * C2));
-            /*@Todo Here I probably lost signs, please check */
+            double gm_d3Swc = (body[j].g_mass / dist3[i][j]) * (1 + (body[j].g_mass) / (dist[i][j] * C2));
             gx += dist_x[i][j] * gm_d3Swc;
             gy += dist_y[i][j] * gm_d3Swc;
             gz += dist_z[i][j] * gm_d3Swc;
@@ -164,7 +160,7 @@ public class Constellation {
         calculateDistances();
         for (int i = 0; i < body.length; i++) {
             calculateGravity(i);
-            body[i].addGravity(gx, gy, gx);
+            body[i].addGravity(gx, gy, gz);
         }
     }
 
@@ -190,8 +186,7 @@ public class Constellation {
             body[i].vx += gx * deltaTime + (gx - body[i].gx) * delT_2;
             body[i].vy += gy * deltaTime + (gy - body[i].gy) * delT_2;
             body[i].vz += gz * deltaTime + (gz - body[i].gz) * delT_2;
-
-            body[i].addGravity(gx, gy, gx);
+            body[i].addGravity(gx, gy, gz);
         }
     }
 
@@ -213,15 +208,7 @@ public class Constellation {
             body[i].vx += gx * deltaTime;
             body[i].vy += gy * deltaTime;
             body[i].vz += gz * deltaTime;
-
-            body[i].addGravity(gx, gy, gx);
-            /*
-            if (i == 1) {
-                double d = Math.sqrt(body[i].x * body[i].x + body[i].y * body[i].y + body[i].z * body[i].z);
-                double g = Math.sqrt(gx * gx + gy * gy + gz * gz);
-                System.out.println(String.format("x:%f  y:%f  d:%f g:%f ", body[i].x, body[i].y, d, g));
-            }
-             */
+            body[i].addGravity(gx, gy, gz);
         }
 
     }
@@ -249,8 +236,7 @@ public class Constellation {
             body[i].vx += gx * deltaTime + (gx - body[i].gx) * delT_2;
             body[i].vy += gy * deltaTime + (gy - body[i].gy) * delT_2;
             body[i].vz += gz * deltaTime + (gz - body[i].gz) * delT_2;
-
-            body[i].addGravity(gx, gy, gx);
+            body[i].addGravity(gx, gy, gz);
         }
     }
 
@@ -274,7 +260,7 @@ public class Constellation {
             body[i].vy += gy * deltaTime;
             body[i].vz += gz * deltaTime;
 
-            body[i].addGravity(gx, gy, gx);
+            body[i].addGravity(gx, gy, gz);
         }
     }
 

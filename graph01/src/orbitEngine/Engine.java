@@ -31,8 +31,8 @@ public class Engine {
 
     public void run(int stepsByGraph) {
         for (int i = 0; i < stepsByGraph; i++) {
-            constellation.step_basic(stepTime);
-            //constellation.step_jerk(stepTime);
+            //constellation.step_basic(stepTime);
+            constellation.step_jerk(stepTime);
             //constellation.step_basic_Schwarzschild(stepTime);
             //constellation.step_jerk_Schwarzschild(stepTime);
         }

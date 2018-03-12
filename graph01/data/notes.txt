@@ -1,0 +1,18 @@
+Notes: 
+1) Synchronized List vs CopyOnWriteArrayList
+    http://www.java67.com/2015/06/difference-between-synchronized-arraylist-and-copyOnWriteArrayList-java.html
+    Test 1e6 loops to compare, the best was (a)
+  -CopyOnWriteArrayList:
+    a)  CopyOnWriteArrayList<Point> proyectionPointList = new CopyOnWriteArrayList<>();
+        1844459468ns
+  -SinchronizedList:
+    b)  List<Point> proyectionPointList = Collections.synchronizedList(new ArrayList<Point>()); ...
+        synchronized (grBody.orbit.proyectionPointList) {
+        Iterator<Point> iter = grBody.orbit.proyectionPointList.iterator();
+        while (iter.hasNext()) { Point orbitPoint = iter.next(); ... }
+        2980145022ns
+    c)  List<Point> proyectionPointList = Collections.synchronizedList(new ArrayList<Point>()); ...
+        synchronized (grBody.orbit.proyectionPointList) {
+        for (Point orbitPoint : grBody.orbit.proyectionPointList) { ... }
+        2952353882ns
+        

@@ -20,14 +20,16 @@ public class main {
     private static Engine eng;
 
     public static void main(String[] args) {
+        final long start = System.nanoTime();
         grConstellation = new GraphConstellation();
         eng = new Engine(grConstellation, "constellation.txt");
         screen = new GraphScreen();
-        for (int i = 0; i < 600; i++) {
+        for (int i = 0; i < 1000; i++) {
             for (int j = 0; j < 10; j++) {
                 eng.run(1000);
             }
             screen.updateConstellation(grConstellation);
         }
+        System.out.print(System.nanoTime() - start);
     }
 }
