@@ -98,7 +98,7 @@ public class GraphScreen extends JComponent {
 
         // TODO code application logic here
         JFrame testFrame = new JFrame();
-        testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        testFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         GraphScreen comp = this;
         comp.setPreferredSize(new Dimension(screenWidth, screenHeight));
 
@@ -112,6 +112,7 @@ public class GraphScreen extends JComponent {
         buttonsPanel.add(resetButton);
         buttonsPanel.add(inButton);
         buttonsPanel.add(outButton);
+
         testFrame.getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
         centerButton.addActionListener(new ActionListener() {
             @Override

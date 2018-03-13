@@ -13,7 +13,7 @@ public class GraphConstellation {
     public int lim_right = 0;
     public int lim_radius = 0;
     /*@Todo manage point of view reference to transform */
- /*@Todo possible we nedd manage double database to let us rotate*/
+ /*@Todo possible we need manage double database to let us rotate*/
     public double ref_x = 1;
     public double ref_y = 1;
     public double ref_z = 0;
@@ -22,7 +22,10 @@ public class GraphConstellation {
     GraphBody[] gBody;
     double scale = 1.3e-10;
 
+    GraphRotation rotation = new GraphRotation();
+
     public GraphConstellation() {
+        rotation.addRotation(0, 0, 0);
     }
 
     public void initConstellation(Body[] body) {
@@ -71,7 +74,7 @@ public class GraphConstellation {
         g2d.drawOval(x - radius, y - radius, diameter, diameter);
     }
 
-    /*@Todo add re-scale comands*/
+    /*@Todo add re-scale commands*/
  /*@Todo calculate screen limits with lim_radius pad */
  /*@Todo add methods to synchronize the orbit xyz-double with the proyection: xi,yi*/
     void paintConstellation(Graphics2D g2d) {

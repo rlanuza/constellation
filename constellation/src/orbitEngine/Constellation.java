@@ -208,7 +208,7 @@ public class Constellation {
             body[i].vx += gx * deltaTime;
             body[i].vy += gy * deltaTime;
             body[i].vz += gz * deltaTime;
-            body[i].addGravity(gx, gy, gz);
+            //body[i].addGravity(gx, gy, gz);
         }
 
     }

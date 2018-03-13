@@ -10,3 +10,5 @@
 /graph01/doc/Constellation.eap
 /graph01/build/
 /graph01/doc/*.ldb
+/constellation/nbproject/private/
+/constellation/build/
