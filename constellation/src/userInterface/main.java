@@ -15,7 +15,7 @@ import orbitEngine.Engine;
 public class main {
 
     private static GraphScreen screen;
-    private static Engine eng;
+    public static Engine eng;
 
     public static void main(String[] args) {
         final long start = System.nanoTime();
@@ -24,8 +24,8 @@ public class main {
         eng = new Engine(screen.getGraphConstellation(), "constellation.txt");
 
         for (int i = 0; i < 100000; i++) {
-            for (int j = 0; j < 10; j++) {
-                eng.run(2000);
+            for (int j = 0; j < 2; j++) {
+                eng.run(21600);
             }
             screen.updateConstellation();
         }

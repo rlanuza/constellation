@@ -2,6 +2,7 @@ package graphEngine;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -12,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import orbitEngine.Engine;
 
 /**
  *
@@ -71,9 +73,12 @@ public class GraphScreen extends JComponent {
         double anchorX = screenWidth / 2;
         double anchorY = screenHeight / 2;
 
-        g2d.translate(anchorX, anchorY);
-        ///g2d.scale(zoom, zoom);
         if (gc != null) {
+            g.setFont(new Font("Courier New", Font.BOLD, 24));
+            g.drawString(Engine.dateString(), 10, 24);
+            g.setFont(new Font("Courier New", Font.PLAIN, 12));
+            g2d.translate(anchorX, anchorY);
+            ///g2d.scale(zoom, zoom);
             gc.paintConstellation(g2d);
         }
     }

@@ -76,17 +76,19 @@ public class GraphConstellation {
         if (grBody != null) {
             for (GraphBody grBody : grBody) {
                 g2d.setColor(grBody.color);
-                int x0 = grBody.orbit.proyectionPointList.get(0).x;
-                int y0 = grBody.orbit.proyectionPointList.get(0).y;
-                for (Point orbitPoint : grBody.orbit.proyectionPointList) {
-                    int x1 = orbitPoint.x;
-                    int y1 = orbitPoint.y;
-                    g2d.drawLine(x0, y0, x1, y1);
-                    x0 = x1;
-                    y0 = y1;
+                if (!grBody.orbit.proyectionPointList.isEmpty()) {
+                    int x0 = grBody.orbit.proyectionPointList.get(0).x;
+                    int y0 = grBody.orbit.proyectionPointList.get(0).y;
+                    for (Point orbitPoint : grBody.orbit.proyectionPointList) {
+                        int x1 = orbitPoint.x;
+                        int y1 = orbitPoint.y;
+                        g2d.drawLine(x0, y0, x1, y1);
+                        x0 = x1;
+                        y0 = y1;
+                    }
+                    drawCircle(g2d, x0, y0, grBody.radius_i);
+                    g2d.drawString(grBody.name, x0, y0);
                 }
-                drawCircle(g2d, x0, y0, grBody.radius_i);
-                g2d.drawString(grBody.name, x0, y0);
             }
         }
     }
