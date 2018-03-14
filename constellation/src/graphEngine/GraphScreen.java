@@ -19,48 +19,32 @@ import javax.swing.JPanel;
  */
 public class GraphScreen extends JComponent {
 
-    private double zoom = 1.0;
     private int zoomCenterX = 0;
     private int zoomCenterY = 0;
     public static int screenWidth = 2000;
     public static int screenHeight = 1200;
 
-    private double percentage = 0.5;
     private GraphConstellation gc;
 
     public GraphConstellation getGraphConstellation() {
         return this.gc;
     }
 
-    public void zoomIn() {
-        zoom += percentage;
-        if (zoom > 10000.0) {
-            zoom = 10000.0;
-        }
+    synchronized public void zoomIn(int zcX, int zcY) {
+        zoomCenterX = zcX;
+        zoomCenterY = zcY;
+        gc.rescaleGrConstellation(2);
         repaint();
     }
 
-    public void zoomOut() {
-        zoom -= percentage;
-        if (zoom < 0.0001) {
-            zoom = 0.0001;
-        }
+    synchronized public void zoomOut(int zcX, int zcY) {
+        zoomCenterX = zcX;
+        zoomCenterY = zcY;
+        gc.rescaleGrConstellation(.5);
         repaint();
     }
 
-    public void zoomIn(int zcX, int zcY) {
-        zoomCenterX = zcX;
-        zoomCenterY = zcY;
-        zoomIn();
-    }
-
-    public void zoomOut(int zcX, int zcY) {
-        zoomCenterX = zcX;
-        zoomCenterY = zcY;
-        zoomOut();
-    }
-
-    public void updateConstellation() {
+    synchronized public void updateConstellation() {
         int width = gc.lim_right - gc.lim_left;
         int height = gc.lim_bottom - gc.lim_top;
 //        if (width > screenWidth) {
@@ -88,7 +72,7 @@ public class GraphScreen extends JComponent {
         double anchorY = screenHeight / 2;
 
         g2d.translate(anchorX, anchorY);
-        g2d.scale(zoom, zoom);
+        ///g2d.scale(zoom, zoom);
         if (gc != null) {
             gc.paintConstellation(g2d);
         }
@@ -122,20 +106,19 @@ public class GraphScreen extends JComponent {
         resetButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                zoom = 1.0;
                 repaint();
             }
         });
         inButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                comp.zoomIn();
+                comp.zoomIn(0, 0);
             }
         });
         outButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                comp.zoomOut();
+                comp.zoomOut(0, 0);
             }
         });
 

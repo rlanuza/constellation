@@ -25,7 +25,7 @@ public class main {
 
         for (int i = 0; i < 100000; i++) {
             for (int j = 0; j < 10; j++) {
-                eng.run(1000);
+                eng.run(2000);
             }
             screen.updateConstellation();
         }

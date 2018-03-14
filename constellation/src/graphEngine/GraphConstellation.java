@@ -3,7 +3,6 @@ package graphEngine;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import orbitEngine.Body;
-import orbitEngine.Position;
 
 public class GraphConstellation {
 
@@ -11,7 +10,6 @@ public class GraphConstellation {
     public int lim_bottom = 0;
     public int lim_left = 0;
     public int lim_right = 0;
-    public int lim_radius = 0;
     /*@Todo manage point of view reference to transform */
  /*@Todo possible we need manage double database to let us rotate*/
     public double ref_x = 1;
@@ -19,7 +17,7 @@ public class GraphConstellation {
     public double ref_z = 0;
 
     // Orbit list points
-    GraphBody[] gBody;
+    GraphBody[] grBody;
     double scale = 1.3e-10;
 
     GraphRotation rotation = new GraphRotation();
@@ -29,31 +27,20 @@ public class GraphConstellation {
     }
 
     public void initConstellation(Body[] body) {
-        gBody = new GraphBody[body.length];
-        int r;
+        grBody = new GraphBody[body.length];
         for (int i = 0; i < body.length; i++) {
-            r = (int) (body[i].getRadius() * scale);
-            if (lim_radius < r) {
-                lim_radius = r;
-            }
-            gBody[i] = new GraphBody();
-            gBody[i].name = body[i].getName();
-            gBody[i].radius = r;
-            gBody[i].color = body[i].getColor();
-            gBody[i].orbit = new GraphOrbit();
+            grBody[i] = new GraphBody();
+            grBody[i].name = body[i].getName();
+            grBody[i].radius = body[i].getRadius();
+            grBody[i].radius_i = (int) (grBody[i].radius * scale) + 1;
+            grBody[i].color = body[i].getColor();
+            grBody[i].orbit = new GraphOrbit();
         }
     }
 
-    public void updateGrConstellation(Body[] body) {
-        int ix, iy;
+    synchronized public void updateGrConstellation(Body[] body) {
         for (int i = 0; i < body.length; i++) {
-            Position p_xyz = new Position();
-            p_xyz.x = body[i].x;
-            p_xyz.y = body[i].y;
-            p_xyz.z = body[i].z;
-
-            ix = (int) (p_xyz.x * scale);
-            iy = (int) -(p_xyz.y * scale);
+            /*
             if (iy > lim_top) {
                 lim_top = iy;
             } else if (lim_bottom > iy) {
@@ -64,8 +51,16 @@ public class GraphConstellation {
             } else if (lim_left > iy) {
                 lim_left = iy;
             }
-            Point p = new Point(ix, iy);
-            gBody[i].orbit.addOrbitPoint(p, p_xyz);
+             */
+            grBody[i].orbit.addOrbitPoint(scale, body[i]);
+        }
+    }
+
+    synchronized public void rescaleGrConstellation(double zoom) {
+        scale *= zoom;
+        for (GraphBody grB : grBody) {
+            grB.radius_i = (int) (grB.radius * scale) + 1;
+            grB.orbit.rescaleOrbit(scale);
         }
     }
 
@@ -78,8 +73,8 @@ public class GraphConstellation {
  /*@Todo calculate screen limits with lim_radius pad */
  /*@Todo add methods to synchronize the orbit xyz-double with the proyection: xi,yi*/
     void paintConstellation(Graphics2D g2d) {
-        if (gBody != null) {
-            for (GraphBody grBody : gBody) {
+        if (grBody != null) {
+            for (GraphBody grBody : grBody) {
                 g2d.setColor(grBody.color);
                 int x0 = grBody.orbit.proyectionPointList.get(0).x;
                 int y0 = grBody.orbit.proyectionPointList.get(0).y;
@@ -90,7 +85,7 @@ public class GraphConstellation {
                     x0 = x1;
                     y0 = y1;
                 }
-                drawCircle(g2d, x0, y0, grBody.radius);
+                drawCircle(g2d, x0, y0, grBody.radius_i);
                 g2d.drawString(grBody.name, x0, y0);
             }
         }
