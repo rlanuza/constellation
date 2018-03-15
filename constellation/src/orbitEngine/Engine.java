@@ -39,10 +39,15 @@ public class Engine {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/LL/dd-HH:mm:ss", Locale.ENGLISH);
         return dateTime.format(formatter);
     }
+    int k = 0;
 
     public void run(int stepsByGraph) {
         seconds += stepTime * stepsByGraph;
+
         for (int i = 0; i < stepsByGraph; i++) {
+            for (int j = 0; j < 10000000; j++) {
+                k = j;
+            }
             //constellation.step_basic(stepTime);
             constellation.step_jerk(stepTime);
             //constellation.step_basic_Schwarzschild(stepTime);
