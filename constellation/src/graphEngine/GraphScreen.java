@@ -27,6 +27,7 @@ public class GraphScreen extends JComponent {
     private double anchorX;
     private double anchorY;
     private double zoom = 1;
+    private double ZOOM_FACTOR = 1.25;
 
     private GraphConstellation gc;
 
@@ -35,13 +36,16 @@ public class GraphScreen extends JComponent {
     }
 
     synchronized public void zoom(double factor, int zoomCenterX, int zoomCenterY) {
-        System.out.println("  zoom:" + zoom);
-        System.out.println("  anchorX:" + anchorX + ", zoomCenterX:" + zoomCenterX);
         // Ok without zoom: anchorX += (screenWidth / 2) - zoomCenterX;
         // Ok without zoom: anchorY += (screenHeight / 2) - zoomCenterY;
         zoom *= factor;
-        anchorX = anchorX + ((screenWidth / 2) - zoomCenterX) / factor;
-        anchorY = anchorY + ((screenHeight / 2) - zoomCenterY) / factor;
+        System.out.println("  zoom:" + zoom);
+        System.out.println("  anchorX:" + anchorX + ", zoomCenterX:" + zoomCenterX);
+
+        anchorX = anchorX + ((screenWidth / 2) - zoomCenterX) * zoom;
+        //anchorX = anchorX + (screenWidth / 2) * zoom;
+        anchorY = anchorY + ((screenHeight / 2) - zoomCenterY) * zoom;
+        //anchorY = anchorY + (screenWidth / 2) * zoom;
         System.out.println("  new anchorX:" + anchorX);
         gc.rescaleGrConstellation(zoom);
         repaint();
@@ -56,8 +60,8 @@ public class GraphScreen extends JComponent {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        screenWidth = this.getWidth();
-        screenHeight = this.getHeight();
+        ///screenWidth = this.getWidth();
+        ///screenHeight = this.getHeight();
 
         if (gc != null) {
             g.setFont(new Font("Courier New", Font.BOLD, 24));
@@ -116,13 +120,13 @@ public class GraphScreen extends JComponent {
         inButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                comp.zoom(2, (int) anchorX, (int) anchorY);
+                comp.zoom(ZOOM_FACTOR, (int) anchorX, (int) anchorY);
             }
         });
         outButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                comp.zoom(0.5, (int) anchorX, (int) anchorY);
+                comp.zoom(1 / ZOOM_FACTOR, (int) anchorX, (int) anchorY);
             }
         });
 
@@ -134,14 +138,14 @@ public class GraphScreen extends JComponent {
                 }
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     System.out.println("Left Click!: " + e.getClickCount());
-                    comp.zoom(2, e.getX(), e.getY());
+                    comp.zoom(ZOOM_FACTOR, e.getX(), e.getY());
                 }
                 if (e.getButton() == MouseEvent.BUTTON2) {
                     System.out.println("Middle Click!: " + e.getClickCount());
                 }
                 if (e.getButton() == MouseEvent.BUTTON3) {
                     System.out.println("Right Click!: " + e.getClickCount());
-                    comp.zoom(0.5, e.getX(), e.getY());
+                    comp.zoom(1 / ZOOM_FACTOR, e.getX(), e.getY());
                 }
             }
         });
