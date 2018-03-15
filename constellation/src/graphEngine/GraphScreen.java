@@ -40,8 +40,8 @@ public class GraphScreen extends JComponent {
         // Ok without zoom: anchorX += (screenWidth / 2) - zoomCenterX;
         // Ok without zoom: anchorY += (screenHeight / 2) - zoomCenterY;
         zoom *= factor;
-        anchorX = anchorX + ((screenWidth / 2) - zoomCenterX) / factor;
-        anchorY = anchorY + ((screenHeight / 2) - zoomCenterY) / factor;
+        anchorX = anchorX + ((screenWidth / 2) - zoomCenterX) * zoom;
+        anchorY = anchorY + ((screenHeight / 2) - zoomCenterY) * zoom;
         System.out.println("  new anchorX:" + anchorX);
         gc.rescaleGrConstellation(zoom);
         repaint();
