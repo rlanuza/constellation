@@ -1,6 +1,7 @@
 package graphEngine;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -26,8 +27,8 @@ public class GraphScreen extends JComponent {
     public static int screenHeight;
     private double anchorX;
     private double anchorY;
-    private double zoom = 1;
-    private double ZOOM_FACTOR = 1.25;
+    private double zoom = 1.0;
+    private double ZOOM_FACTOR = 1.5;
 
     private GraphConstellation gc;
 
@@ -35,23 +36,25 @@ public class GraphScreen extends JComponent {
         return this.gc;
     }
 
-    private void zoom(double factor) {
-        zoom(factor, screenWidth / 2, screenHeight / 2);
+    private void center(double zoomCenterX, double zoomCenterY) {
+
+        System.out.println("  PAN anchorX:" + anchorX + ", zoomCenterX:" + zoomCenterX);
+        System.out.println("  PAN anchorY:" + anchorY + ", zoomCenterX:" + zoomCenterY);
+        anchorX += (screenWidth / 2) - zoomCenterX;
+        anchorY += (screenHeight / 2) - zoomCenterY;
+        System.out.println("  PAN new anchorX:" + anchorX + ", anchorY:" + anchorY);
+        repaint();
     }
 
-    synchronized private void zoom(double factor, int zoomCenterX, int zoomCenterY) {
+    synchronized private void zoom(double factor) {
         zoom *= factor;
         gc.rescaleGrConstellation(zoom);
-        System.out.println("  zoom:" + zoom);
-        System.out.println("  anchorX:" + anchorX + ", zoomCenterX:" + zoomCenterX);
-        //anchorX += (screenWidth / 2) - zoomCenterX; // Ok without zoom
-        //anchorY += (screenHeight / 2) - zoomCenterY;
-        anchorX += ((screenWidth / 2.0) - zoomCenterX) * (1.0 - zoom);
-        anchorY += ((screenHeight / 2.0) - zoomCenterY) * (1.0 - zoom);
-
-        //anchorX = zoomCenterX;  // Moves the center to the mouse click and zoom
-        //anchorY = zoomCenterY;
-        System.out.println("  new anchorX:" + anchorX);
+        System.out.println("  zoom:" + zoom + ", Factor:" + factor);
+        System.out.println("  Z anchorX:" + anchorX);
+        System.out.println("  Z anchorY:" + anchorY);
+        anchorX += (anchorX - (screenWidth / 2)) * (zoom - 1.0);
+        anchorY += (anchorY - (screenHeight / 2)) * (zoom - 1.0);
+        System.out.println("  Z new anchorX:" + anchorX + ", anchorY:" + anchorY);
 
         repaint();
     }
@@ -68,15 +71,19 @@ public class GraphScreen extends JComponent {
         ///screenWidth = this.getWidth();
         ///screenHeight = this.getHeight();
 
+        g.setColor(Color.LIGHT_GRAY);
+        g.drawLine(0, (screenHeight / 2), screenWidth, (screenHeight / 2));
+        g.drawLine((screenWidth / 2), 0, (screenWidth / 2), screenHeight);
+        g.setColor(Color.MAGENTA);
+        g.drawLine(0, (int) anchorY, screenWidth, (int) anchorY);
+        g.drawLine((int) anchorX, 0, (int) anchorX, screenHeight);
+
         if (gc != null) {
+            g.setColor(Color.RED);
             g.setFont(new Font("Courier New", Font.BOLD, 24));
             g.drawString(Engine.dateString(), 10, 24);
             g.setFont(new Font("Verdana", Font.PLAIN, 12));
             Graphics2D g2d = (Graphics2D) g;
-            //anchorX = anchorX + ((screenWidth / 2) - zoomCenterX) * zoom;
-            //zoomCenterX = screenWidth / 2;
-            //anchorY = anchorY + ((screenHeight / 2) - zoomCenterY) * zoom;
-            //zoomCenterY = screenHeight / 2;
             g2d.translate(anchorX, anchorY);
             ///g2d.scale(zoom, zoom);
             gc.paintConstellation(g2d);
@@ -90,12 +97,13 @@ public class GraphScreen extends JComponent {
         screenWidth = screenSize.width * 1 / 2;
         anchorX = screenWidth / 2;
         anchorY = screenHeight / 2;
-        JFrame testFrame = new JFrame();
-        testFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JFrame screen = new JFrame();
+        screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         GraphScreen comp = this;
         comp.setPreferredSize(new Dimension(screenWidth, screenHeight));
+        screen.setResizable(false);
 
-        testFrame.getContentPane().add(comp, BorderLayout.CENTER);
+        screen.getContentPane().add(comp, BorderLayout.CENTER);
         JPanel buttonsPanel = new JPanel();
         JButton centerButton = new JButton("C");
         JButton resetButton = new JButton("R");
@@ -106,7 +114,7 @@ public class GraphScreen extends JComponent {
         buttonsPanel.add(inButton);
         buttonsPanel.add(outButton);
 
-        testFrame.getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
+        screen.getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
         centerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -131,7 +139,7 @@ public class GraphScreen extends JComponent {
         outButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                comp.zoom(1 / ZOOM_FACTOR);
+                comp.zoom(1.0 / ZOOM_FACTOR);
             }
         });
 
@@ -143,20 +151,20 @@ public class GraphScreen extends JComponent {
                 }
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     System.out.println("Left Click!: " + e.getClickCount());
-                    comp.zoom(1, e.getX(), e.getY());
+                    comp.center(e.getX(), e.getY());
                 }
                 if (e.getButton() == MouseEvent.BUTTON2) {
                     System.out.println("Middle Click!: " + e.getClickCount());
                 }
                 if (e.getButton() == MouseEvent.BUTTON3) {
                     System.out.println("Right Click!: " + e.getClickCount());
-                    comp.zoom(1 / 1, e.getX(), e.getY());
+                    comp.center(e.getX(), e.getY());
                 }
             }
         });
 
-        testFrame.pack();
-        testFrame.setVisible(true);
+        screen.pack();
+        screen.setVisible(true);
 
         gc = new GraphConstellation();
     }

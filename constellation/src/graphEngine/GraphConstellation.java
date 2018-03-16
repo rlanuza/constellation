@@ -59,6 +59,7 @@ public class GraphConstellation {
 
     synchronized public void rescaleGrConstellation(double zoom) {
         scale = SCALE * zoom;
+        System.out.println("  scale/SCALE:" + scale / SCALE);
         for (GraphBody grB : grBody) {
             grB.radius_i = (int) (grB.radius * scale) + 1;
             grB.orbit.rescaleOrbit(scale);
