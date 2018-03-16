@@ -36,6 +36,10 @@ public class Constellation {
         this.graphConstellation = graphConstellation;
     }
 
+    Constellation() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public boolean loadConstellation(String constelationStr) {
         // Load all constellation data from file
         String[] lines = constelationStr.split("\\r?\\n|\\r");;

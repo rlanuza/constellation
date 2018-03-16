@@ -135,4 +135,16 @@ public class ConstellationTest {
         System.out.println("initGravity");
         instance.initGravity();
     }
+
+    /**
+     * Test of pushToGraphic method, of class Constellation.
+     */
+    @Test
+    public void testPushToGraphic() {
+        System.out.println("pushToGraphic");
+        Constellation instance = null;
+        instance.pushToGraphic();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
 }
