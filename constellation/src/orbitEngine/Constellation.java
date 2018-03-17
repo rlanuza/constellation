@@ -8,6 +8,7 @@ package orbitEngine;
 import graphEngine.GraphConstellation;
 import java.util.ArrayList;
 import java.util.logging.Logger;
+import userInterface.Parameters;
 
 public class Constellation {
 
@@ -32,22 +33,56 @@ public class Constellation {
 
     GraphConstellation graphConstellation;
 
-    Constellation(GraphConstellation graphConstellation) {
-        this.graphConstellation = graphConstellation;
-    }
-
     Constellation() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public boolean loadConstellation(String constelationStr) {
+    public void link(GraphConstellation graphConstellation) {
+        this.graphConstellation = graphConstellation;
+        // Prepare the graph info
+        graphConstellation.initConstellation(body);
+
+    }
+
+    private long getLong(String line, long defaultValue) {
+        String fields[] = line.split(":|#|,|;");
+        if (fields.length > 1) {
+            return Long.valueOf(fields[1].trim());
+        } else {
+            return defaultValue;
+        }
+    }
+
+    private double getDouble(String line, double defaultValue) {
+        String fields[] = line.split(":|#|,|;");
+        if (fields.length > 1) {
+            return Double.valueOf(fields[1].trim());
+        } else {
+            return defaultValue;
+        }
+    }
+
+    public void loadConstellation(String constelationStr) {
         // Load all constellation data from file
         String[] lines = constelationStr.split("\\r?\\n|\\r");;
-        for (String line : lines) {
-            if (line.startsWith("#")) {
-                //LOG.info(String.format("Comment: %s", line));
+        for (String lineRaw : lines) {
+            String line = lineRaw.trim();
+            if ((line.length() == 0) || line.startsWith("#")) {
+                // This is a comment
+            } else if (line.startsWith("STEP_TIME:")) {
+                Parameters.STEP_TIME = getDouble(line, 60.0);
+            } else if (line.startsWith("SIMULATION_STEPS:")) {
+                Parameters.SIMULATION_STEPS = getLong(line, 1440 * 10000);
+            } else if (line.startsWith("STEPS_PER_PLOT:")) {
+                Parameters.STEPS_PER_PLOT = getLong(line, 1440);
+            } else if (line.startsWith("START_EPOCH_TIME:")) {
+                Parameters.START_EPOCH_TIME = getLong(line, 1520294400); //Epoc of 2018-Mar-06 00:00:00.0000 TDB)
+            } else if (line.startsWith("CALCULUS_METHOD:")) {
+                Parameters.CALCULUS_METHOD = (int) getLong(line, 0);
+            } else if (line.startsWith("METERS_PER_PIXEL:")) {
+                Parameters.METERS_PER_PIXEL = getDouble(line, 1.3e-10);
+            } else if (line.startsWith("MAX_ORBIT_POINTS:")) {
+                Parameters.MAX_ORBIT_POINTS = getLong(line, 1000);
             } else {
-                //LOG.info(String.format("Body:    %s", line));
                 String[] datas = line.split(",");
                 if (datas.length == ASTRO_STRING_FIELDS) {
                     String name = datas[0].trim();
@@ -62,8 +97,7 @@ public class Constellation {
                     Body new_body = new Body(name, mass, diameter, x, y, z, vx, vy, vz);
                     bodyList.add(new_body);
                 } else {
-                    LOG.warning(String.format("loadConstellation: The number of parameters is not: (%d)", ASTRO_STRING_FIELDS));
-                    return false;
+                    System.out.println("Line not processed: " + line);
                 }
             }
         }
@@ -75,12 +109,8 @@ public class Constellation {
         dist_y = new double[bodyList.size()][bodyList.size()];
         dist_z = new double[bodyList.size()][bodyList.size()];
 
-        // Prepare the graph info
-        graphConstellation.initConstellation(body);
-
         // Calculate the initial gravity of the system
         initGravity();
-        return true;
     }
 
     void calculateDistances() {

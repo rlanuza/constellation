@@ -20,13 +20,13 @@ public class main {
     public static void main(String[] args) {
         final long start = System.nanoTime();
 
-        screen = new GraphScreen();
-        eng = new Engine(screen.getGraphConstellation(), "constellation.txt");
+        eng = new Engine("constellation.txt");
+        screen = new GraphScreen(eng);
+        eng.link(screen.getGraphConstellation());
 
-        for (int i = 0; i < 10000; i++) {
-            for (int j = 0; j < 2; j++) {
-                eng.run(1440);
-            }
+        long simulationSteps = Parameters.SIMULATION_STEPS;
+        for (long i = 0; i < simulationSteps; i++) {
+            eng.run();
             screen.updateConstellation();
         }
         System.out.print(System.nanoTime() - start);

@@ -5,16 +5,16 @@ import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 import orbitEngine.Body;
 import orbitEngine.Position;
+import userInterface.Parameters;
 
 public class GraphOrbit {
 
-    static final int MAX_POINTS = 10000;
     // Orbit list points
     CopyOnWriteArrayList<Point> proyectionPointList = new CopyOnWriteArrayList<>();
     ArrayList<Position> point3d = new ArrayList<>();
 
     synchronized public void addOrbitPoint(double scale, Body body) {
-        if (point3d.size() > MAX_POINTS) {
+        if (point3d.size() > Parameters.MAX_ORBIT_POINTS) {
             point3d.remove(0);
             proyectionPointList.remove(0);
         }

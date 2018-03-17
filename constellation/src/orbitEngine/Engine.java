@@ -13,24 +13,32 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import userInterface.Parameters;
 
 public class Engine {
 
-    private double stepTime = 60;
-    static private long seconds = 1520294400; //Epoc of 2018-Mar-06 00:00:00.0000 TDB
+    private double stepTime;
+    static private long seconds;
+    private long steepsPerPlot;
 
     private final Constellation constellation;
 
-    public Engine(GraphConstellation graphConstellation, String constellationFile) {
-        constellation = new Constellation(graphConstellation);
+    public Engine(String constellationFile) {
+        constellation = new Constellation();
         try {
             String contents = new String(Files.readAllBytes(Paths.get(constellationFile)));
             constellation.loadConstellation(contents);
         } catch (IOException ex) {
-            Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error reading: " + constellationFile);
+            System.exit(1);
         }
+        stepTime = Parameters.STEP_TIME;
+        seconds = Parameters.START_EPOCH_TIME;
+        steepsPerPlot = Parameters.STEPS_PER_PLOT;
+    }
+
+    public void link(GraphConstellation graphConstellation) {
+        constellation.link(graphConstellation);
         constellation.pushToGraphic();
     }
 
@@ -40,15 +48,30 @@ public class Engine {
         return dateTime.format(formatter);
     }
 
-    public void run(int stepsByGraph) {
-        seconds += stepTime * stepsByGraph;
-
-        for (int i = 0; i < stepsByGraph; i++) {
-            //constellation.step_basic(stepTime);
-            constellation.step_jerk(stepTime);
-            //constellation.step_basic_Schwarzschild(stepTime);
-            //constellation.step_jerk_Schwarzschild(stepTime);
-            //System.out.print("Izarbe es una petarda");
+    public void run() {
+        seconds += stepTime * steepsPerPlot;
+        switch (Parameters.CALCULUS_METHOD) {
+            case 0:
+                for (int i = 0; i < steepsPerPlot; i++) {
+                    constellation.step_basic(stepTime);
+                }
+                break;
+            case 1:
+                for (int i = 0; i < steepsPerPlot; i++) {
+                    constellation.step_jerk(stepTime);
+                }
+                break;
+            case 2:
+                for (int i = 0; i < steepsPerPlot; i++) {
+                    constellation.step_basic_Schwarzschild(stepTime);
+                }
+                break;
+            case 3:
+                for (int i = 0; i < steepsPerPlot; i++) {
+                    constellation.step_jerk_Schwarzschild(stepTime);
+                }
+                break;
+            default:
         }
         constellation.pushToGraphic();
     }

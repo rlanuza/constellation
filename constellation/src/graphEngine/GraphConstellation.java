@@ -3,6 +3,7 @@ package graphEngine;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import orbitEngine.Body;
+import userInterface.Parameters;
 
 public class GraphConstellation {
 
@@ -18,12 +19,14 @@ public class GraphConstellation {
 
     // Orbit list points
     GraphBody[] grBody;
-    final static double SCALE = 1.3e-10;
-    double scale = SCALE;
+    private double metersPerPixel;
+    private double scale;
 
     GraphRotation rotation = new GraphRotation();
 
     public GraphConstellation() {
+        metersPerPixel = Parameters.METERS_PER_PIXEL;
+        scale = metersPerPixel;
         rotation.addRotation(0, 0, 0);
     }
 
@@ -58,8 +61,8 @@ public class GraphConstellation {
     }
 
     synchronized public void rescaleGrConstellation(double zoom) {
-        scale = SCALE * zoom;
-        System.out.println("  scale/SCALE:" + scale / SCALE);
+        scale = metersPerPixel * zoom;
+        System.out.println("  scale/SCALE:" + scale / metersPerPixel);
         for (GraphBody grB : grBody) {
             grB.radius_i = (int) (grB.radius * scale) + 1;
             grB.orbit.rescaleOrbit(scale);

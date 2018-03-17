@@ -37,25 +37,16 @@ public class GraphScreen extends JComponent {
     }
 
     private void center(double zoomCenterX, double zoomCenterY) {
-
-        System.out.println("  PAN anchorX:" + anchorX + ", zoomCenterX:" + zoomCenterX);
-        System.out.println("  PAN anchorY:" + anchorY + ", zoomCenterX:" + zoomCenterY);
         anchorX += (screenWidth / 2) - zoomCenterX;
         anchorY += (screenHeight / 2) - zoomCenterY;
-        System.out.println("  PAN new anchorX:" + anchorX + ", anchorY:" + anchorY);
         repaint();
     }
 
     synchronized private void zoom(double factor) {
         zoom *= factor;
         gc.rescaleGrConstellation(zoom);
-        System.out.println("  zoom:" + zoom + ", Factor:" + factor);
-        System.out.println("  Z anchorX:" + anchorX);
-        System.out.println("  Z anchorY:" + anchorY);
-        anchorX += (anchorX - (screenWidth / 2)) * (zoom - 1.0);
-        anchorY += (anchorY - (screenHeight / 2)) * (zoom - 1.0);
-        System.out.println("  Z new anchorX:" + anchorX + ", anchorY:" + anchorY);
-
+        anchorX += (anchorX - (screenWidth / 2)) * (factor - 1.0);
+        anchorY += (anchorY - (screenHeight / 2)) * (factor - 1.0);
         repaint();
     }
 
@@ -74,7 +65,7 @@ public class GraphScreen extends JComponent {
         g.setColor(Color.LIGHT_GRAY);
         g.drawLine(0, (screenHeight / 2), screenWidth, (screenHeight / 2));
         g.drawLine((screenWidth / 2), 0, (screenWidth / 2), screenHeight);
-        g.setColor(Color.MAGENTA);
+        g.setColor(new Color(32, 178, 208));
         g.drawLine(0, (int) anchorY, screenWidth, (int) anchorY);
         g.drawLine((int) anchorX, 0, (int) anchorX, screenHeight);
 
@@ -90,8 +81,7 @@ public class GraphScreen extends JComponent {
         }
     }
 
-    public GraphScreen() {
-
+    public GraphScreen(Engine eng) {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         screenHeight = screenSize.height * 1 / 2;
         screenWidth = screenSize.width * 1 / 2;
@@ -105,17 +95,41 @@ public class GraphScreen extends JComponent {
 
         screen.getContentPane().add(comp, BorderLayout.CENTER);
         JPanel buttonsPanel = new JPanel();
-        JButton centerButton = new JButton("C");
         JButton resetButton = new JButton("R");
         JButton inButton = new JButton("+");
         JButton outButton = new JButton("-");
-        buttonsPanel.add(centerButton);
+
+        JButton goUpButton = new JButton("▲");
+        JButton goDownButton = new JButton("▼");
+        JButton goLeftButton = new JButton("◄");
+        JButton goRightButton = new JButton("►");
+
         buttonsPanel.add(resetButton);
         buttonsPanel.add(inButton);
         buttonsPanel.add(outButton);
 
+        buttonsPanel.add(goUpButton);
+        buttonsPanel.add(goDownButton);
+        buttonsPanel.add(goLeftButton);
+        buttonsPanel.add(goRightButton);
+
         screen.getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
-        centerButton.addActionListener(new ActionListener() {
+        goUpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+        goDownButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+        goLeftButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+        goRightButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
             }
@@ -167,5 +181,9 @@ public class GraphScreen extends JComponent {
         screen.setVisible(true);
 
         gc = new GraphConstellation();
+    }
+
+    private Color Color(int i, int i0, int i1) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
