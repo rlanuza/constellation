@@ -5,30 +5,55 @@ import orbitEngine.Position;
 public class GraphRotation {
 
     // Rotation
-    double x_rot;
-    double y_rot;
-    double z_rot;
+    private int x_steps = 0;
+    private int y_steps = 0;
+    private int z_steps = 0;
+    private double stepRadians = Math.PI / 18.0;
     // Precalculed coefficients
-    double sin_x_rot;
-    double cos_x_rot;
-    double sin_y_rot;
-    double cos_y_rot;
-    double sin_z_rot;
-    double cos_z_rot;
+    private double sin_x_rot;
+    private double cos_x_rot;
+    private double sin_y_rot;
+    private double cos_y_rot;
+    private double sin_z_rot;
+    private double cos_z_rot;
 
-    public void addRotation(double xRot, double yRot, double zRot) {
-        x_rot = xRot;
-        y_rot = yRot;
-        z_rot = zRot;
-        sin_x_rot = Math.sin(xRot);
-        cos_x_rot = Math.cos(xRot);
-        sin_y_rot = Math.sin(yRot);
-        cos_y_rot = Math.cos(yRot);
-        sin_z_rot = Math.sin(zRot);
-        cos_z_rot = Math.cos(zRot);
+    public void resetCoeficients() {
+        x_steps = 0;
+        y_steps = 0;
+        z_steps = 0;
+        updateCoeficients(0, 0, 0);
     }
 
-    public Position x_rotation(Position pos) {
+    public void updateCoeficients(int delta_xRot, int delta_yRot, int delta_zRot) {
+        x_steps += delta_xRot;
+        y_steps += delta_yRot;
+        z_steps += delta_zRot;
+        double x_rot = x_steps * stepRadians;
+        double y_rot = y_steps * stepRadians;
+        double z_rot = z_steps * stepRadians;
+        sin_x_rot = Math.sin(x_rot);
+        cos_x_rot = Math.cos(x_rot);
+        sin_y_rot = Math.sin(y_rot);
+        cos_y_rot = Math.cos(y_rot);
+        sin_z_rot = Math.sin(z_rot);
+        cos_z_rot = Math.cos(z_rot);
+    }
+
+    public Position rotatePosition(Position pos) {
+        Position newPos = pos;
+        if (x_steps != 0) {
+            newPos = x_rotation(newPos);
+        }
+        if (y_steps != 0) {
+            newPos = y_rotation(newPos);
+        }
+        if (z_steps != 0) {
+            newPos = z_rotation(newPos);
+        }
+        return newPos;
+    }
+
+    private Position x_rotation(Position pos) {
         Position pos2 = new Position();
         // Axis X
         // y' = y*cos q - z*sin q
@@ -40,7 +65,7 @@ public class GraphRotation {
         return pos2;
     }
 
-    public Position y_rotation(Position pos) {
+    private Position y_rotation(Position pos) {
         Position pos2 = new Position();
         // Axis Y
         //z' = z*cos q - x*sin q
@@ -52,7 +77,7 @@ public class GraphRotation {
         return pos2;
     }
 
-    public Position z_rotation(Position pos) {
+    private Position z_rotation(Position pos) {
         Position pos2 = new Position();
         //x' = x*cos q - y*sin q
         //y' = x*sin q + y*cos q

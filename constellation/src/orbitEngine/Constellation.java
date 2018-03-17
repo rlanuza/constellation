@@ -31,13 +31,14 @@ public class Constellation {
     private GraphConstellation graphConstellation;
 
     Constellation() {
+        int n = bodyList.size();
         // Now we'll generate array copies (faster) of the ArrayList
-        body = bodyList.toArray(new Body[bodyList.size()]);
-        dist = new double[bodyList.size()][bodyList.size()];
-        dist3 = new double[bodyList.size()][bodyList.size()];
-        dist_x = new double[bodyList.size()][bodyList.size()];
-        dist_y = new double[bodyList.size()][bodyList.size()];
-        dist_z = new double[bodyList.size()][bodyList.size()];
+        body = bodyList.toArray(new Body[n]);
+        dist = new double[n][n];
+        dist3 = new double[n][n];
+        dist_x = new double[n][n];
+        dist_y = new double[n][n];
+        dist_z = new double[n][n];
 
         // Calculate the initial gravity of the system
         initGravity();

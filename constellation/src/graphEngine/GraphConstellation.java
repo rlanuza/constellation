@@ -7,27 +7,17 @@ import userInterface.Parameters;
 
 public class GraphConstellation {
 
-    public int lim_top = 0;
-    public int lim_bottom = 0;
-    public int lim_left = 0;
-    public int lim_right = 0;
-    /*@Todo manage point of view reference to transform */
- /*@Todo It's possible that we need manage double database to let us rotate*/
-    public double ref_x = 1;
-    public double ref_y = 1;
-    public double ref_z = 0;
-
     // Orbit list points
     GraphBody[] grBody;
     private double metersPerPixel;
     private double scale;
 
-    GraphRotation rotation = new GraphRotation();
+    GraphRotation rotation;
 
-    public GraphConstellation() {
+    GraphConstellation(GraphRotation rotation) {
+        this.rotation = rotation;
         metersPerPixel = Parameters.METERS_PER_PIXEL;
         scale = metersPerPixel;
-        rotation.addRotation(0, 0, 0);
     }
 
     public void initConstellation(Body[] body) {
@@ -39,31 +29,26 @@ public class GraphConstellation {
             grBody[i].radius_i = (int) (grBody[i].radius * scale) + 1;
             grBody[i].color = body[i].getColor();
             grBody[i].orbit = new GraphOrbit();
+            grBody[i].orbit.rotation = rotation;
         }
     }
 
-    synchronized public void updateGrConstellation(Body[] body) {
+    public synchronized void updateGrConstellation(Body[] body) {
         for (int i = 0; i < body.length; i++) {
-            /*@Todo autoadjust screen option
-            if (iy > lim_top) {
-                lim_top = iy;
-            } else if (lim_bottom > iy) {
-                lim_bottom = iy;
-            }
-            if (iy > lim_right) {
-                lim_right = iy;
-            } else if (lim_left > iy) {
-                lim_left = iy;
-            }
-             */
             grBody[i].orbit.addOrbitPoint(scale, body[i]);
         }
     }
 
-    synchronized public void rescaleGrConstellation(double zoom) {
+    synchronized void rescaleGrConstellation(double zoom) {
         scale = metersPerPixel * zoom;
         for (GraphBody grB : grBody) {
             grB.radius_i = (int) (grB.radius * scale) + 1;
+            grB.orbit.rescaleOrbit(scale);
+        }
+    }
+
+    synchronized void rotateGrConstellation() {
+        for (GraphBody grB : grBody) {
             grB.orbit.rescaleOrbit(scale);
         }
     }

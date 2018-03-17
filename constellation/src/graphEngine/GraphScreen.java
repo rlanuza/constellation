@@ -31,6 +31,9 @@ public class GraphScreen extends JComponent {
     private double zoom = 1.0;
     private double ZOOM_FACTOR = 1.5;
 
+    /*@Todo manage point of view reference to transform */
+    private GraphRotation rotation;
+
     private GraphConstellation gc;
 
     public GraphConstellation getGraphConstellation() {
@@ -43,7 +46,7 @@ public class GraphScreen extends JComponent {
         repaint();
     }
 
-    synchronized private void zoom(double factor) {
+    private synchronized void zoom(double factor) {
         zoom *= factor;
         gc.rescaleGrConstellation(zoom);
         anchorX += (anchorX - (screenWidth / 2)) * (factor - 1.0);
@@ -51,18 +54,25 @@ public class GraphScreen extends JComponent {
         repaint();
     }
 
-    synchronized public void updateConstellation() {
-        //int width = gc.lim_right - gc.lim_left;
-        //int height = gc.lim_bottom - gc.lim_top;
+    private synchronized void pitch(int steps) {
+        rotation.updateCoeficients(steps, 0, 0);
+        gc.rotateGrConstellation();
+        repaint();
+    }
+
+    private synchronized void yaw(int steps) {
+        rotation.updateCoeficients(0, steps, 0);
+        gc.rotateGrConstellation();
+        repaint();
+    }
+
+    public synchronized void updateConstellation() {
         repaint();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        ///screenWidth = this.getWidth();
-        ///screenHeight = this.getHeight();
-
         g.setColor(Color.LIGHT_GRAY);
         g.drawLine(0, (screenHeight / 2), screenWidth, (screenHeight / 2));
         g.drawLine((screenWidth / 2), 0, (screenWidth / 2), screenHeight);
@@ -77,7 +87,6 @@ public class GraphScreen extends JComponent {
             g.setFont(new Font("Verdana", Font.PLAIN, 12));
             Graphics2D g2d = (Graphics2D) g;
             g2d.translate(anchorX, anchorY);
-            ///g2d.scale(zoom, zoom);
             gc.paintConstellation(g2d);
         }
     }
@@ -119,24 +128,29 @@ public class GraphScreen extends JComponent {
         buttonsPanel.add(goRightButton);
 
         screen.getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
+
         goUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                comp.pitch(1);
             }
         });
         goDownButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                comp.pitch(-1);
             }
         });
         goLeftButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                comp.yaw(1);
             }
         });
         goRightButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                comp.yaw(-1);
             }
         });
         resetButton.addActionListener(new ActionListener() {
@@ -146,6 +160,8 @@ public class GraphScreen extends JComponent {
                 gc.rescaleGrConstellation(zoom);
                 anchorX = screenWidth / 2;
                 anchorY = screenHeight / 2;
+                rotation.resetCoeficients();
+                gc.rotateGrConstellation();
                 repaint();
             }
         });
@@ -185,7 +201,8 @@ public class GraphScreen extends JComponent {
         screen.pack();
         screen.setVisible(true);
 
-        gc = new GraphConstellation();
+        rotation = new GraphRotation();
+        gc = new GraphConstellation(rotation);
     }
 
     private Color Color(int i, int i0, int i1) {
