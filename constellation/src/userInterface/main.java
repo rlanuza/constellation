@@ -19,13 +19,14 @@ public class main {
 
     public static void main(String[] args) {
         final long start = System.nanoTime();
+        Parameters.loadParameters("constellation.txt");
 
-        eng = new Engine("constellation.txt");
+        eng = new Engine();
         screen = new GraphScreen(eng);
         eng.link(screen.getGraphConstellation());
 
-        long simulationSteps = Parameters.SIMULATION_STEPS;
-        for (long i = 0; i < simulationSteps; i++) {
+        long simulationPlots = Parameters.SIMULATION_STEPS / Parameters.STEPS_PER_PLOT;
+        for (long i = 0; i < simulationPlots; i++) {
             eng.run();
             screen.updateConstellation();
         }

@@ -16,6 +16,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import orbitEngine.Engine;
+import userInterface.Parameters;
 
 /**
  *
@@ -83,8 +84,12 @@ public class GraphScreen extends JComponent {
 
     public GraphScreen(Engine eng) {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        screenHeight = screenSize.height * 1 / 2;
-        screenWidth = screenSize.width * 1 / 2;
+        double screenPortion = Parameters.SCREEN_PERCENT / 100.0;
+        if (screenPortion > 1.0) {
+            screenPortion = 5.00;
+        }
+        screenHeight = (int) (screenSize.height * screenPortion);
+        screenWidth = (int) (screenSize.width * screenPortion);
         anchorX = screenWidth / 2;
         anchorY = screenHeight / 2;
         JFrame screen = new JFrame();

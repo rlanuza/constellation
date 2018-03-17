@@ -6,9 +6,6 @@
 package orbitEngine;
 
 import graphEngine.GraphConstellation;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -23,15 +20,8 @@ public class Engine {
 
     private final Constellation constellation;
 
-    public Engine(String constellationFile) {
+    public Engine() {
         constellation = new Constellation();
-        try {
-            String contents = new String(Files.readAllBytes(Paths.get(constellationFile)));
-            constellation.loadConstellation(contents);
-        } catch (IOException ex) {
-            System.out.println("Error reading: " + constellationFile);
-            System.exit(1);
-        }
         stepTime = Parameters.STEP_TIME;
         seconds = Parameters.START_EPOCH_TIME;
         steepsPerPlot = Parameters.STEPS_PER_PLOT;
