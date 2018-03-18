@@ -18,6 +18,16 @@ public class Parameters {
     public static long MAX_ORBIT_POINTS;
     public static int SCREEN_PERCENT;
     public static ArrayList<Body> bodyList = new ArrayList<Body>();
+    public static boolean SCREEN_RESIZABLE;
+
+    private static Boolean getBoolean(String line, boolean defaultValue) {
+        String fields[] = line.split(":|#|,|;");
+        if (fields.length > 1) {
+            return Boolean.valueOf(fields[1].trim());
+        } else {
+            return defaultValue;
+        }
+    }
 
     private static long getLong(String line, long defaultValue) {
         String fields[] = line.split(":|#|,|;");
@@ -67,6 +77,8 @@ public class Parameters {
                 Parameters.MAX_ORBIT_POINTS = getLong(line, 1000);
             } else if (line.startsWith("SCREEN_PERCENT:")) {
                 Parameters.SCREEN_PERCENT = (int) getLong(line, 1000);
+            } else if (line.startsWith("SCREEN_RESIZABLE:")) {
+                Parameters.SCREEN_RESIZABLE = (boolean) getBoolean(line, false);
             } else {
                 String[] datas = line.split(",");
                 if (datas.length == ASTRO_STRING_FIELDS) {

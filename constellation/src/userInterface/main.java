@@ -27,7 +27,7 @@ public class main {
 
         long simulationPlots = Parameters.SIMULATION_STEPS / Parameters.STEPS_PER_PLOT;
         for (long i = 0; i < simulationPlots; i++) {
-            eng.run();
+            eng.run(Parameters.STEPS_PER_PLOT);
             screen.updateConstellation();
         }
         System.out.print(System.nanoTime() - start);

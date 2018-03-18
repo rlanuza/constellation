@@ -16,7 +16,6 @@ public class Engine {
 
     private double stepTime;
     static private long seconds;
-    private long steepsPerPlot;
 
     private final Constellation constellation;
 
@@ -24,7 +23,7 @@ public class Engine {
         constellation = new Constellation();
         stepTime = Parameters.STEP_TIME;
         seconds = Parameters.START_EPOCH_TIME;
-        steepsPerPlot = Parameters.STEPS_PER_PLOT;
+
     }
 
     public void link(GraphConstellation graphConstellation) {
@@ -35,10 +34,10 @@ public class Engine {
     static public String dateString() {
         LocalDateTime dateTime = LocalDateTime.ofEpochSecond(seconds, 0, ZoneOffset.UTC);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/LL/dd-HH:mm:ss", Locale.ENGLISH);
-        return dateTime.format(formatter);
+        return "Date: " + dateTime.format(formatter);
     }
 
-    public void run() {
+    public void run(long steepsPerPlot) {
         seconds += stepTime * steepsPerPlot;
         switch (Parameters.CALCULUS_METHOD) {
             case 0:

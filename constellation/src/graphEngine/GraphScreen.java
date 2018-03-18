@@ -9,6 +9,8 @@ import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
@@ -66,6 +68,12 @@ public class GraphScreen extends JComponent {
         repaint();
     }
 
+    private synchronized void roll(int steps) {
+        rotation.updateCoeficients(0, 0, steps);
+        gc.rotateGrConstellation();
+        repaint();
+    }
+
     public synchronized void updateConstellation() {
         repaint();
     }
@@ -82,8 +90,12 @@ public class GraphScreen extends JComponent {
 
         if (gc != null) {
             g.setColor(Color.RED);
-            g.setFont(new Font("Courier New", Font.BOLD, 24));
-            g.drawString(Engine.dateString(), 10, 24);
+            g.setFont(new Font("Courier New", Font.BOLD, 22));
+            g.drawString(Engine.dateString(), 10, 22);
+            g.setColor(Color.BLUE);
+            g.drawString(gc.getScaleString(), 10, 44);
+            g.setColor(Color.MAGENTA);
+            g.drawString(rotation.getRotationString(), 10, 66);
             g.setFont(new Font("Verdana", Font.PLAIN, 12));
             Graphics2D g2d = (Graphics2D) g;
             g2d.translate(anchorX, anchorY);
@@ -102,10 +114,11 @@ public class GraphScreen extends JComponent {
         anchorX = screenWidth / 2;
         anchorY = screenHeight / 2;
         JFrame screen = new JFrame();
+        screen.setTitle("Constellation");
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         GraphScreen comp = this;
         comp.setPreferredSize(new Dimension(screenWidth, screenHeight));
-        screen.setResizable(false);
+        screen.setResizable(Parameters.SCREEN_RESIZABLE);
 
         screen.getContentPane().add(comp, BorderLayout.CENTER);
         JPanel buttonsPanel = new JPanel();
@@ -117,6 +130,8 @@ public class GraphScreen extends JComponent {
         JButton goDownButton = new JButton("▼");
         JButton goLeftButton = new JButton("◄");
         JButton goRightButton = new JButton("►");
+        JButton goClockWiseButton = new JButton("↻");
+        JButton goAntiClockWiseButton = new JButton("↺");
 
         buttonsPanel.add(resetButton);
         buttonsPanel.add(inButton);
@@ -126,8 +141,19 @@ public class GraphScreen extends JComponent {
         buttonsPanel.add(goDownButton);
         buttonsPanel.add(goLeftButton);
         buttonsPanel.add(goRightButton);
+        buttonsPanel.add(goClockWiseButton);
+        buttonsPanel.add(goAntiClockWiseButton);
 
         screen.getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
+
+        screen.addComponentListener(new ComponentAdapter() {
+            public void componentResized(ComponentEvent evt) {
+                screenWidth = screen.getWidth();
+                anchorX = screenWidth / 2;
+                screenHeight = screen.getHeight();
+                anchorY = screenHeight / 2;
+            }
+        });
 
         goUpButton.addActionListener(new ActionListener() {
             @Override
@@ -151,6 +177,19 @@ public class GraphScreen extends JComponent {
             @Override
             public void actionPerformed(ActionEvent e) {
                 comp.yaw(-1);
+            }
+        });
+
+        goClockWiseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                comp.roll(1);
+            }
+        });
+        goAntiClockWiseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                comp.roll(-1);
             }
         });
         resetButton.addActionListener(new ActionListener() {
@@ -182,18 +221,10 @@ public class GraphScreen extends JComponent {
             public void mouseClicked(MouseEvent e) {
                 System.out.println("Number of click: " + e.getClickCount());
                 System.out.println("Click position (X, Y):  " + e.getX() + ", " + e.getY());
-                if (e.getButton() == MouseEvent.NOBUTTON) {
-                }
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    System.out.println("Left Click!: " + e.getClickCount());
-                    comp.center(e.getX(), e.getY());
-                }
-                if (e.getButton() == MouseEvent.BUTTON2) {
-                    System.out.println("Middle Click!: " + e.getClickCount());
-                }
-                if (e.getButton() == MouseEvent.BUTTON3) {
-                    System.out.println("Right Click!: " + e.getClickCount());
-                    comp.center(e.getX(), e.getY());
+                    if (e.getClickCount() == 2) {
+                        comp.center(e.getX(), e.getY());
+                    }
                 }
             }
         });

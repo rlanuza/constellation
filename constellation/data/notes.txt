@@ -16,3 +16,7 @@ Notes:
         for (Point orbitPoint : grBody.orbit.proyectionPointList) { ... }
         2952353882ns
         
+
+2) Symbols
+    https://unicode-search.net/unicode-namesearch.pl?term=arrow http://xahlee.info/comp/unicode_arrows.html
+    ▲▼◄► ↻↶ ↷↺

@@ -9,6 +9,7 @@ public class GraphRotation {
     private int y_steps = 0;
     private int z_steps = 0;
     private double stepRadians = Math.PI / 18.0;
+    private int stepGrades = (int) (2 * Math.PI / stepRadians);
     // Precalculed coefficients
     private double sin_x_rot;
     private double cos_x_rot;
@@ -86,5 +87,12 @@ public class GraphRotation {
         pos2.y = pos.x * sin_z_rot + pos.y * cos_z_rot;
         pos2.z = pos.z;
         return pos2;
+    }
+
+    String getRotationString() {
+        int pitch = x_steps * 10;
+        int yaw = y_steps * 10;
+        int roll = z_steps * 10;
+        return String.format("Pitch: %dº, Yaw: %dº, Roll: %dº", pitch, yaw, roll);
     }
 }

@@ -4,11 +4,12 @@
     STEPS_PER_PLOT:     1440            # 24*60 
     STEP_TIME:          60.0            # Seconds
     START_EPOCH_TIME:   1520294400      # Epoc of 2018-Mar-06 00:00:00.0000 TDB. 
-    METERS_PER_PIXEL:   1.0e-10          # UNIX Epoch time is the number of seconds that have elapsed since 
+    METERS_PER_PIXEL:   1.0e-10         # UNIX Epoch time is the number of seconds that have elapsed since 
                                         # 00:00:00 Coordinated Universal Time (UTC), Thursday, 1 January 1970. 
                                         # [https://en.wikipedia.org/wiki/Unix_time]
-    MAX_ORBIT_POINTS:   5000            # Avoid hard graphic computing, use less than 10000
-    SCREEN_PERCENT:     80              # Size of screen in % 
+    MAX_ORBIT_POINTS:   10000           # Avoid hard graphic computing, use less than 10000
+    SCREEN_PERCENT:     50              # Size of screen in % 
+    SCREEN_RESIZABLE:   true            # true or false
 
 #   Name,    mass (Kg),  radio(m),               x0 (km) ,               y0 (km) ,                z0 (km),             vx0 (km/s),             vy0 (km/s),             vz0 (km/s)
   Sun,     1.988544E30,   6.955E08,  2.115163395189363E+05,  9.629395991577826E+05, -1.658378464810934E+04, -1.087740873620591E-02,  7.895676043082171E-03,  2.588298582967292E-04

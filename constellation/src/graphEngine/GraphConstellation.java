@@ -12,6 +12,11 @@ public class GraphConstellation {
     private double metersPerPixel;
     private double scale;
 
+    public String getScaleString() {
+        String s = String.format("Scale: %.4e m/pixel", scale);
+        return s;
+    }
+
     GraphRotation rotation;
 
     GraphConstellation(GraphRotation rotation) {
