@@ -27,8 +27,26 @@ public class GraphRotation {
 
     public void updateCoeficients(int delta_xRot, int delta_yRot, int delta_zRot) {
         x_steps += delta_xRot;
+        if (x_steps == 36) {
+            x_steps = 0;
+        }
+        if (x_steps == -1) {
+            x_steps = 35;
+        }
         y_steps += delta_yRot;
+        if (y_steps == 36) {
+            y_steps = 0;
+        }
+        if (y_steps == -1) {
+            y_steps = 35;
+        }
         z_steps += delta_zRot;
+        if (z_steps == 36) {
+            z_steps = 0;
+        }
+        if (z_steps == -1) {
+            z_steps = 35;
+        }
         double x_rot = x_steps * stepRadians;
         double y_rot = y_steps * stepRadians;
         double z_rot = z_steps * stepRadians;
