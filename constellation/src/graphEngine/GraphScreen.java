@@ -153,7 +153,6 @@ public class GraphScreen extends JComponent implements KeyListener {
                         yaw(1);
                     }
                 }
-
                 break;
             case KeyEvent.VK_RIGHT:
                 if (e.isControlDown()) {
@@ -166,14 +165,16 @@ public class GraphScreen extends JComponent implements KeyListener {
                     }
                 }
                 break;
+            case KeyEvent.VK_PLUS:
             case KeyEvent.VK_ADD:
                 zoom(ZOOM_FACTOR);
                 break;
-            case KeyEvent.VK_LESS:
+            case KeyEvent.VK_MINUS:
+            case KeyEvent.VK_SUBTRACT:
                 zoom(1 / ZOOM_FACTOR);
                 break;
             default:
-                System.out.println(code);
+            //System.out.println(code);
         }
     }
 
