@@ -36,3 +36,15 @@ Notes:
         public void keyReleased(KeyEvent e) { }
         public void keyTyped(KeyEvent e) { c = e.getKeyChar();  }
 
+4) References
+    http://www.sc.ehu.es/sbweb/fisica_/celeste/kepler2/kepler2.html
+    https://astrojem.com/teorias/marte.html
+    http://www.astronoo.com/es/articulos/posiciones-de-los-planetas.html
+    https://www.geogebra.org/m/egN8dBKb
+    https://solarsystem.nasa.gov/
+    https://ssd.jpl.nasa.gov/horizons.cgi
+    https://es.m.wikipedia.org/wiki/M%C3%A9trica_de_Schwarzschild
+    https://es.wikipedia.org/wiki/Anexo:Datos_de_los_planetas_del_sistema_solar
+    https://codigofacilito.com/cursos/JAVA
+    https://cs.uns.edu.ar/~ldm/mypage/data/oc/info/guia_para_la_documentacion_de_proyectos_de_software.pdf
+

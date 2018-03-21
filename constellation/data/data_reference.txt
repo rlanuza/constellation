@@ -2024,3 +2024,249 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
+*******************************************************************************
+JPL/HORIZONS             136472 Makemake (2005 FY9)        2018-Mar-21 22:55:35
+Rec #:  136472 (+COV) Soln.date: 2018-Mar-06_00:48:25   # obs: 1468 (1955-2018)
+ 
+IAU76/J2000 helio. ecliptic osc. elements (au, days, deg., period=Julian yrs): 
+ 
+  EPOCH=  2455873.5 ! 2011-Nov-08.00 (TDB)         Residual RMS= .33903        
+   EC= .163243645764803    QR= 37.98936402578253   TP= 2408166.97804815        
+   OM= 79.32583089553567   W=  296.2985095636197   IN= 29.01057544965225       
+   A= 45.40074758142131    MA= 153.7047621225908   ADIST= 52.81213113706008    
+   PER= 305.91637          N= .003221881           ANGMOM= .114353062          
+   DAN= 41.21036           DDN= 47.63616           L= 18.7967022               
+   B= -25.7710107          MOID= 37.09220123       TP= 1881-Mar-27.4780481500  
+ 
+Asteroid physical parameters (km, seconds, rotational period in hours):        
+   GM= n.a.                RAD= n.a.               ROTPER= 22.48               
+   H= -.200                G= .150                 B-V= n.a.                   
+                           ALBEDO= n.a.            STYP= n.a.                  
+ 
+ASTEROID comments: 
+1: soln ref.= JPL#87, OCC=2
+2: source=ORB
+*******************************************************************************
+ 
+ 
+*******************************************************************************
+Ephemeris / WWW_USER Wed Mar 21 22:55:35 2018 Pasadena, USA      / Horizons    
+*******************************************************************************
+Target body name: 136472 Makemake (2005 FY9)      {source: JPL#87}
+Center body name: Solar System Barycenter (0)     {source: DE431}
+Center-site name: BODY CENTER
+*******************************************************************************
+Start time      : A.D. 2018-Mar-06 00:00:00.0000 TDB
+Stop  time      : A.D. 2018-Mar-16 00:00:00.0000 TDB
+Step-size       : 2880 minutes
+*******************************************************************************
+Center geodetic : 0.00000000,0.00000000,0.0000000 {E-lon(deg),Lat(deg),Alt(km)}
+Center cylindric: 0.00000000,0.00000000,0.0000000 {E-lon(deg),Dxy(km),Dz(km)}
+Center radii    : (undefined)                                                  
+Small perturbers: Yes                             {source: SB431-N16}
+Output units    : KM-S                                                         
+Output type     : GEOMETRIC cartesian states
+Output format   : 2 (position and velocity)
+Reference frame : ICRF/J2000.0                                                 
+Coordinate systm: Ecliptic and Mean Equinox of Reference Epoch                 
+*******************************************************************************
+Initial IAU76/J2000 heliocentric ecliptic osculating elements (au, days, deg.):
+  EPOCH=  2455873.5 ! 2011-Nov-08.00 (TDB)         Residual RMS= .33903        
+   EC= .163243645764803    QR= 37.98936402578253   TP= 2408166.97804815        
+   OM= 79.32583089553567   W=  296.2985095636197   IN= 29.01057544965225       
+  Equivalent ICRF heliocentric equatorial cartesian coordinates (au, au/d):
+   X=-4.573730857749887E+01  Y=-8.025010222974128E+00  Z= 2.392852066344231E+01
+  VX=-2.959644349211270E-04 VY=-1.968679195449939E-03 VZ=-9.209610172847871E-04
+Asteroid physical parameters (km, seconds, rotational period in hours):        
+   GM= n.a.                RAD= n.a.               ROTPER= 22.48               
+   H= -.200                G= .150                 B-V= n.a.                   
+                           ALBEDO= n.a.            STYP= n.a.                  
+*******************************************************************************
+JDTDB
+   X     Y     Z
+   VX    VY    VZ
+*******************************************************************************
+$$SOE
+2458183.500000000 = A.D. 2018-Mar-06 00:00:00.0000 TDB 
+ X =-6.905816436080448E+09 Y =-4.306238326837785E+08 Z = 3.719720971101691E+09
+ VX=-1.267306703268274E-01 VY=-3.767471774508901E+00 VZ=-3.136164069857730E-01
+2458185.500000000 = A.D. 2018-Mar-08 00:00:00.0000 TDB 
+ X =-6.905838306877617E+09 Y =-4.312748500434666E+08 Z = 3.719666762962612E+09
+ VX=-1.264035566074092E-01 VY=-3.767451364927130E+00 VZ=-3.137926093763621E-01
+2458187.500000000 = A.D. 2018-Mar-10 00:00:00.0000 TDB 
+ X =-6.905860121149764E+09 Y =-4.319258638737340E+08 Z = 3.719612524376154E+09
+ VX=-1.260764455343002E-01 VY=-3.767430924731615E+00 VZ=-3.139688071987752E-01
+2458189.500000000 = A.D. 2018-Mar-12 00:00:00.0000 TDB 
+ X =-6.905881878897346E+09 Y =-4.325768741692896E+08 Z = 3.719558255343107E+09
+ VX=-1.257493371091148E-01 VY=-3.767410453923303E+00 VZ=-3.141450004521082E-01
+2458191.500000000 = A.D. 2018-Mar-14 00:00:00.0000 TDB 
+ X =-6.905903580120820E+09 Y =-4.332278809248455E+08 Z = 3.719503955864262E+09
+ VX=-1.254222313327915E-01 VY=-3.767389952502151E+00 VZ=-3.143211891361739E-01
+2458193.500000000 = A.D. 2018-Mar-16 00:00:00.0000 TDB 
+ X =-6.905925224820647E+09 Y =-4.338788841351113E+08 Z = 3.719449625940404E+09
+ VX=-1.250951282069391E-01 VY=-3.767369420469101E+00 VZ=-3.144973732500744E-01
+$$EOE
+*******************************************************************************
+Coordinate system description:
+
+  Ecliptic and Mean Equinox of Reference Epoch
+
+    Reference epoch: J2000.0
+    XY-plane: plane of the Earth's orbit at the reference epoch
+              Note: obliquity of 84381.448 arcseconds wrt ICRF equator (IAU76)
+    X-axis  : out along ascending node of instantaneous plane of the Earth's
+              orbit and the Earth's mean equator at the reference epoch
+    Z-axis  : perpendicular to the xy-plane in the directional (+ or -) sense
+              of Earth's north pole at the reference epoch.
+
+  Symbol meaning:
+
+    JDTDB    Julian Day Number, Barycentric Dynamical Time
+      X      X-component of position vector (km)                               
+      Y      Y-component of position vector (km)                               
+      Z      Z-component of position vector (km)                               
+      VX     X-component of velocity vector (km/sec)                           
+      VY     Y-component of velocity vector (km/sec)                           
+      VZ     Z-component of velocity vector (km/sec)                           
+
+Geometric states/elements have no aberrations applied.
+
+ Computations by ...
+     Solar System Dynamics Group, Horizons On-Line Ephemeris System
+     4800 Oak Grove Drive, Jet Propulsion Laboratory
+     Pasadena, CA  91109   USA
+     Information: http://ssd.jpl.nasa.gov/
+     Connect    : telnet://ssd.jpl.nasa.gov:6775  (via browser)
+                  http://ssd.jpl.nasa.gov/?horizons
+                  telnet ssd.jpl.nasa.gov 6775    (via command-line)
+     Author     : Jon.D.Giorgini@jpl.nasa.gov
+*******************************************************************************
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+*******************************************************************************
+JPL/HORIZONS              136199 Eris (2003 UB313)         2018-Mar-21 23:09:55
+Rec #:  136199 (+COV) Soln.date: 2017-Nov-07_16:42:29    # obs: 944 (1954-2017)
+ 
+IAU76/J2000 helio. ecliptic osc. elements (au, days, deg., period=Julian yrs): 
+ 
+  EPOCH=  2455936.5 ! 2012-Jan-10.00 (TDB)         Residual RMS= .2495         
+   EC= .4344606714175216   QR= 38.48659940403228   TP= 2545919.4421254303      
+   OM= 36.06473954858459   W=  150.8940778730555   IN= 43.81785695462196       
+   A= 68.05291419873267    MA= 202.022887492725    ADIST= 97.61922899343304    
+   PER= 561.40762          N= .001755634           ANGMOM= .12781462           
+   DAN= 88.98666           DDN= 40.01711           L= 194.1792039              
+   B= 19.6811547           MOID= 37.54470062       TP= 2258-May-22.9421254303  
+ 
+Asteroid physical parameters (km, seconds, rotational period in hours):        
+   GM= n.a.                RAD= n.a.               ROTPER= 25.9                
+   H= -1.1                 G= .150                 B-V= n.a.                   
+                           ALBEDO= n.a.            STYP= n.a.                  
+ 
+ASTEROID comments: 
+1: soln ref.= JPL#59, OCC=3
+2: source=ORB
+*******************************************************************************
+ 
+ 
+*******************************************************************************
+Ephemeris / WWW_USER Wed Mar 21 23:09:55 2018 Pasadena, USA      / Horizons    
+*******************************************************************************
+Target body name: 136199 Eris (2003 UB313)        {source: JPL#59}
+Center body name: Solar System Barycenter (0)     {source: DE431}
+Center-site name: BODY CENTER
+*******************************************************************************
+Start time      : A.D. 2018-Mar-06 00:00:00.0000 TDB
+Stop  time      : A.D. 2018-Mar-16 00:00:00.0000 TDB
+Step-size       : 2880 minutes
+*******************************************************************************
+Center geodetic : 0.00000000,0.00000000,0.0000000 {E-lon(deg),Lat(deg),Alt(km)}
+Center cylindric: 0.00000000,0.00000000,0.0000000 {E-lon(deg),Dxy(km),Dz(km)}
+Center radii    : (undefined)                                                  
+Small perturbers: Yes                             {source: SB431-N16}
+Output units    : KM-S                                                         
+Output type     : GEOMETRIC cartesian states
+Output format   : 2 (position and velocity)
+Reference frame : ICRF/J2000.0                                                 
+Coordinate systm: Ecliptic and Mean Equinox of Reference Epoch                 
+*******************************************************************************
+Initial IAU76/J2000 heliocentric ecliptic osculating elements (au, days, deg.):
+  EPOCH=  2455936.5 ! 2012-Jan-10.00 (TDB)         Residual RMS= .2495         
+   EC= .4344606714175216   QR= 38.48659940403228   TP= 2545919.4421254303      
+   OM= 36.06473954858459   W=  150.8940778730555   IN= 43.81785695462196       
+  Equivalent ICRF heliocentric equatorial cartesian coordinates (au, au/d):
+   X= 8.724248031513278E+01  Y= 4.086442322023402E+01  Z=-6.480603118127547E+00
+  VX=-3.283210547726760E-04 VY= 4.899240089127559E-04 VZ= 1.197172800824818E-03
+Asteroid physical parameters (km, seconds, rotational period in hours):        
+   GM= n.a.                RAD= n.a.               ROTPER= 25.9                
+   H= -1.1                 G= .150                 B-V= n.a.                   
+                           ALBEDO= n.a.            STYP= n.a.                  
+*******************************************************************************
+JDTDB
+   X     Y     Z
+   VX    VY    VZ
+*******************************************************************************
+$$SOE
+2458183.500000000 = A.D. 2018-Mar-06 00:00:00.0000 TDB 
+ X = 1.293104966467640E+10 Y = 5.528125733328150E+09 Z =-3.014821537387200E+09
+ VX=-6.728713349606320E-01 VY= 1.548577377916613E+00 VZ= 1.591520722029788E+00
+2458185.500000000 = A.D. 2018-Mar-08 00:00:00.0000 TDB 
+ X = 1.293093338388645E+10 Y = 5.528393323812426E+09 Z =-3.014546520595949E+09
+ VX=-6.729711413694420E-01 VY= 1.548534708191540E+00 VZ= 1.591543991215852E+00
+2458187.500000000 = A.D. 2018-Mar-10 00:00:00.0000 TDB 
+ X = 1.293081708584992E+10 Y = 5.528660906923151E+09 Z =-3.014271499783942E+09
+ VX=-6.730709481141822E-01 VY= 1.548492035875264E+00 VZ= 1.591567258566303E+00
+2458189.500000000 = A.D. 2018-Mar-12 00:00:00.0000 TDB 
+ X = 1.293070077056676E+10 Y = 5.528928482659875E+09 Z =-3.013996474951495E+09
+ VX=-6.731707551948746E-01 VY= 1.548449360967705E+00 VZ= 1.591590524081098E+00
+2458191.500000000 = A.D. 2018-Mar-14 00:00:00.0000 TDB 
+ X = 1.293058443803691E+10 Y = 5.529196051022153E+09 Z =-3.013721446098925E+09
+ VX=-6.732705626115409E-01 VY= 1.548406683468785E+00 VZ= 1.591613787760193E+00
+2458193.500000000 = A.D. 2018-Mar-16 00:00:00.0000 TDB 
+ X = 1.293046808826031E+10 Y = 5.529463612009533E+09 Z =-3.013446413226550E+09
+ VX=-6.733703703642030E-01 VY= 1.548364003378423E+00 VZ= 1.591637049603545E+00
+$$EOE
+*******************************************************************************
+Coordinate system description:
+
+  Ecliptic and Mean Equinox of Reference Epoch
+
+    Reference epoch: J2000.0
+    XY-plane: plane of the Earth's orbit at the reference epoch
+              Note: obliquity of 84381.448 arcseconds wrt ICRF equator (IAU76)
+    X-axis  : out along ascending node of instantaneous plane of the Earth's
+              orbit and the Earth's mean equator at the reference epoch
+    Z-axis  : perpendicular to the xy-plane in the directional (+ or -) sense
+              of Earth's north pole at the reference epoch.
+
+  Symbol meaning:
+
+    JDTDB    Julian Day Number, Barycentric Dynamical Time
+      X      X-component of position vector (km)                               
+      Y      Y-component of position vector (km)                               
+      Z      Z-component of position vector (km)                               
+      VX     X-component of velocity vector (km/sec)                           
+      VY     Y-component of velocity vector (km/sec)                           
+      VZ     Z-component of velocity vector (km/sec)                           
+
+Geometric states/elements have no aberrations applied.
+
+ Computations by ...
+     Solar System Dynamics Group, Horizons On-Line Ephemeris System
+     4800 Oak Grove Drive, Jet Propulsion Laboratory
+     Pasadena, CA  91109   USA
+     Information: http://ssd.jpl.nasa.gov/
+     Connect    : telnet://ssd.jpl.nasa.gov:6775  (via browser)
+                  http://ssd.jpl.nasa.gov/?horizons
+                  telnet ssd.jpl.nasa.gov 6775    (via command-line)
+     Author     : Jon.D.Giorgini@jpl.nasa.gov
+*******************************************************************************
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+

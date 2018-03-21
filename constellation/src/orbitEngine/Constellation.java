@@ -50,8 +50,21 @@ public class Constellation {
         graphConstellation.initConstellation(body);
     }
 
+    private void mergeBodies(Body body1, Body body2) {
+        Body[] bodyTmp = new Body[body.length - 1];
+        int j = 0;
+        for (int i = 0; i < body.length; i++) {
+            if ((body[i] != body1) && (body[i] != body2)) {
+                bodyTmp[j++] = body[i];
+            }
+        }
+        //bodyTmp[j].
+        body = bodyTmp;
+    }
+
     void calculateDistances() {
         double dx, dy, dz, d2, d;
+        outerloop:
         for (int i = 0; i < body.length; i++) {
             for (int j = i + 1; j < body.length; j++) {
                 dx = body[j].x - body[i].x;
@@ -65,11 +78,17 @@ public class Constellation {
                 dist_y[i][j] = dy;
                 dist_z[i][j] = dz;
                 /*@Todo merge bodies here if they are near */
+                if (d < (body[i].radius + body[j].radius)) {
+                    mergeBodies(body[i], body[j]);
+                    calculateDistances();
+                    return;
+                }
             }
         }
     }
+}
 
-    void calculateGravity(int i) {
+void calculateGravity(int i) {
         // F=G*(m1*m2)/d^2; g1=F/m1;  g2=F/m2;
         //   where: G is gravitation constant, F is force between the masses
         //          m1 & m2 are mass 1 and mass 2
