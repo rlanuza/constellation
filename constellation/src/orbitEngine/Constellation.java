@@ -184,8 +184,7 @@ public class Constellation {
 
     }
 
-    void step_jerk_Schwarzschild(double deltaTime
-    ) {
+    void step_jerk_Schwarzschild(double deltaTime) {
         double delT_2 = deltaTime / 2;          // deltaTime/2
         double delT2_2 = deltaTime * delT_2;    // deltaTime^2/2
         double delT2_6 = delT2_2 / 3;           // deltaTime^2/6
@@ -211,8 +210,7 @@ public class Constellation {
         }
     }
 
-    void step_basic_Schwarzschild(double deltaTime
-    ) {
+    void step_basic_Schwarzschild(double deltaTime) {
         double delT_2 = deltaTime / 2;          // deltaTime/2
         double delT2_2 = deltaTime * delT_2;    // deltaTime^2/2
         calculateDistances();

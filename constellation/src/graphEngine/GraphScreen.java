@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
@@ -24,7 +26,7 @@ import userInterface.Parameters;
  *
  * @author rlanuza
  */
-public class GraphScreen extends JComponent {
+public class GraphScreen extends JComponent implements KeyListener {
 
     public static int screenWidth;
     public static int screenHeight;
@@ -42,9 +44,15 @@ public class GraphScreen extends JComponent {
         return this.gc;
     }
 
-    private void center(double zoomCenterX, double zoomCenterY) {
-        anchorX += (screenWidth / 2) - zoomCenterX;
-        anchorY += (screenHeight / 2) - zoomCenterY;
+    private void moveCenter(double shiftCenterX, double shiftCenterY) {
+        anchorX -= shiftCenterX;
+        anchorY -= shiftCenterY;
+        repaint();
+    }
+
+    private void center(double newCenterX, double newCenterY) {
+        anchorX += (screenWidth / 2) - newCenterX;
+        anchorY += (screenHeight / 2) - newCenterY;
         repaint();
     }
 
@@ -103,7 +111,74 @@ public class GraphScreen extends JComponent {
         }
     }
 
+    //@Override
+    public void addNotify() {
+        super.addNotify();
+        requestFocus();
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int code = e.getKeyCode();
+        switch (code) {
+            case KeyEvent.VK_DOWN:
+                if (e.isControlDown()) {
+                    moveCenter(0, -10);
+                } else {
+                    pitch(-1);
+                }
+                break;
+            case KeyEvent.VK_UP:
+                if (e.isControlDown()) {
+                    moveCenter(0, 10);
+                } else {
+                    pitch(1);
+                }
+                break;
+            case KeyEvent.VK_LEFT:
+                if (e.isControlDown()) {
+                    moveCenter(10, 0);
+                } else {
+                    if (e.isAltDown()) {
+                        roll(1);
+                    } else {
+                        yaw(1);
+                    }
+                }
+
+                break;
+            case KeyEvent.VK_RIGHT:
+                if (e.isControlDown()) {
+                    moveCenter(-10, 0);
+                } else {
+                    if (e.isAltDown()) {
+                        roll(-1);
+                    } else {
+                        yaw(-1);
+                    }
+                }
+                break;
+            case KeyEvent.VK_ADD:
+                zoom(ZOOM_FACTOR);
+                break;
+            case KeyEvent.VK_LESS:
+                zoom(1 / ZOOM_FACTOR);
+                break;
+            default:
+                System.out.println(code);
+        }
+    }
+
     public GraphScreen(Engine eng) {
+        addKeyListener(this);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double screenPortion = Parameters.SCREEN_PERCENT / 100.0;
         if (screenPortion > 1.0) {
@@ -116,16 +191,15 @@ public class GraphScreen extends JComponent {
         JFrame screen = new JFrame();
         screen.setTitle("Constellation");
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        GraphScreen comp = this;
-        comp.setPreferredSize(new Dimension(screenWidth, screenHeight));
+
+        setPreferredSize(new Dimension(screenWidth, screenHeight));
         screen.setResizable(Parameters.SCREEN_RESIZABLE);
 
-        screen.getContentPane().add(comp, BorderLayout.CENTER);
+        screen.getContentPane().add(this, BorderLayout.CENTER);
         JPanel buttonsPanel = new JPanel();
         JButton resetButton = new JButton("R");
         JButton inButton = new JButton("+");
         JButton outButton = new JButton("-");
-
         JButton goUpButton = new JButton("▲");
         JButton goDownButton = new JButton("▼");
         JButton goLeftButton = new JButton("◄");
@@ -133,10 +207,19 @@ public class GraphScreen extends JComponent {
         JButton goClockWiseButton = new JButton("↻");
         JButton goAntiClockWiseButton = new JButton("↺");
 
+        resetButton.setFocusable(false);
+        inButton.setFocusable(false);
+        outButton.setFocusable(false);
+        goUpButton.setFocusable(false);
+        goDownButton.setFocusable(false);
+        goLeftButton.setFocusable(false);
+        goRightButton.setFocusable(false);
+        goClockWiseButton.setFocusable(false);
+        goAntiClockWiseButton.setFocusable(false);
+
         buttonsPanel.add(resetButton);
         buttonsPanel.add(inButton);
         buttonsPanel.add(outButton);
-
         buttonsPanel.add(goUpButton);
         buttonsPanel.add(goDownButton);
         buttonsPanel.add(goLeftButton);
@@ -145,7 +228,6 @@ public class GraphScreen extends JComponent {
         buttonsPanel.add(goAntiClockWiseButton);
 
         screen.getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
-
         screen.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent evt) {
                 screenWidth = screen.getWidth();
@@ -158,38 +240,38 @@ public class GraphScreen extends JComponent {
         goUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                comp.pitch(1);
+                pitch(1);
             }
         });
         goDownButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                comp.pitch(-1);
+                pitch(-1);
+
             }
         });
         goLeftButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                comp.yaw(1);
+                yaw(1);
             }
         });
         goRightButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                comp.yaw(-1);
+                yaw(-1);
             }
         });
-
         goClockWiseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                comp.roll(1);
+                roll(1);
             }
         });
         goAntiClockWiseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                comp.roll(-1);
+                roll(-1);
             }
         });
         resetButton.addActionListener(new ActionListener() {
@@ -207,23 +289,23 @@ public class GraphScreen extends JComponent {
         inButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                comp.zoom(ZOOM_FACTOR);
+                zoom(ZOOM_FACTOR);
             }
         });
         outButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                comp.zoom(1.0 / ZOOM_FACTOR);
+                zoom(1.0 / ZOOM_FACTOR);
             }
         });
 
-        comp.addMouseListener(new MouseAdapter() {
+        addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 System.out.println("Number of click: " + e.getClickCount());
                 System.out.println("Click position (X, Y):  " + e.getX() + ", " + e.getY());
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     if (e.getClickCount() == 2) {
-                        comp.center(e.getX(), e.getY());
+                        center(e.getX(), e.getY());
                     }
                 }
             }

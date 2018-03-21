@@ -20,3 +20,19 @@ Notes:
 2) Symbols
     https://unicode-search.net/unicode-namesearch.pl?term=arrow http://xahlee.info/comp/unicode_arrows.html
     ▲▼◄► ↻↶ ↷↺
+
+
+3) how to simply implement a KeyListener?
+    https://stackoverflow.com/questions/9333876/how-to-simply-implement-a-keylistener
+    a) in class add: implements KeyListener 
+        public class GraphScreen extends JComponent implements KeyListener {
+    b) in constructor add the key listener and remove the focusable of buttons else will lost focus from keys:  
+        addKeyListener(this);
+        <every_button>.setFocusable(false);
+    c) Add requestFocus() in a overrided addNotify():
+        public void addNotify() { super.addNotify(); requestFocus(); }
+    d) finally override the KeyListener abstract methods:
+        public void keyPressed(KeyEvent e) { }
+        public void keyReleased(KeyEvent e) { }
+        public void keyTyped(KeyEvent e) { c = e.getKeyChar();  }
+
