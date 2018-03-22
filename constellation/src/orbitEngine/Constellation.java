@@ -58,8 +58,10 @@ public class Constellation {
                 bodyTmp[j++] = body[i];
             }
         }
+        //@Todo Merge mass and energy
         //bodyTmp[j].
         body = bodyTmp;
+
     }
 
     void calculateDistances() {
@@ -86,9 +88,8 @@ public class Constellation {
             }
         }
     }
-}
 
-void calculateGravity(int i) {
+    void calculateGravity(int i) {
         // F=G*(m1*m2)/d^2; g1=F/m1;  g2=F/m2;
         //   where: G is gravitation constant, F is force between the masses
         //          m1 & m2 are mass 1 and mass 2
