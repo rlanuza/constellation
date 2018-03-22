@@ -13,7 +13,7 @@ public class GraphConstellation {
     private double scale;
 
     public String getScaleString() {
-        String s = String.format("Scale: %.4e m/pixel", scale);
+        String s = String.format("Scale: %.4e pixel/m", scale);
         return s;
     }
 
@@ -33,8 +33,7 @@ public class GraphConstellation {
             grBody[i].radius = body[i].getRadius();
             grBody[i].radius_i = (int) (grBody[i].radius * scale) + 1;
             grBody[i].color = body[i].getColor();
-            grBody[i].orbit = new GraphOrbit();
-            grBody[i].orbit.rotation = rotation;
+            grBody[i].orbit = new GraphOrbit(rotation);
         }
     }
 
