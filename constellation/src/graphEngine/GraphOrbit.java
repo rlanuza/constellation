@@ -11,9 +11,13 @@ public class GraphOrbit {
 
     // Orbit list points
     CopyOnWriteArrayList<Point> proyectionPointList = new CopyOnWriteArrayList<>();
-    ArrayList<Position> point3d = new ArrayList<>();
-    GraphRotation rotation;
-    Point p_old = new Point(0, 0);
+    private ArrayList<Position> point3d = new ArrayList<>();
+    private GraphRotation rotation = null;
+    private Point p_old = new Point(0, 0);
+
+    GraphOrbit(GraphRotation rotation) {
+        this.rotation = rotation;
+    }
 
     synchronized void addOrbitPoint(double scale, Body body) {
         if (point3d.size() > Parameters.MAX_ORBIT_POINTS) {
@@ -33,10 +37,7 @@ public class GraphOrbit {
         }
     }
 
-    int saveline = 0;
-
     synchronized void rescaleOrbit(double scale) {
-        int i = 0;
         proyectionPointList.clear();
         proyectionPointList = new CopyOnWriteArrayList<>();
         Point p_old = new Point(0, 0);
