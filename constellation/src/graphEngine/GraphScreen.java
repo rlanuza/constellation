@@ -97,12 +97,12 @@ public class GraphScreen extends JComponent implements KeyListener {
         g.drawLine((int) anchorX, 0, (int) anchorX, screenHeight);
 
         if (gc != null) {
-            g.setColor(Color.RED);
+            g.setColor(Parameters.COLOR_DATE);
             g.setFont(new Font("Courier New", Font.BOLD, 22));
             g.drawString(Engine.dateString(), 10, 22);
-            g.setColor(Color.BLUE);
+            g.setColor(Parameters.COLOR_SCALE);
             g.drawString(gc.getScaleString(), 10, 44);
-            g.setColor(Color.MAGENTA);
+            g.setColor(Parameters.COLOR_ANGLE);
             g.drawString(rotation.getRotationString(), 10, 66);
             g.setFont(new Font("Verdana", Font.PLAIN, 12));
             Graphics2D g2d = (Graphics2D) g;
@@ -195,6 +195,7 @@ public class GraphScreen extends JComponent implements KeyListener {
 
         setPreferredSize(new Dimension(screenWidth, screenHeight));
         screen.setResizable(Parameters.SCREEN_RESIZABLE);
+        screen.getContentPane().setBackground(Parameters.COLOR_SCREEN);
 
         screen.getContentPane().add(this, BorderLayout.CENTER);
         JPanel buttonsPanel = new JPanel();
@@ -317,9 +318,5 @@ public class GraphScreen extends JComponent implements KeyListener {
 
         rotation = new GraphRotation();
         gc = new GraphConstellation(rotation);
-    }
-
-    private Color Color(int i, int i0, int i1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

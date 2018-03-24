@@ -22,6 +22,8 @@ public class GraphOrbit {
     synchronized void addOrbitPoint(double scale, Body body) {
         if (point3d.size() > Parameters.MAX_ORBIT_POINTS) {
             point3d.remove(0);
+        }
+        if (proyectionPointList.size() > Parameters.MAX_ORBIT_POINTS) {
             proyectionPointList.remove(0);
         }
         Position p_xyz = new Position();

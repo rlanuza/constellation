@@ -25,7 +25,7 @@ public class Body extends Position {
     double gy;
     double gz;
 
-    public Body(String name, double mass, double radius, double x, double y, double z, double vx, double vy, double vz) {
+    public Body(String name, double mass, double radius, double x, double y, double z, double vx, double vy, double vz, Color astroColor) {
         this.name = name;
         this.mass = mass;
         this.g_mass = mass * G_UNIVERSAL;
@@ -36,9 +36,7 @@ public class Body extends Position {
         this.vx = vx;
         this.vy = vy;
         this.vz = vz;
-        int col = (int) Math.log10(mass) & 255;
-        this.color = new Color((col * 8) & 255, (col * 4) & 255, (col * 2) & 255);
-        //this.color = new Color(100, 100, 100);
+        this.color = astroColor;
     }
 
     public void addGravity(double gx, double gy, double gz) {

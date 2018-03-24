@@ -11,7 +11,7 @@ import static userInterface.Parameters.bodyList;
 
 public class Constellation {
 
-    public static final int ASTRO_STRING_FIELDS = 9;
+    public static final int ASTRO_STRING_FIELDS = 12;
     static final double C = 299792458;
     public static final double G_UNIVERSAL = 6.6740831e-11; // m^3/(Kg*s^2)
     static final double C2 = C * C;

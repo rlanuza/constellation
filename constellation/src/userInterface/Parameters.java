@@ -1,5 +1,6 @@
 package userInterface;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -19,6 +20,10 @@ public class Parameters {
     public static int SCREEN_PERCENT;
     public static ArrayList<Body> bodyList = new ArrayList<Body>();
     public static boolean SCREEN_RESIZABLE;
+    public static Color COLOR_SCREEN;
+    public static Color COLOR_DATE;
+    public static Color COLOR_SCALE;
+    public static Color COLOR_ANGLE;
 
     private static Boolean getBoolean(String line, boolean defaultValue) {
         String fields[] = line.split(":|#|,|;");
@@ -44,6 +49,18 @@ public class Parameters {
             return Double.valueOf(fields[1].trim());
         } else {
             return defaultValue;
+        }
+    }
+
+    private static Color getColor(String line, Color defaultColor) {
+        String fields[] = line.split(":|#|,|;");
+        if (fields.length > 3) {
+            int r = Integer.parseInt(fields[1].trim()) & 255;
+            int g = Integer.parseInt(fields[2].trim()) & 255;
+            int b = Integer.parseInt(fields[3].trim()) & 255;
+            return new Color(r, g, b);
+        } else {
+            return defaultColor;
         }
     }
 
@@ -79,19 +96,28 @@ public class Parameters {
                 Parameters.SCREEN_PERCENT = (int) getLong(line, 1000);
             } else if (line.startsWith("SCREEN_RESIZABLE:")) {
                 Parameters.SCREEN_RESIZABLE = (boolean) getBoolean(line, false);
+            } else if (line.startsWith("COLOR_SCREEN:")) {
+                Parameters.COLOR_SCREEN = getColor(line, Color.BLACK);
+            } else if (line.startsWith("COLOR_DATE:")) {
+                Parameters.COLOR_DATE = getColor(line, Color.RED);
+            } else if (line.startsWith("COLOR_SCALE:")) {
+                Parameters.COLOR_SCALE = getColor(line, Color.ORANGE);
+            } else if (line.startsWith("COLOR_ANGLE:")) {
+                Parameters.COLOR_ANGLE = getColor(line, Color.YELLOW);
             } else {
                 String[] datas = line.split(",");
                 if (datas.length == ASTRO_STRING_FIELDS) {
                     String name = datas[0].trim();
                     double mass = Double.valueOf(datas[1].trim());
-                    double diameter = Double.valueOf(datas[2].trim());
+                    double radius = Double.valueOf(datas[2].trim());
                     double x = Double.valueOf(datas[3].trim()) * 1000;
                     double y = Double.valueOf(datas[4].trim()) * 1000;
                     double z = Double.valueOf(datas[5].trim()) * 1000;
                     double vx = Double.valueOf(datas[6].trim()) * 1000;
                     double vy = Double.valueOf(datas[7].trim()) * 1000;
                     double vz = Double.valueOf(datas[8].trim()) * 1000;
-                    Body new_body = new Body(name, mass, diameter, x, y, z, vx, vy, vz);
+                    Color astroColor = getColor("," + datas[9] + "," + datas[10] + "," + datas[11], Color.YELLOW);
+                    Body new_body = new Body(name, mass, radius, x, y, z, vx, vy, vz, astroColor);
                     bodyList.add(new_body);
                 } else {
                     System.out.println("Line not processed: " + line);

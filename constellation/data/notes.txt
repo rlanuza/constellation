@@ -47,4 +47,5 @@ Notes:
     https://es.wikipedia.org/wiki/Anexo:Datos_de_los_planetas_del_sistema_solar
     https://codigofacilito.com/cursos/JAVA
     https://cs.uns.edu.ar/~ldm/mypage/data/oc/info/guia_para_la_documentacion_de_proyectos_de_software.pdf
+    https://es.slideshare.net/cpavella/8b-curso-de-poo-en-java-paso-de-diagrama-clases-a-java-1
 

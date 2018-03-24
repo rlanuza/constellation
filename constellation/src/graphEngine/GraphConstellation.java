@@ -13,7 +13,7 @@ public class GraphConstellation {
     private double scale;
 
     public String getScaleString() {
-        String s = String.format("Scale: %.4e pixel/m", scale);
+        String s = String.format("Scale: %.4e m/pixel", 1 / scale);
         return s;
     }
 

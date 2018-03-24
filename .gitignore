@@ -13,5 +13,5 @@
 /constellation/nbproject/private/
 /constellation/build/
 /constellation/dist/
-/constellation/doc/Constellation.eap
-/constellation/doc/Constellation.ldb
+/constellation/doc/*.ldb
+/constellation/doc/*.eap
