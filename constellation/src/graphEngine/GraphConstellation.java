@@ -64,20 +64,20 @@ public class GraphConstellation {
 
     void paintConstellation(Graphics2D g2d) {
         if (grBody != null) {
-            for (GraphBody grBody : grBody) {
-                g2d.setColor(grBody.color);
-                if (!grBody.orbit.proyectionPointList.isEmpty()) {
-                    int x0 = grBody.orbit.proyectionPointList.get(0).x;
-                    int y0 = grBody.orbit.proyectionPointList.get(0).y;
-                    for (Point orbitPoint : grBody.orbit.proyectionPointList) {
+            for (GraphBody grB : grBody) {
+                g2d.setColor(grB.color);
+                if (!grB.orbit.proyectionPointList.isEmpty()) {
+                    int x0 = grB.orbit.proyectionPointList.get(0).x;
+                    int y0 = grB.orbit.proyectionPointList.get(0).y;
+                    for (Point orbitPoint : grB.orbit.proyectionPointList) {
                         int x1 = orbitPoint.x;
                         int y1 = orbitPoint.y;
                         g2d.drawLine(x0, y0, x1, y1);
                         x0 = x1;
                         y0 = y1;
                     }
-                    drawCircle(g2d, x0, y0, grBody.radius_i);
-                    g2d.drawString(grBody.name, x0, y0);
+                    drawCircle(g2d, x0, y0, grB.radius_i);
+                    g2d.drawString(grB.name, x0, y0);
                 }
             }
         }
