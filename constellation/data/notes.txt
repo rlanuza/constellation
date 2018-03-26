@@ -49,3 +49,14 @@ Notes:
     https://cs.uns.edu.ar/~ldm/mypage/data/oc/info/guia_para_la_documentacion_de_proyectos_de_software.pdf
     https://es.slideshare.net/cpavella/8b-curso-de-poo-en-java-paso-de-diagrama-clases-a-java-1
 
+5) Todo
+    a) Create a list of reduced elements to start to debug the final functionality
+    b) Finish the joint method with a energy report of collision
+    c) Dump distances between elements
+        c1) Check if the distance is always reduced and didn't has more than 1 minimun
+        c2) If there are more than a minimum check if it's only one by orbit
+    d) Strategies:
+        d1) If  minimun recalculate target when the minimun distance happens
+        d2) Else a corrective method will be neccesary, like partial corrections
+    
+    
