@@ -10,7 +10,7 @@
     MAX_ORBIT_POINTS:   50000           # Avoid hard graphic computing, try to use less than 10000
     SCREEN_PERCENT:     50              # Size of screen in % 
     SCREEN_RESIZABLE:   true            # true or false
-    COLOR_SCREEN:       42,42,42        # Screen color in R,G,B
+    COLOR_SCREEN:       21,21,21        # Screen color in R,G,B
     COLOR_DATE:         255,0,0         # Screen color in R,G,B
     COLOR_SCALE:        0,255,0         # Screen color in R,G,B
     COLOR_ANGLE:        102,255,255     # Screen color in R,G,B    

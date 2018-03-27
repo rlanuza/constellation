@@ -69,22 +69,32 @@ public class Constellation {
         String name = body1.name + "-" + body2.name;
         double mass = body1.mass + body2.mass;
         double radius = Math.cbrt(Math.pow(body1.radius, 3) + Math.pow(body2.radius, 3));
-        //@Todo calculate the new barycentre r1 = d*m2/(m1+m2)
-
+        // The new barycentre r1 = d*m2/(m1+m2)
         double x = body1.x + ((body2.x - body1.x) * body2.mass / mass);
         double y = body1.y + ((body2.y - body1.y) * body2.mass / mass);
         double z = body1.z + ((body2.z - body1.z) * body2.mass / mass);
-        //@Todo calculate the new speed vf = [ m1 v1i + m2 v2i ] / (m1 + m2)
+        // The new speed vf = [ m1 v1 + m2 v2 ] / (m1 + m2)
         // [Assumption:the collision is inelastic and direct without modification in rotation of th]
         double vx = ((body1.mass * body1.vx) + (body2.mass * body2.vx)) / mass;
         double vy = ((body1.mass * body1.vy) + (body2.mass * body2.vy)) / mass;
         double vz = ((body1.mass * body1.vz) + (body2.mass * body2.vz)) / mass;
-        Color astroColor = body1.color;
+        int newRColor = body1.color.getRed() + body2.color.getRed();
+        if (newRColor > 255) {
+            newRColor = 255;
+        }
+        int newGColor = body1.color.getGreen() + body2.color.getGreen();
+        if (newGColor > 255) {
+            newGColor = 255;
+        }
+        int newBColor = body1.color.getBlue() + body2.color.getBlue();
+        if (newBColor > 255) {
+            newBColor = 255;
+        }
+        Color astroColor = new Color(newRColor, newGColor, newBColor);
         bodyTmp[j] = new Body(name, mass, radius, x, y, z, vx, vy, vz, astroColor);
         body = bodyTmp;
         calculateGravity(j);
 
-        // @Todo correct lost of planet
         graphConstellation.reindexConstellation(body);
     }
 
