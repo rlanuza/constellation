@@ -48,6 +48,7 @@ Notes:
     https://codigofacilito.com/cursos/JAVA
     https://cs.uns.edu.ar/~ldm/mypage/data/oc/info/guia_para_la_documentacion_de_proyectos_de_software.pdf
     https://es.slideshare.net/cpavella/8b-curso-de-poo-en-java-paso-de-diagrama-clases-a-java-1
+    http://www.ux1.eiu.edu/~cfadd/1150/07Mom/Inelastic.html
 
 5) Todo
     a) Create a list of reduced elements to start to debug the final functionality
