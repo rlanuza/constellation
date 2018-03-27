@@ -9,6 +9,8 @@ import static orbitEngine.Constellation.G_UNIVERSAL;
  */
 public class Body extends Position {
 
+    static int nextIndex = 0;
+    int index;
     String name;
     double mass;
     double g_mass;
@@ -37,6 +39,8 @@ public class Body extends Position {
         this.vy = vy;
         this.vz = vz;
         this.color = astroColor;
+        this.index = nextIndex;
+        nextIndex++;
     }
 
     public void addGravity(double gx, double gy, double gz) {
@@ -56,4 +60,13 @@ public class Body extends Position {
     public Color getColor() {
         return color;
     }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public static int getNextIndex() {
+        return nextIndex;
+    }
+
 }

@@ -28,13 +28,38 @@ public class GraphConstellation {
     public void initConstellation(Body[] body) {
         grBody = new GraphBody[body.length];
         for (int i = 0; i < body.length; i++) {
-            grBody[i] = new GraphBody();
-            grBody[i].name = body[i].getName();
-            grBody[i].radius = body[i].getRadius();
-            grBody[i].radius_i = (int) (grBody[i].radius * scale) + 1;
-            grBody[i].color = body[i].getColor();
-            grBody[i].orbit = new GraphOrbit(rotation);
+            int j = body[i].getIndex();
+            grBody[j] = new GraphBody();
+            grBody[j].index = body[i].getIndex();
+            grBody[j].name = body[i].getName();
+            grBody[j].radius = body[i].getRadius();
+            grBody[j].radius_i = (int) (grBody[j].radius * scale) + 1;
+            grBody[j].color = body[i].getColor();
+            grBody[j].orbit = new GraphOrbit(rotation);
         }
+    }
+
+    public void reindexConstellation(Body[] body) {
+        /*
+        GraphBody[] grTmp = new GraphBody[Body.getNextIndex()];
+        for (int i = 0; i < grBody.length; i++) {
+            if(grBody
+        }
+
+        for (int i = 0; i < body.length; i++) {
+            int j = body[i].getIndex();
+            if (grBody.length > i) {
+                grTmp[i] = grBody[i];
+            }
+            grTmp[i].index = body[i].getIndex();
+            grTmp[i].name = body[i].getName();
+            grTmp[i].radius = body[i].getRadius();
+            grTmp[i].radius_i = (int) (grBody[i].radius * scale) + 1;
+            grTmp[i].color = body[i].getColor();
+            grTmp[i].orbit = new GraphOrbit(rotation);
+
+        }
+         */
     }
 
     public synchronized void updateGrConstellation(Body[] body) {
