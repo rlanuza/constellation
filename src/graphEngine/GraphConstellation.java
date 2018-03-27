@@ -25,53 +25,49 @@ public class GraphConstellation {
         scale = metersPerPixel;
     }
 
-    public void initConstellation(Body[] body) {
-        grBody = new GraphBody[body.length];
-        for (int i = 0; i < body.length; i++) {
-            int j = body[i].getIndex();
-            grBody[j] = new GraphBody();
-            grBody[j].index = body[i].getIndex();
-            grBody[j].name = body[i].getName();
-            grBody[j].radius = body[i].getRadius();
-            grBody[j].radius_i = (int) (grBody[j].radius * scale) + 1;
-            grBody[j].color = body[i].getColor();
-            grBody[j].orbit = new GraphOrbit(rotation);
+    public synchronized void initConstellation(Body[] b) {
+        grBody = new GraphBody[b.length];
+        for (int i = 0; i < b.length; i++) {
+            int j = b[i].getIndex();
+            grBody[j] = new GraphBody(
+                    b[i].getIndex(), b[i].getName(), b[i].getRadius(),
+                    b[i].getColor(), new GraphOrbit(rotation), scale
+            );
         }
     }
 
-    public void reindexConstellation(Body[] body) {
-        /*
+    public synchronized void reindexConstellation(Body[] b) {
         GraphBody[] grTmp = new GraphBody[Body.getNextIndex()];
-        for (int i = 0; i < grBody.length; i++) {
-            if(grBody
-        }
-
-        for (int i = 0; i < body.length; i++) {
-            int j = body[i].getIndex();
-            if (grBody.length > i) {
-                grTmp[i] = grBody[i];
+        // Copy all old bodies, even the collided
+        int i, j;
+        for (i = 0, j = 0; i < grBody.length; i++) {
+            grTmp[i] = grBody[i];
+            if (grBody[i].index == b[j].getIndex()) {
+                j++;
+            } else {
+                grTmp[i].name = "";
+                grTmp[i].radius = 0;
             }
-            grTmp[i].index = body[i].getIndex();
-            grTmp[i].name = body[i].getName();
-            grTmp[i].radius = body[i].getRadius();
-            grTmp[i].radius_i = (int) (grBody[i].radius * scale) + 1;
-            grTmp[i].color = body[i].getColor();
-            grTmp[i].orbit = new GraphOrbit(rotation);
-
         }
-         */
+        // Add the new element that arrives in last position
+        grTmp[i] = new GraphBody(
+                b[j].getIndex(), b[j].getName(), b[j].getRadius(),
+                b[j].getColor(), new GraphOrbit(rotation), scale
+        );
+        // Replace the list
+        grBody = grTmp;
     }
 
     public synchronized void updateGrConstellation(Body[] body) {
         for (int i = 0; i < body.length; i++) {
-            grBody[i].orbit.addOrbitPoint(scale, body[i]);
+            grBody[body[i].getIndex()].orbit.addOrbitPoint(scale, body[i]);
         }
     }
 
     synchronized void rescaleGrConstellation(double zoom) {
         scale = metersPerPixel * zoom;
         for (GraphBody grB : grBody) {
-            grB.radius_i = (int) (grB.radius * scale) + 1;
+            grB.recalculateGrRadius(scale);
             grB.orbit.rescaleOrbit(scale);
         }
     }

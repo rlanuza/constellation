@@ -85,7 +85,7 @@ public class Constellation {
         calculateGravity(j);
 
         // @Todo correct lost of planet
-        graphConstellation.initConstellation(body);
+        graphConstellation.reindexConstellation(body);
     }
 
     void calculateDistances() {
