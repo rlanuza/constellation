@@ -13,7 +13,7 @@ public class GraphOrbit {
     CopyOnWriteArrayList<Point> proyectionPointList = new CopyOnWriteArrayList<>();
     private ArrayList<Position> point3d = new ArrayList<>();
     private GraphRotation rotation = null;
-    private Point p_old = new Point(0, 0);
+    private Point p_old = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
 
     GraphOrbit(GraphRotation rotation) {
         this.rotation = rotation;
