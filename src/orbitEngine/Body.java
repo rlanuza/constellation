@@ -27,6 +27,10 @@ public class Body extends Position {
     double gy;
     double gz;
 
+    // Energy on creation in Joule
+    //Todo split translational kinetic energy and rotational energy or angular kinetic energy i
+    double kineticOnCReation;
+
     public Body(String name, double mass, double radius, double x, double y, double z, double vx, double vy, double vz, Color astroColor) {
         this.name = name;
         this.mass = mass;

@@ -51,42 +51,47 @@ public class Constellation {
         graphConstellation.initConstellation(body);
     }
 
-    private void mergeBodies(Body body1, Body body2) {
+    private void mergeBodies(Body b1, Body b2) {
         Body[] bodyTmp = new Body[body.length - 1];
         int j = 0;
         for (int i = 0; i < body.length; i++) {
-            if ((body[i] != body1) && (body[i] != body2)) {
+            if ((body[i] != b1) && (body[i] != b2)) {
                 bodyTmp[j++] = body[i];
             }
         }
         // The Body1 must be the biggest
-        if (body2.mass > body1.mass) {
-            Body tmp = body1;
-            body1 = body2;
-            body2 = tmp;
+        if (b2.mass > b1.mass) {
+            Body tmp = b1;
+            b1 = b2;
+            b2 = tmp;
         }
 
-        String name = body1.name + "-" + body2.name;
-        double mass = body1.mass + body2.mass;
-        double radius = Math.cbrt(Math.pow(body1.radius, 3) + Math.pow(body2.radius, 3));
+        String name = b1.name + "-" + b2.name;
+        double mass = b1.mass + b2.mass;
+        double radius = Math.cbrt(Math.pow(b1.radius, 3) + Math.pow(b2.radius, 3));
         // The new barycentre r1 = d*m2/(m1+m2)
-        double x = body1.x + ((body2.x - body1.x) * body2.mass / mass);
-        double y = body1.y + ((body2.y - body1.y) * body2.mass / mass);
-        double z = body1.z + ((body2.z - body1.z) * body2.mass / mass);
+        double x = b1.x + ((b2.x - b1.x) * b2.mass / mass);
+        double y = b1.y + ((b2.y - b1.y) * b2.mass / mass);
+        double z = b1.z + ((b2.z - b1.z) * b2.mass / mass);
         // The new speed vf = [ m1 v1 + m2 v2 ] / (m1 + m2)
         // [Assumption:the collision is inelastic and direct without modification in rotation of th]
-        double vx = ((body1.mass * body1.vx) + (body2.mass * body2.vx)) / mass;
-        double vy = ((body1.mass * body1.vy) + (body2.mass * body2.vy)) / mass;
-        double vz = ((body1.mass * body1.vz) + (body2.mass * body2.vz)) / mass;
-        int newRColor = body1.color.getRed() + body2.color.getRed();
+        double vx = ((b1.mass * b1.vx) + (b2.mass * b2.vx)) / mass;
+        double vy = ((b1.mass * b1.vy) + (b2.mass * b2.vy)) / mass;
+        double vz = ((b1.mass * b1.vz) + (b2.mass * b2.vz)) / mass;
+        // Kinetic energy loss Ecf - (Eci1+Eci2)= 1/2*((m1+m2)*vf^2-(m1*vi1^2+m2*vi2^2)
+        double kinetic1 = 0.5 * b1.mass * (b1.vx * b1.vx + b1.vy * b1.vy + b1.vz * b1.vz);
+        double kinetic2 = 0.5 * b2.mass * (b2.vx * b2.vx + b2.vy * b2.vy + b2.vz * b2.vz);
+        double kineticf = 0.5 * mass * (vx * vx + vy * vy + vz * vz);
+        double kineticLost = kineticf - (kinetic1 + kinetic2);
+        int newRColor = b1.color.getRed() + b2.color.getRed();
         if (newRColor > 255) {
             newRColor = 255;
         }
-        int newGColor = body1.color.getGreen() + body2.color.getGreen();
+        int newGColor = b1.color.getGreen() + b2.color.getGreen();
         if (newGColor > 255) {
             newGColor = 255;
         }
-        int newBColor = body1.color.getBlue() + body2.color.getBlue();
+        int newBColor = b1.color.getBlue() + b2.color.getBlue();
         if (newBColor > 255) {
             newBColor = 255;
         }
