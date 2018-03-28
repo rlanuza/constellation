@@ -79,10 +79,6 @@ public class Constellation {
         double vy = ((b1.mass * b1.vy) + (b2.mass * b2.vy)) / mass;
         double vz = ((b1.mass * b1.vz) + (b2.mass * b2.vz)) / mass;
         // Kinetic energy loss Ecf - (Eci1+Eci2)= 1/2*((m1+m2)*vf^2-(m1*vi1^2+m2*vi2^2)
-        double kinetic1 = 0.5 * b1.mass * (b1.vx * b1.vx + b1.vy * b1.vy + b1.vz * b1.vz);
-        double kinetic2 = 0.5 * b2.mass * (b2.vx * b2.vx + b2.vy * b2.vy + b2.vz * b2.vz);
-        double kineticf = 0.5 * mass * (vx * vx + vy * vy + vz * vz);
-        double kineticLost = kineticf - (kinetic1 + kinetic2);
         int newRColor = b1.color.getRed() + b2.color.getRed();
         if (newRColor > 255) {
             newRColor = 255;
@@ -97,6 +93,8 @@ public class Constellation {
         }
         Color astroColor = new Color(newRColor, newGColor, newBColor);
         bodyTmp[j] = new Body(name, mass, radius, x, y, z, vx, vy, vz, astroColor);
+        double kineticLost = bodyTmp[j].kinetic() - (b1.kinetic() + b2.kinetic());
+        System.out.printf("Kinetic lost on %s generation: %e\n", name, kineticLost);
         body = bodyTmp;
         calculateGravity(j);
 

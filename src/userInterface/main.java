@@ -59,7 +59,7 @@ public class main {
             eng.link(screen.getGraphConstellation());
 
             runSimulation();
-            System.out.print(System.nanoTime() - start);
+            System.out.printf("Elapsed time %f\n", (System.nanoTime() - start) / 1.0e9);
         }
     }
 
