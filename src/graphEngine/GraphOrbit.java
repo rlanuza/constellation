@@ -2,7 +2,6 @@ package graphEngine;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.concurrent.CopyOnWriteArrayList;
 import orbitEngine.Body;
 import orbitEngine.Position;
 import userInterface.Parameters;
@@ -10,7 +9,7 @@ import userInterface.Parameters;
 public class GraphOrbit {
 
     // Orbit list points
-    CopyOnWriteArrayList<Point> proyectionPointList = new CopyOnWriteArrayList<>();
+    ArrayList<Point> proyectionPointList = new ArrayList<>();
     private ArrayList<Position> point3d = new ArrayList<>();
     private GraphRotation rotation = null;
     private Point p_old = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
@@ -41,8 +40,8 @@ public class GraphOrbit {
 
     synchronized void rescaleOrbit(double scale) {
         proyectionPointList.clear();
-        proyectionPointList = new CopyOnWriteArrayList<>();
-        Point p_old = new Point(0, 0);
+        proyectionPointList = new ArrayList<>();
+        Point p_old = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
         for (Position p_xyz : point3d) {
             Position r_p_xyz = rotation.rotatePosition(p_xyz);
             Point p = new Point((int) (r_p_xyz.x * scale), (int) -(r_p_xyz.y * scale));

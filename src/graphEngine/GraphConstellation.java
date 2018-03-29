@@ -83,7 +83,7 @@ public class GraphConstellation {
         g2d.drawOval(x - radius, y - radius, diameter, diameter);
     }
 
-    void paintConstellation(Graphics2D g2d) {
+    synchronized void paintConstellation(Graphics2D g2d) {
         if (grBody != null) {
             for (GraphBody grB : grBody) {
                 g2d.setColor(grB.color);

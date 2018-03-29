@@ -79,18 +79,9 @@ public class Constellation {
         double vy = ((b1.mass * b1.vy) + (b2.mass * b2.vy)) / mass;
         double vz = ((b1.mass * b1.vz) + (b2.mass * b2.vz)) / mass;
         // Kinetic energy loss Ecf - (Eci1+Eci2)= 1/2*((m1+m2)*vf^2-(m1*vi1^2+m2*vi2^2)
-        int newRColor = b1.color.getRed() + b2.color.getRed();
-        if (newRColor > 255) {
-            newRColor = 255;
-        }
-        int newGColor = b1.color.getGreen() + b2.color.getGreen();
-        if (newGColor > 255) {
-            newGColor = 255;
-        }
-        int newBColor = b1.color.getBlue() + b2.color.getBlue();
-        if (newBColor > 255) {
-            newBColor = 255;
-        }
+        int newRColor = Math.min(b1.color.getRed() + b2.color.getRed(), 255);
+        int newGColor = Math.min(b1.color.getGreen() + b2.color.getGreen(), 255);
+        int newBColor = Math.min(b1.color.getBlue() + b2.color.getBlue(), 255);
         Color astroColor = new Color(newRColor, newGColor, newBColor);
         bodyTmp[j] = new Body(name, mass, radius, x, y, z, vx, vy, vz, astroColor);
         double kineticLost = bodyTmp[j].kinetic() - (b1.kinetic() + b2.kinetic());
@@ -101,9 +92,9 @@ public class Constellation {
         graphConstellation.reindexConstellation(body);
     }
 
+    // Calculate diatances and give a factor to reduce the delta time to get best accuracy on short distances
     void calculateDistances() {
         double dx, dy, dz, d2, d;
-        outerloop:
         for (int i = 0; i < body.length; i++) {
             for (int j = i + 1; j < body.length; j++) {
                 dx = body[j].x - body[i].x;
@@ -116,8 +107,9 @@ public class Constellation {
                 dist_x[i][j] = dx;
                 dist_y[i][j] = dy;
                 dist_z[i][j] = dz;
-                /*@Todo merge bodies here if they are near */
-                if (d < (body[i].radius + body[j].radius)) {
+                // Merge bodies here if they are near
+                double distCollision = body[i].radius + body[j].radius;
+                if (d < distCollision) {
                     mergeBodies(body[i], body[j]);
                     calculateDistances();
                     return;
@@ -238,7 +230,6 @@ public class Constellation {
             body[i].vz += gz * deltaTime;
             //body[i].addGravity(gx, gy, gz);
         }
-
     }
 
     void step_jerk_Schwarzschild(double deltaTime) {
@@ -285,7 +276,6 @@ public class Constellation {
             body[i].vx += gx * deltaTime;
             body[i].vy += gy * deltaTime;
             body[i].vz += gz * deltaTime;
-
             body[i].addGravity(gx, gy, gz);
         }
     }
