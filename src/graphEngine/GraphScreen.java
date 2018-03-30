@@ -111,7 +111,7 @@ public class GraphScreen extends JComponent implements KeyListener {
         }
     }
 
-    //@Override
+    @Override
     public void addNotify() {
         super.addNotify();
         requestFocus();
@@ -183,7 +183,7 @@ public class GraphScreen extends JComponent implements KeyListener {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double screenPortion = Parameters.SCREEN_PERCENT / 100.0;
         if (screenPortion > 1.0) {
-            screenPortion = 5.00;
+            screenPortion = 0.5;
         }
         screenHeight = (int) (screenSize.height * screenPortion);
         screenWidth = (int) (screenSize.width * screenPortion);

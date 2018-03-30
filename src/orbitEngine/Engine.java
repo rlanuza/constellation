@@ -14,8 +14,8 @@ import userInterface.Parameters;
 
 public class Engine {
 
-    private double stepTime;
-    static private long seconds;
+    private final double stepTime;
+    private static long seconds;
 
     private final Constellation constellation;
 

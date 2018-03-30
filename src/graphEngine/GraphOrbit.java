@@ -10,9 +10,9 @@ public class GraphOrbit {
 
     // Orbit list points
     ArrayList<Point> proyectionPointList = new ArrayList<>();
-    private ArrayList<Position> point3d = new ArrayList<>();
+    private final ArrayList<Position> point3d = new ArrayList<>();
     private GraphRotation rotation = null;
-    private Point p_old = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
+    private Point pOld = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
 
     GraphOrbit(GraphRotation rotation) {
         this.rotation = rotation;
@@ -32,22 +32,22 @@ public class GraphOrbit {
         Position r_p_xyz = rotation.rotatePosition(p_xyz);
         Point p = new Point((int) (r_p_xyz.x * scale), (int) -(r_p_xyz.y * scale));
         point3d.add(p_xyz);
-        if ((p.x != p_old.x) || (p.y != p_old.y)) {
+        if ((p.x != pOld.x) || (p.y != pOld.y)) {
             proyectionPointList.add(p);
-            p_old = p;
+            pOld = p;
         }
     }
 
     synchronized void rescaleOrbit(double scale) {
         proyectionPointList.clear();
         proyectionPointList = new ArrayList<>();
-        Point p_old = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
+        Point lastPoint = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
         for (Position p_xyz : point3d) {
             Position r_p_xyz = rotation.rotatePosition(p_xyz);
             Point p = new Point((int) (r_p_xyz.x * scale), (int) -(r_p_xyz.y * scale));
-            if ((p.x != p_old.x) || (p.y != p_old.y)) {
+            if ((p.x != lastPoint.x) || (p.y != lastPoint.y)) {
                 proyectionPointList.add(p);
-                p_old = p;
+                lastPoint = p;
             }
         }
     }
