@@ -8,15 +8,15 @@ package orbitEngine;
 import graphEngine.GraphConstellation;
 import java.awt.Color;
 import java.util.logging.Logger;
-import static userInterface.Parameters.bodyList;
+import static userInterface.Parameter.bodyList;
 
-public class Constellation {
+public final class Constellation {
 
     public static final int ASTRO_STRING_FIELDS = 12;
     static final double C = 299792458;
     public static final double G_UNIVERSAL = 6.6740831e-11; // m^3/(Kg*s^2)
     static final double C2 = C * C;
-    final Logger LOG = Logger.getLogger(Constellation.class.getName());
+    static final Logger LOG = Logger.getLogger(Constellation.class.getName());
 
     // Once we'll have all data loaded we'll convert o array and implement 2 copies to store old and new position each step
     static Body[] body;

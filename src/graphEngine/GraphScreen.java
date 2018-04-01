@@ -20,7 +20,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import orbitEngine.Engine;
-import userInterface.Parameters;
+import userInterface.Parameter;
 
 /**
  *
@@ -97,12 +97,12 @@ public class GraphScreen extends JComponent implements KeyListener {
         g.drawLine((int) anchorX, 0, (int) anchorX, screenHeight);
 
         if (gc != null) {
-            g.setColor(Parameters.COLOR_DATE);
+            g.setColor(Parameter.COLOR_DATE);
             g.setFont(new Font("Courier New", Font.BOLD, 22));
             g.drawString(Engine.dateString(), 10, 22);
-            g.setColor(Parameters.COLOR_SCALE);
+            g.setColor(Parameter.COLOR_SCALE);
             g.drawString(gc.getScaleString(), 10, 44);
-            g.setColor(Parameters.COLOR_ANGLE);
+            g.setColor(Parameter.COLOR_ANGLE);
             g.drawString(rotation.getRotationString(), 10, 66);
             g.setFont(new Font("Verdana", Font.PLAIN, 12));
             Graphics2D g2d = (Graphics2D) g;
@@ -181,7 +181,7 @@ public class GraphScreen extends JComponent implements KeyListener {
     public GraphScreen(Engine eng) {
         addKeyListener(this);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        double screenPortion = Parameters.SCREEN_PERCENT / 100.0;
+        double screenPortion = Parameter.SCREEN_PERCENT / 100.0;
         if (screenPortion > 1.0) {
             screenPortion = 0.5;
         }
@@ -194,8 +194,8 @@ public class GraphScreen extends JComponent implements KeyListener {
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setPreferredSize(new Dimension(screenWidth, screenHeight));
-        screen.setResizable(Parameters.SCREEN_RESIZABLE);
-        screen.getContentPane().setBackground(Parameters.COLOR_SCREEN);
+        screen.setResizable(Parameter.SCREEN_RESIZABLE);
+        screen.getContentPane().setBackground(Parameter.COLOR_SCREEN);
 
         screen.getContentPane().add(this, BorderLayout.CENTER);
         JPanel buttonsPanel = new JPanel();

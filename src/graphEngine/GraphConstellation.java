@@ -3,7 +3,7 @@ package graphEngine;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import orbitEngine.Body;
-import userInterface.Parameters;
+import userInterface.Parameter;
 
 public class GraphConstellation {
 
@@ -21,7 +21,7 @@ public class GraphConstellation {
 
     GraphConstellation(GraphRotation rotation) {
         this.rotation = rotation;
-        metersPerPixel = Parameters.METERS_PER_PIXEL;
+        metersPerPixel = Parameter.METERS_PER_PIXEL;
         scale = metersPerPixel;
     }
 

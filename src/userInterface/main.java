@@ -52,7 +52,7 @@ public class main {
                     + "\t-h, --help\n");
         } else {
             final long start = System.nanoTime();
-            Parameters.loadParameters(parametersFile);
+            Parameter.loadParameters(parametersFile);
 
             eng = new Engine();
             screen = new GraphScreen(eng);
@@ -64,9 +64,9 @@ public class main {
     }
 
     private static void runSimulation() {
-        long simulationPlots = Parameters.SIMULATION_STEPS / Parameters.STEPS_PER_PLOT;
+        long simulationPlots = Parameter.SIMULATION_STEPS / Parameter.STEPS_PER_PLOT;
         for (long i = 0; i < simulationPlots; i++) {
-            eng.run(Parameters.STEPS_PER_PLOT);
+            eng.run(Parameter.STEPS_PER_PLOT);
             screen.updateConstellation();
         }
     }

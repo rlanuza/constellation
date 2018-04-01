@@ -18,9 +18,9 @@ public class Body extends Position {
     Color color;
 
     // Speed by axis: v(t)= d(r(t))/dt
-    double vx;
-    double vy;
-    double vz;
+    public double vx;
+    public double vy;
+    public double vz;
 
     // Gravity acceleration by axis: a(t)= d(v(t))/dt = d2(r(t))/dt
     double gx;

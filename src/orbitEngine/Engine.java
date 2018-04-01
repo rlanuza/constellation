@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import userInterface.Parameters;
+import userInterface.Parameter;
 
 public class Engine {
 
@@ -21,8 +21,8 @@ public class Engine {
 
     public Engine() {
         constellation = new Constellation();
-        stepTime = Parameters.STEP_TIME;
-        seconds = Parameters.START_EPOCH_TIME;
+        stepTime = Parameter.STEP_TIME;
+        seconds = Parameter.START_EPOCH_TIME;
 
     }
 
@@ -39,7 +39,7 @@ public class Engine {
 
     public void run(long steepsPerPlot) {
         seconds += stepTime * steepsPerPlot;
-        switch (Parameters.CALCULUS_METHOD) {
+        switch (Parameter.CALCULUS_METHOD) {
             case 0:
                 for (int i = 0; i < steepsPerPlot; i++) {
                     constellation.step_basic(stepTime);
