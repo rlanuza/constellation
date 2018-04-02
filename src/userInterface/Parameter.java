@@ -30,7 +30,7 @@ public class Parameter extends LineConvert {
         try {
             contents = new String(Files.readAllBytes(Paths.get(constellationFile)));
         } catch (IOException ex) {
-            System.out.println("Error reading: " + constellationFile);
+            System.out.printf("Error [%s]  reading: %s\n", ex.toString(), constellationFile);
             System.exit(1);
         }
         // Load all constellation data from file
@@ -85,6 +85,5 @@ public class Parameter extends LineConvert {
                 }
             }
         }
-
     }
 }

@@ -45,6 +45,15 @@ public class LineConvert {
         }
     }
 
+    protected static String getString(String line, String defaultValue) {
+        String[] fields = getdata(line);
+        if (fields != null) {
+            return fields[0].trim();
+        } else {
+            return defaultValue;
+        }
+    }
+
     protected static Color getColor(String line, Color defaultColor) {
         String[] fields = getdata(line);
         if ((fields != null) && (fields.length == 3)) {

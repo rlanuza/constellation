@@ -43,16 +43,18 @@ public class main {
                 outputFile = s.substring(ARG_OUT2.length());
             }
         }
-        if (parametersFile == null || commandFile == null || outputFile == null) {
+        if (parametersFile == null) {
             System.out.print("Options:\n"
                     + "\t" + ARG_PARAM2 + "<parameter_file>, " + ARG_PARAM1 + "<parameter_file>\n"
-                    + "\t" + ARG_PARAM2 + "<parameter_file>, " + ARG_PARAM1 + "<parameter_file>\n"
-                    + "\t" + ARG_COMMAND2 + "<command_file>, " + ARG_COMMAND1 + "<command_file>\n"
-                    + "\t" + ARG_OUT2 + "<output_file>, " + ARG_OUT1 + "<output_file>\n"
+                    + "\t[" + ARG_COMMAND2 + "<command_file>, " + ARG_COMMAND1 + "<command_file>]\n"
+                    + "\t[" + ARG_OUT2 + "<output_file>, " + ARG_OUT1 + "<output_file>]\n"
                     + "\t-h, --help\n");
         } else {
             final long start = System.nanoTime();
             Parameter.loadParameters(parametersFile);
+            if (commandFile != null) {
+                Command.loadCommand(commandFile);
+            }
 
             eng = new Engine();
             screen = new GraphScreen(eng);
