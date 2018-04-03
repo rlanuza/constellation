@@ -52,16 +52,27 @@ public class main {
         } else {
             final long start = System.nanoTime();
             Parameter.loadParameters(parametersFile);
-            if (commandFile != null) {
-                Command.loadCommand(commandFile);
-            }
 
             eng = new Engine();
             screen = new GraphScreen(eng);
             eng.link(screen.getGraphConstellation());
 
-            runSimulation();
+            if (commandFile != null) {
+                Command.loadCommand(commandFile);
+                runSimulationTravel();
+            } else {
+                runSimulation();
+            }
+
             System.out.printf("Elapsed time %f\n", (System.nanoTime() - start) / 1.0e9);
+        }
+    }
+
+    private static void runSimulationTravel() {
+        long simulationPlots = Parameter.SIMULATION_STEPS / Parameter.STEPS_PER_PLOT;
+        for (long i = 0; i < simulationPlots; i++) {
+            eng.run(Parameter.STEPS_PER_PLOT);
+            screen.updateConstellation();
         }
     }
 
@@ -72,4 +83,5 @@ public class main {
             screen.updateConstellation();
         }
     }
+
 }

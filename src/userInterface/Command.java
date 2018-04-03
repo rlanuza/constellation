@@ -22,6 +22,8 @@ public class Command extends LineConvert {
     public static long MAX_LAUNCH_TIME;
     public static long STEP_LAUNCH_TIME;
     public static Route route;
+    public static String ORIGIN;
+    public static String DESTINATION;
 
     static void loadCommand(String commandFile) {
         String contents = "";
@@ -56,6 +58,10 @@ public class Command extends LineConvert {
                 Command.MAX_LAUNCH_TIME = getLong(line, 1551830400);
             } else if (line.startsWith("STEP_LAUNCH_TIME:")) {
                 Command.STEP_LAUNCH_TIME = getLong(line, 3600);
+            } else if (line.startsWith("ORIGIN:")) {
+                Command.ORIGIN = getString(line, "Earth");
+            } else if (line.startsWith("DESTINATION:")) {
+                Command.NAME = getString(line, "Mars");
             } else {
                 System.out.println("Line not processed: " + line);
             }
