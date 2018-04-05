@@ -66,6 +66,5 @@ public class Command extends LineConvert {
                 System.out.println("Line not processed: " + line);
             }
         }
-        //@Todo create a new route to test route = new Route()
     }
 }
