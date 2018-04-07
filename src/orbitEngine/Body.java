@@ -27,13 +27,16 @@ public class Body extends Position {
     double gy;
     double gz;
 
-    // Energy on creation in Joule
-    //Todo split translational kinetic energy and rotational energy or angular kinetic energy i
+    // Energy on new bodies creation in Joule
+    // Todo split translational kinetic energy and rotational energy or angular kinetic energy i
     public double kinetic() {
         // Kinetic energy = 1/2*m*v^2 = 1/2*m*sqr(vx^2+vy^2+vz^2)^2 = 1/2*m*vx^2+vy^2+vz^2)
         return 0.5 * mass * (vx * vx + vy * vy + vz * vz);  // Joules
     }
 
+    /**
+     * Constructor necessary to add bodies
+     */
     public Body(String name, double mass, double radius, double x, double y, double z, double vx, double vy, double vz, Color astroColor) {
         this.name = name;
         this.mass = mass;
@@ -50,6 +53,9 @@ public class Body extends Position {
         nextIndex++;
     }
 
+    /**
+     * Constructor necessary to add rockets
+     */
     Body(String name, double mass, double radius, Color astroColor) {
         this(name, mass, radius, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, astroColor);
     }

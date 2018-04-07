@@ -25,7 +25,7 @@ public class Parameter extends LineConvert {
     public static Color COLOR_SCALE;
     public static Color COLOR_ANGLE;
 
-    static void loadParameters(String constellationFile) {
+    Parameter(String constellationFile) {
         String contents = "";
         try {
             contents = new String(Files.readAllBytes(Paths.get(constellationFile)));

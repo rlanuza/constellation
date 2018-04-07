@@ -30,6 +30,7 @@ public class GraphScreen extends JComponent implements KeyListener {
 
     public static int screenWidth;
     public static int screenHeight;
+    private static final long serialVersionUID = 1L;
     private double anchorX;
     private double anchorY;
     private double zoom = 1.0;

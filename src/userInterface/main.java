@@ -16,7 +16,6 @@ public class main {
 
     private static GraphScreen screen;
     public static Engine eng;
-
     private static final String ARG_PARAM1 = "--parameters:";
     private static final String ARG_PARAM2 = "-p";
     private static final String ARG_COMMAND1 = "--command:";
@@ -51,7 +50,7 @@ public class main {
                     + "\t-h, --help\n");
         } else {
             final long start = System.nanoTime();
-            Parameter.loadParameters(parametersFile);
+            new Parameter(parametersFile);
 
             eng = new Engine();
             screen = new GraphScreen(eng);
@@ -72,7 +71,7 @@ public class main {
         eng.setRoute(command);
         long simulationPlots = Parameter.SIMULATION_STEPS / Parameter.STEPS_PER_PLOT;
         for (long i = 0; i < simulationPlots; i++) {
-            eng.run(Parameter.STEPS_PER_PLOT);
+            eng.runRoute(Parameter.STEPS_PER_PLOT);
             screen.updateConstellation();
         }
     }

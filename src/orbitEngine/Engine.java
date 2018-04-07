@@ -18,8 +18,8 @@ public class Engine {
 
     private final double stepTime;
     private static long seconds;
-
     private final Constellation constellation;
+    private Route route;
 
     public Engine() {
         constellation = new Constellation();
@@ -39,7 +39,6 @@ public class Engine {
     }
 
     public void run(long steepsPerPlot) {
-        seconds += stepTime * steepsPerPlot;
         switch (Parameter.CALCULUS_METHOD) {
             case 0:
                 for (int i = 0; i < steepsPerPlot; i++) {
@@ -63,6 +62,18 @@ public class Engine {
                 break;
             default:
         }
+        seconds += stepTime * steepsPerPlot;
+        constellation.pushToGraphic();
+    }
+
+    public void runRoute(long steepsPerPlot) {
+        for (int i = 0; i < steepsPerPlot; i++) {
+            constellation.step_jerk(stepTime);
+            seconds += stepTime;
+            if (seconds >= route.time) {
+                route.launchToNextTarget();
+            }
+        }
         constellation.pushToGraphic();
     }
 
@@ -71,10 +82,10 @@ public class Engine {
         Body origin = constellation.getBody(cmd.ORIGIN);
         Body target = constellation.getBody(cmd.TARGET);
         if ((origin == null) || (target == null)) {
-            System.out.printf("Error, the origin [%s] or the target [%s]is not in our constellation\n", cmd.ORIGIN, cmd.TARGET);
+            System.out.printf("Error, the origin '%s' or the target '%s' is not in our constellation\n", cmd.ORIGIN, cmd.TARGET);
             System.exit(1);
         }
-        Route route = new Route(spacecraft, origin, target, cmd.MIN_LAUNCH_TIME, cmd.MAX_LAUNCH_TIME, cmd.STEP_LAUNCH_TIME, cmd.MIN_SPEED, cmd.MAX_SPEED, cmd.STEP_SPEED);
-        constellation.setRoute(route);
+        route = new Route(spacecraft, origin, target, cmd.MIN_LAUNCH_TIME, cmd.MAX_LAUNCH_TIME, cmd.STEP_LAUNCH_TIME, cmd.MIN_SPEED, cmd.MAX_SPEED, cmd.STEP_SPEED);
+        constellation.addRocket(route);
     }
 }

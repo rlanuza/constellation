@@ -36,14 +36,17 @@ public final class Constellation {
         int n = bodyList.size();
         // Now we'll generate array copies (faster) of the ArrayList
         body = bodyList.toArray(new Body[n]);
+        resizeDistanceArrays(n);
+        // Calculate the initial gravity of the system
+        initGravity();
+    }
+
+    private void resizeDistanceArrays(int n) {
         dist = new double[n][n];
         dist3 = new double[n][n];
         dist_x = new double[n][n];
         dist_y = new double[n][n];
         dist_z = new double[n][n];
-
-        // Calculate the initial gravity of the system
-        initGravity();
     }
 
     public void link(GraphConstellation graphConstellation) {
@@ -88,8 +91,7 @@ public final class Constellation {
         double kineticLost = bodyTmp[j].kinetic() - (b1.kinetic() + b2.kinetic());
         System.out.printf("Kinetic lost on %s generation: %e\n", name, kineticLost);
         body = bodyTmp;
-        calculateGravity(j);
-
+        resizeDistanceArrays(body.length);
         graphConstellation.reindexConstellation(body);
     }
 
@@ -294,7 +296,16 @@ public final class Constellation {
         return null;
     }
 
-    void setRoute(Route route) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    void addRocket(Route route) {
+        int i;
+        Body[] bodyTmp = new Body[body.length + 1];
+        for (i = 0; i < body.length; i++) {
+            bodyTmp[i] = body[i];
+        }
+
+        bodyTmp[i] = route.getSpacecraft();
+        body = bodyTmp;
+        resizeDistanceArrays(body.length);
+        initGravity();
     }
 }
