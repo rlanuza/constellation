@@ -51,7 +51,7 @@ public final class Constellation {
 
     public void link(GraphConstellation graphConstellation) {
         this.graphConstellation = graphConstellation;
-        // Prepare the graph info
+        // Prepare the graphical info
         graphConstellation.initConstellation(body);
     }
 
@@ -306,6 +306,7 @@ public final class Constellation {
         bodyTmp[i] = route.getSpacecraft();
         body = bodyTmp;
         resizeDistanceArrays(body.length);
+        graphConstellation.reindexConstellation(body);
         initGravity();
     }
 }
