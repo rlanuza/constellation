@@ -5,8 +5,9 @@
     NAME:               Sara            # Rocket name
     MASS:               5E03            # Rocket mass (Kg)
     RADIUS:             3               # Rocket Radius (m)
+    COLOR:              0,0,255         # Rocket color in R,G,B
     MIN_LAUNCH_TIME:    1520294400      # The minimum Epoc time of the launch (1520294400==2018-Mar-06 00:00:00.0000 TDB.)
     MAX_LAUNCH_TIME:    1551830400      # The minimum Epoc time of the launch (1520294400==2018-Mar-06 00:00:00.0000 TDB.)
     STEP_LAUNCH_TIME:   86400           # The minimum Epoc time of the launch (1520294400==2018-Mar-06 00:00:00.0000 TDB.)
     ORIGIN:             Earth           # Origin body
-    DESTINATION:        Mars            # Destiantion body
+    TARGET:             Mars            # Target body

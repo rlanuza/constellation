@@ -5,27 +5,27 @@
  */
 package userInterface;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import orbitEngine.routes.Route;
 
 public class Command extends LineConvert {
 
-    public static double MIN_SPEED;
-    public static double MAX_SPEED;
-    public static double STEP_SPEED;
-    public static String NAME;
-    public static double MASS;
-    public static double RADIUS;
-    public static long MIN_LAUNCH_TIME;
-    public static long MAX_LAUNCH_TIME;
-    public static long STEP_LAUNCH_TIME;
-    public static Route route;
-    public static String ORIGIN;
-    public static String DESTINATION;
+    public double MIN_SPEED;
+    public double MAX_SPEED;
+    public double STEP_SPEED;
+    public String NAME;
+    public double MASS;
+    public double RADIUS;
+    public Color COLOR;
+    public long MIN_LAUNCH_TIME;
+    public long MAX_LAUNCH_TIME;
+    public long STEP_LAUNCH_TIME;
+    public String ORIGIN;
+    public String TARGET;
 
-    static void loadCommand(String commandFile) {
+    Command(String commandFile) {
         String contents = "";
         try {
             contents = new String(Files.readAllBytes(Paths.get(commandFile)));
@@ -41,27 +41,29 @@ public class Command extends LineConvert {
             if ((line.length() == 0) || line.startsWith("#")) {
                 // This is a comment
             } else if (line.startsWith("MIN_SPEED:")) {
-                Command.MIN_SPEED = getDouble(line, 1.0);
+                this.MIN_SPEED = getDouble(line, 1.0);
             } else if (line.startsWith("MAX_SPEED:")) {
-                Command.MAX_SPEED = getDouble(line, 1000.0);
+                this.MAX_SPEED = getDouble(line, 1000.0);
             } else if (line.startsWith("STEP_SPEED:")) {
-                Command.STEP_SPEED = getDouble(line, 5.0);
+                this.STEP_SPEED = getDouble(line, 5.0);
             } else if (line.startsWith("NAME:")) {
-                Command.NAME = getString(line, "Rocket");
+                this.NAME = getString(line, "Rocket");
             } else if (line.startsWith("MASS:")) {
-                Command.MASS = getDouble(line, 1000.0);
+                this.MASS = getDouble(line, 1000.0);
             } else if (line.startsWith("RADIUS:")) {
-                Command.RADIUS = getDouble(line, 5.0);
+                this.RADIUS = getDouble(line, 5.0);
+            } else if (line.startsWith("COLOR:")) {
+                this.COLOR = getColor(line, Color.ORANGE);
             } else if (line.startsWith("MIN_LAUNCH_TIME:")) {
-                Command.MIN_LAUNCH_TIME = getLong(line, 1520294400); //Epoc of 2018-Mar-06 00:00:00.0000 TDB)
+                this.MIN_LAUNCH_TIME = getLong(line, 1520294400); //Epoc of 2018-Mar-06 00:00:00.0000 TDB)
             } else if (line.startsWith("MAX_LAUNCH_TIME:")) {
-                Command.MAX_LAUNCH_TIME = getLong(line, 1551830400);
+                this.MAX_LAUNCH_TIME = getLong(line, 1551830400);
             } else if (line.startsWith("STEP_LAUNCH_TIME:")) {
-                Command.STEP_LAUNCH_TIME = getLong(line, 3600);
+                this.STEP_LAUNCH_TIME = getLong(line, 3600);
             } else if (line.startsWith("ORIGIN:")) {
-                Command.ORIGIN = getString(line, "Earth");
-            } else if (line.startsWith("DESTINATION:")) {
-                Command.NAME = getString(line, "Mars");
+                this.ORIGIN = getString(line, "Earth");
+            } else if (line.startsWith("TARGET:")) {
+                this.TARGET = getString(line, "Mars");
             } else {
                 System.out.println("Line not processed: " + line);
             }

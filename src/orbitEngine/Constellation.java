@@ -8,6 +8,7 @@ package orbitEngine;
 import graphEngine.GraphConstellation;
 import java.awt.Color;
 import java.util.logging.Logger;
+import orbitEngine.routes.Route;
 import static userInterface.Parameter.bodyList;
 
 public final class Constellation {
@@ -282,5 +283,18 @@ public final class Constellation {
 
     void pushToGraphic() {
         graphConstellation.updateGrConstellation(body);
+    }
+
+    Body getBody(String bodyName) {
+        for (int i = 0; i < body.length; i++) {
+            if (body[i].name.equals(bodyName)) {
+                return body[i];
+            }
+        }
+        return null;
+    }
+
+    void setRoute(Route route) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

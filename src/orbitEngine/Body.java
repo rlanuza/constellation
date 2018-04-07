@@ -50,6 +50,10 @@ public class Body extends Position {
         nextIndex++;
     }
 
+    Body(String name, double mass, double radius, Color astroColor) {
+        this(name, mass, radius, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, astroColor);
+    }
+
     public void addGravity(double gx, double gy, double gz) {
         this.gx = gx;
         this.gy = gy;

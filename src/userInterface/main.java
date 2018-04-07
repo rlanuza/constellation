@@ -68,8 +68,8 @@ public class main {
     }
 
     private static void runSimulationTravel(String cmdFile) {
-        Command.loadCommand(cmdFile);
-        eng.setRoute(Command.);
+        Command command = new Command(cmdFile);
+        eng.setRoute(command);
         long simulationPlots = Parameter.SIMULATION_STEPS / Parameter.STEPS_PER_PLOT;
         for (long i = 0; i < simulationPlots; i++) {
             eng.run(Parameter.STEPS_PER_PLOT);

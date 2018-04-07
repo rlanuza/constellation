@@ -13,18 +13,28 @@ public class Route {
     Body origin;
     Body target;
     double startTime;
+    double stopTime;
+    double stepTime;
+    double startSpeed;
+    double stopSpeed;
+    double stepSpeed;
     double speed;
 
-    public Route(Body spacecraft, Body origin, Body target, double startTime, double speed) {
+    public Route(Body spacecraft, Body origin, Body target, double startTime, double stopTime, double stepTime, double startSpeed, double stopSpeed, double stepSpeed) {
         this.spacecraft = spacecraft;
         this.origin = origin;
         this.target = target;
         this.startTime = startTime;
-        this.speed = speed;
+        this.stopTime = stopTime;
+        this.stepTime = stepTime;
+        this.startSpeed = startSpeed;
+        this.stopSpeed = stopSpeed;
+        this.stepSpeed = stepSpeed;
     }
 
     // Launh to the current point to let us calculate the error when it miss the target
     public void directLaunch() {
+        //@Todo precalculate the spped for this launch with apis to iterate spped and time
         // Distance to the target and the 3 distance proyections
         double dx = target.x - origin.x;
         double dy = target.y - origin.y;
