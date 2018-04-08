@@ -66,15 +66,22 @@ public class Engine {
         constellation.pushToGraphic();
     }
 
-    public void runRoute(long steepsPerPlot) {
+    public boolean runRoute(long steepsPerPlot) {
         for (int i = 0; i < steepsPerPlot; i++) {
             constellation.step_jerk(stepTime);
             seconds += stepTime;
+            if (route.spacecraftLand()) {
+                System.out.printf("Spacecraft Land on time '%s' as: %s\n", dateString(), route.spacecraftLandName());
+                constellation.pushToGraphic();
+                //System.exit(0);
+                return true;
+            }
             if (seconds >= route.time) {
                 route.launchToNextTarget();
             }
         }
         constellation.pushToGraphic();
+        return false;
     }
 
     public void setRoute(Command cmd) {

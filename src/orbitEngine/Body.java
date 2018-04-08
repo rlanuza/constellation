@@ -13,6 +13,8 @@ public class Body extends Position {
     int index;
     String name;
     double mass;
+    public boolean merged;
+    public String mergedName;
     double g_mass;
     double radius;
     Color color;
@@ -42,6 +44,7 @@ public class Body extends Position {
         this.mass = mass;
         this.g_mass = mass * G_UNIVERSAL;
         this.radius = radius;
+        this.merged = false;
         this.x = x;
         this.y = y;
         this.z = z;

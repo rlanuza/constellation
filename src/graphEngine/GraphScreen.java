@@ -87,6 +87,16 @@ public class GraphScreen extends JComponent implements KeyListener {
         repaint();
     }
 
+    private void reset() {
+        zoom = 1;
+        gc.rescaleGrConstellation(zoom);
+        anchorX = screenWidth / 2;
+        anchorY = screenHeight / 2;
+        rotation.resetCoeficients();
+        gc.rotateGrConstellation();
+        repaint();
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -173,6 +183,9 @@ public class GraphScreen extends JComponent implements KeyListener {
             case KeyEvent.VK_MINUS:
             case KeyEvent.VK_SUBTRACT:
                 zoom(1 / ZOOM_FACTOR);
+                break;
+            case KeyEvent.VK_R:
+                reset();
                 break;
             default:
             //System.out.println(code);
@@ -280,13 +293,7 @@ public class GraphScreen extends JComponent implements KeyListener {
         resetButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                zoom = 1;
-                gc.rescaleGrConstellation(zoom);
-                anchorX = screenWidth / 2;
-                anchorY = screenHeight / 2;
-                rotation.resetCoeficients();
-                gc.rotateGrConstellation();
-                repaint();
+                reset();
             }
         });
         inButton.addActionListener(new ActionListener() {

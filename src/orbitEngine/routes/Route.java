@@ -109,4 +109,19 @@ public class Route {
     public Body getSpacecraft() {
         return spacecraft;
     }
+
+    /**
+     * @return if spacecraft land
+     */
+    public boolean spacecraftLand() {
+        return spacecraft.merged;
+    }
+
+    /**
+     * @return spacecraft land name
+     */
+    public String spacecraftLandName() {
+        return spacecraft.mergedName;
+    }
+
 }

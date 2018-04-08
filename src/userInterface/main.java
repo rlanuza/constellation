@@ -69,9 +69,14 @@ public class main {
     private static void runSimulationTravel(String cmdFile) {
         Command command = new Command(cmdFile);
         eng.setRoute(command);
-        long simulationPlots = Parameter.SIMULATION_STEPS / Parameter.STEPS_PER_PLOT;
+        while () {
+            long
+        }
+        simulationPlots = Parameter.SIMULATION_STEPS / Parameter.STEPS_PER_PLOT;
         for (long i = 0; i < simulationPlots; i++) {
-            eng.runRoute(Parameter.STEPS_PER_PLOT);
+            if (eng.runRoute(Parameter.STEPS_PER_PLOT)) {
+                i = simulationPlots;
+            }
             screen.updateConstellation();
         }
     }

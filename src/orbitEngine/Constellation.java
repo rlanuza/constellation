@@ -69,8 +69,11 @@ public final class Constellation {
             b1 = b2;
             b2 = tmp;
         }
-
         String name = b1.name + "-" + b2.name;
+        b1.merged = true;
+        b1.mergedName = name;
+        b2.merged = true;
+        b2.mergedName = name;
         double mass = b1.mass + b2.mass;
         double radius = Math.cbrt(Math.pow(b1.radius, 3) + Math.pow(b2.radius, 3));
         // The new barycentre r1 = d*m2/(m1+m2)
