@@ -15,9 +15,9 @@ public class Route {
     private final Body target;
     private final Position virtualTarget = new Position();
     private final Position missedTargetTarget = new Position();
-    private final long startTime;
-    private final long stopTime;
-    private final long stepTime;
+    private final double startTime;
+    private final double stopTime;
+    private final double stepTime;
     private final double startSpeed;
     private final double stopSpeed;
     private final double stepSpeed;
@@ -26,7 +26,7 @@ public class Route {
     private double speed;
     private double missedTargetDistance;
 
-    public Route(Body spacecraft, Body origin, Body target, long startTime, long stopTime, long stepTime, double startSpeed, double stopSpeed, double stepSpeed) {
+    public Route(Body spacecraft, Body origin, Body target, double startTime, double stopTime, double stepTime, double startSpeed, double stopSpeed, double stepSpeed) {
         this.spacecraft = spacecraft;
         this.origin = origin;
         this.target = target;
@@ -66,15 +66,27 @@ public class Route {
      * @Todo Analyze the best place to call this iterator: Route.launch or Engine...
      */
     public boolean nextLaunch() {
-        time += stepTime;
-        if (time > stopTime) {
-            time = startTime;
+        if (false) {
+            time += stepTime;
+            if (time > stopTime) {
+                time = startTime;
+                speed += stepSpeed;
+                if (speed > stopSpeed) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
             speed += stepSpeed;
             if (speed > stopSpeed) {
-                return false;
+                speed = startSpeed;
+                time += stepTime;
+                if (time > stopTime) {
+                    return false;
+                }
             }
+            return true;
         }
-        return true;
     }
 
     /**

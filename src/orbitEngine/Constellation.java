@@ -39,9 +39,12 @@ public final class Constellation {
     void resetConstellation() {
         int n = bodyList.size();
         // Now we'll generate array copies (faster) of the ArrayList
+        body = new Body[n];
         body = bodyList.toArray(new Body[n]);
-        for (int i = 0; i < n; i++) {
-            body[i].reset();
+        int i = 0;
+        for (Body b : bodyList) {
+            body[i++] = (Body) b.clone();
+            ///body[i].reset();
         }
         Body.nextIndex = body.length;
         resizeDistanceArrays(n);

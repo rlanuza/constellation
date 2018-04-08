@@ -17,7 +17,7 @@ import userInterface.Parameter;
 public class Engine {
 
     private final double stepTime;
-    private static long seconds;
+    private static double seconds;
     private final Constellation constellation;
     private Route route;
     private GraphScreen screen;
@@ -40,7 +40,7 @@ public class Engine {
     }
 
     static public String dateString() {
-        LocalDateTime dateTime = LocalDateTime.ofEpochSecond(seconds, 0, ZoneOffset.UTC);
+        LocalDateTime dateTime = LocalDateTime.ofEpochSecond((long) seconds, 0, ZoneOffset.UTC);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/LL/dd-HH:mm:ss", Locale.ENGLISH);
         return "Date: " + dateTime.format(formatter);
     }

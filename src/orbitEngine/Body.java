@@ -7,7 +7,7 @@ import static orbitEngine.Constellation.G_UNIVERSAL;
  *
  * @author Roberto
  */
-public class Body extends Position {
+public class Body extends Position implements Cloneable {
 
     static int nextIndex = 0;
     private int index;
@@ -64,17 +64,28 @@ public class Body extends Position {
         nextIndex--;
     }
 
+    @Override
+    protected Object clone() {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public void addGravity(double gx, double gy, double gz) {
         this.gx = gx;
         this.gy = gy;
         this.gz = gz;
     }
 
+    /*
     public void reset() {
         merged = false;
         mergedWith = null;
     }
-
+     */
     public String getName() {
         return name;
     }
