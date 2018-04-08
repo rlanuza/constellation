@@ -326,5 +326,6 @@ public class GraphScreen extends JComponent implements KeyListener {
 
         rotation = new GraphRotation();
         gc = new GraphConstellation(rotation);
+        eng.link(this);
     }
 }

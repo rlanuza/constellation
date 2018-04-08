@@ -54,38 +54,13 @@ public class main {
 
             eng = new Engine();
             screen = new GraphScreen(eng);
-            eng.link(screen.getGraphConstellation());
 
             if (commandFile != null) {
-                runSimulationTravel(commandFile);
+                eng.runSimulationTravel(new Command(commandFile));
             } else {
-                runSimulation();
+                eng.runSimulation();
             }
-
             System.out.printf("Elapsed time %f\n", (System.nanoTime() - start) / 1.0e9);
-        }
-    }
-
-    private static void runSimulationTravel(String cmdFile) {
-        Command command = new Command(cmdFile);
-        eng.setRoute(command);
-        while () {
-            long
-        }
-        simulationPlots = Parameter.SIMULATION_STEPS / Parameter.STEPS_PER_PLOT;
-        for (long i = 0; i < simulationPlots; i++) {
-            if (eng.runRoute(Parameter.STEPS_PER_PLOT)) {
-                i = simulationPlots;
-            }
-            screen.updateConstellation();
-        }
-    }
-
-    private static void runSimulation() {
-        long simulationPlots = Parameter.SIMULATION_STEPS / Parameter.STEPS_PER_PLOT;
-        for (long i = 0; i < simulationPlots; i++) {
-            eng.run(Parameter.STEPS_PER_PLOT);
-            screen.updateConstellation();
         }
     }
 

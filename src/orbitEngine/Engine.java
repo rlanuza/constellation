@@ -5,7 +5,7 @@
  */
 package orbitEngine;
 
-import graphEngine.GraphConstellation;
+import graphEngine.GraphScreen;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -20,6 +20,7 @@ public class Engine {
     private static long seconds;
     private final Constellation constellation;
     private Route route;
+    private GraphScreen screen;
 
     public Engine() {
         constellation = new Constellation();
@@ -27,8 +28,9 @@ public class Engine {
         seconds = Parameter.START_EPOCH_TIME;
     }
 
-    public void link(GraphConstellation graphConstellation) {
-        constellation.link(graphConstellation);
+    public void link(GraphScreen screen) {
+        this.screen = screen;
+        constellation.link(screen.getGraphConstellation());
         constellation.pushToGraphic();
     }
 
@@ -38,7 +40,7 @@ public class Engine {
         return "Date: " + dateTime.format(formatter);
     }
 
-    public void run(long steepsPerPlot) {
+    private void run(long steepsPerPlot) {
         switch (Parameter.CALCULUS_METHOD) {
             case 0:
                 for (int i = 0; i < steepsPerPlot; i++) {
@@ -66,7 +68,15 @@ public class Engine {
         constellation.pushToGraphic();
     }
 
-    public boolean runRoute(long steepsPerPlot) {
+    public void runSimulation() {
+        long simulationPlots = Parameter.SIMULATION_STEPS / Parameter.STEPS_PER_PLOT;
+        for (long i = 0; i < simulationPlots; i++) {
+            run(Parameter.STEPS_PER_PLOT);
+            screen.updateConstellation();
+        }
+    }
+
+    private boolean runRoute(long steepsPerPlot) {
         for (int i = 0; i < steepsPerPlot; i++) {
             constellation.step_jerk(stepTime);
             seconds += stepTime;
@@ -84,7 +94,22 @@ public class Engine {
         return false;
     }
 
-    public void setRoute(Command cmd) {
+    public void runSimulationTravel(Command cmd) {
+        setRoute(cmd);
+        /*        while () {
+            long
+        }
+         */
+        long simulationPlots = Parameter.SIMULATION_STEPS / Parameter.STEPS_PER_PLOT;
+        for (long i = 0; i < simulationPlots; i++) {
+            if (runRoute(Parameter.STEPS_PER_PLOT)) {
+                i = simulationPlots;
+            }
+            screen.updateConstellation();
+        }
+    }
+
+    private void setRoute(Command cmd) {
         Body spacecraft = new Body(cmd.NAME, cmd.MASS, cmd.RADIUS, cmd.COLOR);
         Body origin = constellation.getBody(cmd.ORIGIN);
         Body target = constellation.getBody(cmd.TARGET);
