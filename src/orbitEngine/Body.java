@@ -10,11 +10,11 @@ import static orbitEngine.Constellation.G_UNIVERSAL;
 public class Body extends Position {
 
     static int nextIndex = 0;
-    int index;
+    private int index;
     String name;
     double mass;
     public boolean merged;
-    public String mergedName;
+    public Body mergedWith;
     double g_mass;
     double radius;
     Color color;
@@ -44,7 +44,7 @@ public class Body extends Position {
         this.mass = mass;
         this.g_mass = mass * G_UNIVERSAL;
         this.radius = radius;
-        this.merged = false;
+        merged = false;
         this.x = x;
         this.y = y;
         this.z = z;
@@ -61,12 +61,18 @@ public class Body extends Position {
      */
     Body(String name, double mass, double radius, Color astroColor) {
         this(name, mass, radius, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, astroColor);
+        nextIndex--;
     }
 
     public void addGravity(double gx, double gy, double gz) {
         this.gx = gx;
         this.gy = gy;
         this.gz = gz;
+    }
+
+    public void reset() {
+        merged = false;
+        mergedWith = null;
     }
 
     public String getName() {
@@ -88,5 +94,4 @@ public class Body extends Position {
     public static int getNextIndex() {
         return nextIndex;
     }
-
 }

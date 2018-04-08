@@ -25,6 +25,11 @@ public class Engine {
     public Engine() {
         constellation = new Constellation();
         stepTime = Parameter.STEP_TIME;
+    }
+
+    private void resetEngine() {
+        constellation.resetConstellation();
+        constellation.resetGrConstellation();
         seconds = Parameter.START_EPOCH_TIME;
     }
 
@@ -80,14 +85,18 @@ public class Engine {
         for (int i = 0; i < steepsPerPlot; i++) {
             constellation.step_jerk(stepTime);
             seconds += stepTime;
-            if (route.spacecraftLand()) {
-                System.out.printf("Spacecraft Land on time '%s' as: %s\n", dateString(), route.spacecraftLandName());
-                constellation.pushToGraphic();
-                //System.exit(0);
-                return true;
-            }
-            if (seconds >= route.time) {
-                route.launchToNextTarget();
+            if (route.launched) {
+                if (route.spacecraftLand()) {
+                    System.out.printf("Spacecraft Land on time '%s' as: %s\n", dateString(), route.spacecraftLandBody().name);
+                    constellation.pushToGraphic();
+                    //System.exit(0);
+                    route.launched = false;
+                    return true;
+                }
+            } else {
+                if (seconds >= route.time) {
+                    route.launchToNextTarget();
+                }
             }
         }
         constellation.pushToGraphic();
@@ -96,17 +105,18 @@ public class Engine {
 
     public void runSimulationTravel(Command cmd) {
         setRoute(cmd);
-        /*        while () {
-            long
-        }
-         */
         long simulationPlots = Parameter.SIMULATION_STEPS / Parameter.STEPS_PER_PLOT;
-        for (long i = 0; i < simulationPlots; i++) {
-            if (runRoute(Parameter.STEPS_PER_PLOT)) {
-                i = simulationPlots;
+        do {
+            resetEngine();
+            constellation.addRocket(route);
+
+            for (long i = 0; i < simulationPlots; i++) {
+                if (runRoute(Parameter.STEPS_PER_PLOT)) {
+                    i = simulationPlots;
+                }
+                screen.updateConstellation();
             }
-            screen.updateConstellation();
-        }
+        } while (route.nextLaunch());
     }
 
     private void setRoute(Command cmd) {
@@ -118,6 +128,5 @@ public class Engine {
             System.exit(1);
         }
         route = new Route(spacecraft, origin, target, cmd.MIN_LAUNCH_TIME, cmd.MAX_LAUNCH_TIME, cmd.STEP_LAUNCH_TIME, cmd.MIN_SPEED, cmd.MAX_SPEED, cmd.STEP_SPEED);
-        constellation.addRocket(route);
     }
 }

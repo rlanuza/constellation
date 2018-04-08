@@ -33,12 +33,24 @@ public final class Constellation {
     private GraphConstellation graphConstellation;
 
     Constellation() {
+        resetConstellation();
+    }
+
+    void resetConstellation() {
         int n = bodyList.size();
         // Now we'll generate array copies (faster) of the ArrayList
         body = bodyList.toArray(new Body[n]);
+        for (int i = 0; i < n; i++) {
+            body[i].reset();
+        }
+        Body.nextIndex = body.length;
         resizeDistanceArrays(n);
         // Calculate the initial gravity of the system
         initGravity();
+    }
+
+    void resetGrConstellation() {
+        graphConstellation.initConstellation(body);
     }
 
     private void resizeDistanceArrays(int n) {
@@ -52,7 +64,7 @@ public final class Constellation {
     public void link(GraphConstellation graphConstellation) {
         this.graphConstellation = graphConstellation;
         // Prepare the graphical info
-        graphConstellation.initConstellation(body);
+        resetGrConstellation();
     }
 
     private void mergeBodies(Body b1, Body b2) {
@@ -71,9 +83,9 @@ public final class Constellation {
         }
         String name = b1.name + "-" + b2.name;
         b1.merged = true;
-        b1.mergedName = name;
+        b1.mergedWith = b2;
         b2.merged = true;
-        b2.mergedName = name;
+        b2.mergedWith = b1;
         double mass = b1.mass + b2.mass;
         double radius = Math.cbrt(Math.pow(b1.radius, 3) + Math.pow(b2.radius, 3));
         // The new barycentre r1 = d*m2/(m1+m2)
@@ -290,6 +302,9 @@ public final class Constellation {
         graphConstellation.updateGrConstellation(body);
     }
 
+    /**
+     * @Returns the body with the given name or null
+     */
     Body getBody(String bodyName) {
         for (int i = 0; i < body.length; i++) {
             if (body[i].name.equals(bodyName)) {
@@ -307,6 +322,7 @@ public final class Constellation {
         }
 
         bodyTmp[i] = route.getSpacecraft();
+        Body.nextIndex++;
         body = bodyTmp;
         resizeDistanceArrays(body.length);
         graphConstellation.reindexConstellation(body);

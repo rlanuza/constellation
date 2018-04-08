@@ -22,6 +22,7 @@ public class Route {
     private final double stopSpeed;
     private final double stepSpeed;
     public double time;
+    public boolean launched;
     private double speed;
     private double missedTargetDistance;
 
@@ -35,8 +36,9 @@ public class Route {
         this.startSpeed = startSpeed;
         this.stopSpeed = stopSpeed;
         this.stepSpeed = stepSpeed;
-        this.time = startTime;
-        this.speed = startSpeed;
+        time = startTime;
+        speed = startSpeed;
+        launched = false;
         missedTargetDistance = 0.0;
     }
 
@@ -101,6 +103,7 @@ public class Route {
         spacecraft.x = origin.x + xr;
         spacecraft.y = origin.y + yr;
         spacecraft.z = origin.z + zr;
+        launched = true;
     }
 
     /**
@@ -120,8 +123,8 @@ public class Route {
     /**
      * @return spacecraft land name
      */
-    public String spacecraftLandName() {
-        return spacecraft.mergedName;
+    public Body spacecraftLandBody() {
+        return spacecraft.mergedWith;
     }
 
 }

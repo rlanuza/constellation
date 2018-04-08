@@ -34,7 +34,7 @@ public class GraphScreen extends JComponent implements KeyListener {
     private double anchorX;
     private double anchorY;
     private double zoom = 1.0;
-    private double ZOOM_FACTOR = 1.5;
+    private double ZOOM_FACTOR = 1.125;
 
     /*@Todo manage point of view reference to transform */
     private GraphRotation rotation;
@@ -326,6 +326,8 @@ public class GraphScreen extends JComponent implements KeyListener {
 
         rotation = new GraphRotation();
         gc = new GraphConstellation(rotation);
+
+        // Double link to let callback graphicEngine from orbitEngine events
         eng.link(this);
     }
 }
