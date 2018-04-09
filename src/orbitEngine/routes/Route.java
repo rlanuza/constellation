@@ -6,6 +6,7 @@
 package orbitEngine.routes;
 
 import orbitEngine.Body;
+import static orbitEngine.Engine.dateString;
 import orbitEngine.Position;
 
 public class Route {
@@ -26,6 +27,8 @@ public class Route {
     private double speed;
     private double missedTargetDistance;
 
+    private static final double LAUNCH_ELEVATION = 1;
+
     public Route(Body spacecraft, Body origin, Body target, double startTime, double stopTime, double stepTime, double startSpeed, double stopSpeed, double stepSpeed) {
         this.spacecraft = spacecraft;
         this.origin = origin;
@@ -44,9 +47,6 @@ public class Route {
 
     /**
      * Set the next virtual target
-     *
-     * @Todo the target will be different on every retry, this must be adjusted
-     * to the middle of the missed old target
      */
     private void setNextTarget() {
         if (missedTargetDistance == 0.0) {
@@ -64,22 +64,10 @@ public class Route {
      * Program next launch conditions
      *
      * @return true until no new conditions programmed
-     * @Todo Analyze the best place to call this iterator: Route.launch or
-     * Engine...
+     * @Todo Analyze the best place to call this iterator: Route.launch or Engine...
      */
-    public boolean nextLaunch() {
-        if (false) {
-            time += stepTime;
-            if (time > stopTime) {
-                time = startTime;
-                speed += stepSpeed;
-                if (speed > stopSpeed) {
-                    return false;
-                }
-            }
-            System.out.printf("Next Launch time '%f' with speed: %f\n", time, speed);
-            return true;
-        } else {
+    public boolean nextLaunch(boolean iterateSpeedFirst) {
+        if (iterateSpeedFirst) {
             speed += stepSpeed;
             if (speed > stopSpeed) {
                 speed = startSpeed;
@@ -88,14 +76,22 @@ public class Route {
                     return false;
                 }
             }
-            System.out.printf("Next Launch time '%f' with speed: %f\n", time, speed);
-            return true;
+        } else {
+            time += stepTime;
+            if (time > stopTime) {
+                time = startTime;
+                speed += stepSpeed;
+                if (speed > stopSpeed) {
+                    return false;
+                }
+            }
         }
+        System.out.printf("Next Launch time '%s' with speed: %f\n", dateString(), speed);
+        return true;
     }
 
     /**
-     * Launch to the next target iteration point. We will use this to calculate
-     * the error if we miss the target and adjust next launch
+     * Launch to the next target iteration point. We will use this to calculate the error if we miss the target and adjust next launch
      */
     public void launchToNextTarget() {
         setNextTarget();
@@ -113,7 +109,7 @@ public class Route {
         spacecraft.vy = origin.vy + vyr;
         spacecraft.vz = origin.vz + vzr;
         // Calculate the launch position as the origin body position that points to destination
-        double r = origin.getRadius();
+        double r = origin.getRadius() + spacecraft.getRadius() + LAUNCH_ELEVATION;
         double xr = r * dx / d;
         double yr = r * dy / d;
         double zr = r * dz / d;

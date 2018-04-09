@@ -95,8 +95,9 @@ public class Engine {
                 }
             } else {
                 if (seconds >= route.time) {
-                    constellation.addRocket(route); //@Todo Check if this place is correect
                     route.launchToNextTarget();
+                    constellation.addRocket(route); //@Todo Check if this place is correect to launch teh rocket
+
                 }
             }
         }
@@ -109,15 +110,13 @@ public class Engine {
         long simulationPlots = Parameter.SIMULATION_STEPS / Parameter.STEPS_PER_PLOT;
         do {
             resetEngine();
-            //@Todo Remove if redundant: constellation.addRocket(route);
-
             for (long i = 0; i < simulationPlots; i++) {
                 if (runRoute(Parameter.STEPS_PER_PLOT)) {
                     i = simulationPlots;
                 }
                 screen.updateConstellation();
             }
-        } while (route.nextLaunch());
+        } while (route.nextLaunch(cmd.ITERATE_SPEED_FIRST));
     }
 
     private void setRoute(Command cmd) {

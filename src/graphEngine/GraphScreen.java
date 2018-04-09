@@ -8,7 +8,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
@@ -36,7 +35,6 @@ public class GraphScreen extends JComponent implements KeyListener {
     private double zoom = 1.0;
     private double ZOOM_FACTOR = 1.125;
 
-    /*@Todo manage point of view reference to transform */
     private GraphRotation rotation;
 
     private GraphConstellation gc;
@@ -253,60 +251,32 @@ public class GraphScreen extends JComponent implements KeyListener {
             }
         });
 
-        goUpButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                pitch(1);
-            }
+        goUpButton.addActionListener((ActionEvent e) -> {
+            pitch(1);
         });
-        goDownButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                pitch(-1);
-
-            }
+        goDownButton.addActionListener((ActionEvent e) -> {
+            pitch(-1);
         });
-        goLeftButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                yaw(1);
-            }
+        goLeftButton.addActionListener((ActionEvent e) -> {
+            yaw(1);
         });
-        goRightButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                yaw(-1);
-            }
+        goRightButton.addActionListener((ActionEvent e) -> {
+            yaw(-1);
         });
-        goClockWiseButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                roll(1);
-            }
+        goClockWiseButton.addActionListener((ActionEvent e) -> {
+            roll(1);
         });
-        goAntiClockWiseButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                roll(-1);
-            }
+        goAntiClockWiseButton.addActionListener((ActionEvent e) -> {
+            roll(-1);
         });
-        resetButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                reset();
-            }
+        resetButton.addActionListener((ActionEvent e) -> {
+            reset();
         });
-        inButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                zoom(ZOOM_FACTOR);
-            }
+        inButton.addActionListener((ActionEvent e) -> {
+            zoom(ZOOM_FACTOR);
         });
-        outButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                zoom(1.0 / ZOOM_FACTOR);
-            }
+        outButton.addActionListener((ActionEvent e) -> {
+            zoom(1.0 / ZOOM_FACTOR);
         });
 
         addMouseListener(new MouseAdapter() {

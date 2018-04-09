@@ -44,7 +44,6 @@ public final class Constellation {
         int i = 0;
         for (Body b : bodyList) {
             body[i++] = (Body) b.clone();
-            //@Todo remove if not neccesary: body[i].reset();
         }
         Body.nextIndex = body.length;
         resizeDistanceArrays(n);

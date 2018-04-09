@@ -4,7 +4,7 @@
     STEPS_PER_PLOT:     1               # 24*60*2
     STEP_TIME:          1.0             # Seconds
     START_EPOCH_TIME:   1520294400      # Epoc of 2018-Mar-06 00:00:00.0000 TDB.
-    METERS_PER_PIXEL:   2.0e-07         # UNIX Epoch time is the number of seconds that have elapsed since
+    METERS_PER_PIXEL:   3.0e-05         # UNIX Epoch time is the number of seconds that have elapsed since
                                         # 00:00:00 Coordinated Universal Time (UTC), Thursday, 1 January 1970.
                                         # [https://en.wikipedia.org/wiki/Unix_time]
     MAX_ORBIT_POINTS:   5000            # Avoid hard graphic computing, try to use less than 10000

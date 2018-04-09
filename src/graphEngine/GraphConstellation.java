@@ -60,7 +60,6 @@ public class GraphConstellation {
 
     public synchronized void updateGrConstellation(Body[] body) {
         for (int i = 0; i < body.length; i++) {
-            //@Todo Correct the ranges when a rocket is add
             grBody[body[i].getIndex()].orbit.addOrbitPoint(scale, body[i]);
         }
     }
