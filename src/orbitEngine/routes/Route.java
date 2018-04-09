@@ -45,7 +45,8 @@ public class Route {
     /**
      * Set the next virtual target
      *
-     * @Todo the target will be different on every retry, this must be adjusted to the middle of the missed old target
+     * @Todo the target will be different on every retry, this must be adjusted
+     * to the middle of the missed old target
      */
     private void setNextTarget() {
         if (missedTargetDistance == 0.0) {
@@ -63,7 +64,8 @@ public class Route {
      * Program next launch conditions
      *
      * @return true until no new conditions programmed
-     * @Todo Analyze the best place to call this iterator: Route.launch or Engine...
+     * @Todo Analyze the best place to call this iterator: Route.launch or
+     * Engine...
      */
     public boolean nextLaunch() {
         if (false) {
@@ -75,6 +77,7 @@ public class Route {
                     return false;
                 }
             }
+            System.out.printf("Next Launch time '%f' with speed: %f\n", time, speed);
             return true;
         } else {
             speed += stepSpeed;
@@ -85,12 +88,14 @@ public class Route {
                     return false;
                 }
             }
+            System.out.printf("Next Launch time '%f' with speed: %f\n", time, speed);
             return true;
         }
     }
 
     /**
-     * Launch to the next target iteration point. We will use this to calculate the error if we miss the target and adjust next launch
+     * Launch to the next target iteration point. We will use this to calculate
+     * the error if we miss the target and adjust next launch
      */
     public void launchToNextTarget() {
         setNextTarget();

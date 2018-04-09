@@ -87,7 +87,7 @@ public class Engine {
             seconds += stepTime;
             if (route.launched) {
                 if (route.spacecraftLand()) {
-                    System.out.printf("Spacecraft Land on time '%s' as: %s\n", dateString(), route.spacecraftLandBody().name);
+                    System.out.printf("Spacecraft Land on time '%s' in: %s\n", dateString(), route.spacecraftLandBody().name);
                     constellation.pushToGraphic();
                     //System.exit(0);
                     route.launched = false;
