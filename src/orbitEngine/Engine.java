@@ -95,6 +95,7 @@ public class Engine {
                 }
             } else {
                 if (seconds >= route.time) {
+                    constellation.addRocket(route); //@Todo Check if this place is correect
                     route.launchToNextTarget();
                 }
             }
@@ -108,7 +109,7 @@ public class Engine {
         long simulationPlots = Parameter.SIMULATION_STEPS / Parameter.STEPS_PER_PLOT;
         do {
             resetEngine();
-            constellation.addRocket(route);
+            //@Todo Remove if redundant: constellation.addRocket(route);
 
             for (long i = 0; i < simulationPlots; i++) {
                 if (runRoute(Parameter.STEPS_PER_PLOT)) {
