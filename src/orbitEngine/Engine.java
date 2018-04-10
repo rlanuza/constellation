@@ -89,17 +89,33 @@ public class Engine {
 
     private boolean runRoute(long steepsPerPlot) {
         for (int i = 0; i < steepsPerPlot; i++) {
-            constellation.step_jerk(stepTime);
+            switch (Parameter.CALCULUS_METHOD) {
+                case 0:
+                    constellation.step_basic(stepTime);
+                    break;
+                case 1:
+                    constellation.step_jerk(stepTime);
+                    break;
+                case 2:
+                    constellation.step_basic_Schwarzschild(stepTime);
+                    break;
+                case 3:
+                    constellation.step_jerk_Schwarzschild(stepTime);
+                    break;
+                default:
+            }
             seconds += stepTime;
-            if (route.launched) {
+            if (route.isLaunched()) {
                 if (route.spacecraftLand()) {
                     System.out.printf("Spacecraft Land on time '%s' in: %s\n", dateString(), route.spacecraftLandBody().name);
                     constellation.pushToGraphic();
                     //System.exit(0);
                     return true;
+                } else if (route.overtaking()) {
+                    return true;
                 }
             } else {
-                if (seconds >= route.time) {
+                if (route.timeToLaunch(seconds)) {
                     route.launchToNextTarget();
                     constellation.addRocket(route); //@Todo Check if this place is correect to launch teh rocket
                 }

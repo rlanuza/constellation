@@ -20,8 +20,8 @@ public class Route {
     private final double startSpeed;
     private final double stopSpeed;
     private final double stepSpeed;
-    public double time;
-    public boolean launched;
+    private double time;
+    private boolean launched;
     private double speed;
     private double missedTargetDistance;
 
@@ -60,10 +60,19 @@ public class Route {
             virtualTarget.y = target.y;
             virtualTarget.z = target.z;
         } else {
+            //@Todo decide a good overtaking correction algorithm
             virtualTarget.x = (target.x + missedTargetTarget.x) / 2.0;
             virtualTarget.y = (target.y + missedTargetTarget.y) / 2.0;
             virtualTarget.z = (target.z + missedTargetTarget.z) / 2.0;
         }
+    }
+
+    /**
+     * Check if the target has been overtaken
+     */
+    boolean overtaking() {
+        //@Todo decide a good overtaking detection algorithm  and calculate the missedTargetDistance
+        return false;
     }
 
     /**
@@ -94,6 +103,13 @@ public class Route {
         }
         System.out.printf("Next Launch time '%s' with speed: %f\n", dateString(time), speed);
         return true;
+    }
+
+    /**
+     * Time to launch check
+     */
+    boolean timeToLaunch(double seconds) {
+        return (seconds >= time);
     }
 
     /**
@@ -145,5 +161,12 @@ public class Route {
      */
     public Body spacecraftLandBody() {
         return spacecraft.mergedWith;
+    }
+
+    /**
+     * @return if the rocket is launched
+     */
+    public boolean isLaunched() {
+        return launched;
     }
 }
