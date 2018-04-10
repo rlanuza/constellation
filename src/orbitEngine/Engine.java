@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import orbitEngine.routes.Route;
 import userInterface.Command;
 import userInterface.Parameter;
 
@@ -30,6 +29,7 @@ public class Engine {
     private void resetEngine() {
         constellation.resetConstellation();
         constellation.resetGrConstellation();
+        route.resetBodyValues(constellation);
         seconds = Parameter.START_EPOCH_TIME;
     }
 
@@ -41,6 +41,12 @@ public class Engine {
 
     static public String dateString() {
         LocalDateTime dateTime = LocalDateTime.ofEpochSecond((long) seconds, 0, ZoneOffset.UTC);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/LL/dd-HH:mm:ss", Locale.ENGLISH);
+        return "Date: " + dateTime.format(formatter);
+    }
+
+    static public String dateString(double seconds_time) {
+        LocalDateTime dateTime = LocalDateTime.ofEpochSecond((long) seconds_time, 0, ZoneOffset.UTC);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/LL/dd-HH:mm:ss", Locale.ENGLISH);
         return "Date: " + dateTime.format(formatter);
     }
@@ -90,14 +96,12 @@ public class Engine {
                     System.out.printf("Spacecraft Land on time '%s' in: %s\n", dateString(), route.spacecraftLandBody().name);
                     constellation.pushToGraphic();
                     //System.exit(0);
-                    route.launched = false;
                     return true;
                 }
             } else {
                 if (seconds >= route.time) {
                     route.launchToNextTarget();
                     constellation.addRocket(route); //@Todo Check if this place is correect to launch teh rocket
-
                 }
             }
         }

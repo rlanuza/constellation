@@ -8,7 +8,7 @@
                                         # 00:00:00 Coordinated Universal Time (UTC), Thursday, 1 January 1970.
                                         # [https://en.wikipedia.org/wiki/Unix_time]
     MAX_ORBIT_POINTS:   5000            # Avoid hard graphic computing, try to use less than 10000
-    SCREEN_PERCENT:     50              # Size of screen in %
+    SCREEN_PERCENT:     25              # Size of screen in %
     SCREEN_RESIZABLE:   true            # true or false
     COLOR_SCREEN:       42,42,42        # Screen color in R,G,B
     COLOR_DATE:         255,0,0         # Screen color in R,G,B
@@ -18,5 +18,6 @@
 
 #   Name,    mass (Kg),   radio(m),               x0 (km) ,               y0 (km) ,                z0 (km),             vx0 (km/s),             vy0 (km/s),             vz0 (km/s),   R,   G,   B
   Earth,   5.97219E24, 6.37101E06,  0.000000000000000E+00,  0.000000000000000E+00,  0.000000000000000E+00,  0.000000000000000E+00,  0.000000000000000E+00,  0.000000000000000E+00, 255, 255,  51
-  Mars,     6.4185E23,  3.3899E06, -1.680363251004358E+08, -1.619139471749525E+08,  6.995397671373487E+05,  1.775152406671200E+01, -1.532808889855790E+01, -7.569927554109483E-01, 255, 153, 153
+#  Mars,     6.4185E23,  3.3899E06, -1.680363251004358E+08, -1.619139471749525E+08,  6.995397671373487E+05,  1.775152406671200E+01, -1.532808889855790E+01, -7.569927554109483E-01, 255, 153, 153
+  Mars,     6.4185E23,  3.3899E06,   2.300000000000000E+08,  0.000000000000000E+00,  0.000000000000000E+00,  0.000000000000000E+00,  2.000000000000000E+00,  0.000000000000000E+00, 255, 153, 153
 

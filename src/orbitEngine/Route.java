@@ -3,17 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package orbitEngine.routes;
+package orbitEngine;
 
-import orbitEngine.Body;
 import static orbitEngine.Engine.dateString;
-import orbitEngine.Position;
 
 public class Route {
 
     private final Body spacecraft;
-    private final Body origin;
-    private final Body target;
+    private Body origin;
+    private Body target;
     private final Position virtualTarget = new Position();
     private final Position missedTargetTarget = new Position();
     private final double startTime;
@@ -46,6 +44,14 @@ public class Route {
     }
 
     /**
+     * Reset Origin and destination bodies for a new calculus
+     */
+    void resetBodyValues(Constellation constellation) {
+        origin = constellation.getBody(origin.getIndex());
+        target = constellation.getBody(target.getIndex());
+    }
+
+    /**
      * Set the next virtual target
      */
     private void setNextTarget() {
@@ -64,9 +70,9 @@ public class Route {
      * Program next launch conditions
      *
      * @return true until no new conditions programmed
-     * @Todo Analyze the best place to call this iterator: Route.launch or Engine...
      */
     public boolean nextLaunch(boolean iterateSpeedFirst) {
+        launched = false;
         if (iterateSpeedFirst) {
             speed += stepSpeed;
             if (speed > stopSpeed) {
@@ -86,7 +92,7 @@ public class Route {
                 }
             }
         }
-        System.out.printf("Next Launch time '%s' with speed: %f\n", dateString(), speed);
+        System.out.printf("Next Launch time '%s' with speed: %f\n", dateString(time), speed);
         return true;
     }
 
@@ -116,6 +122,7 @@ public class Route {
         spacecraft.x = origin.x + xr;
         spacecraft.y = origin.y + yr;
         spacecraft.z = origin.z + zr;
+        spacecraft.merged = false;
         launched = true;
     }
 
@@ -139,5 +146,4 @@ public class Route {
     public Body spacecraftLandBody() {
         return spacecraft.mergedWith;
     }
-
 }

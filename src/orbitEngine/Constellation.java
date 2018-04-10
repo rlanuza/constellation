@@ -8,7 +8,6 @@ package orbitEngine;
 import graphEngine.GraphConstellation;
 import java.awt.Color;
 import java.util.logging.Logger;
-import orbitEngine.routes.Route;
 import static userInterface.Parameter.bodyList;
 
 public final class Constellation {
@@ -38,9 +37,9 @@ public final class Constellation {
 
     void resetConstellation() {
         int n = bodyList.size();
-        // Now we'll generate array copies (faster) of the ArrayList
+        // Now we'll generate array copies (faster) of the ArrayList and left the ArrayList to let us recover initial positions 
         body = new Body[n];
-        body = bodyList.toArray(new Body[n]);
+        // @Todo remove:  body = bodyList.toArray(new Body[n]);
         int i = 0;
         for (Body b : bodyList) {
             body[i++] = (Body) b.clone();
@@ -314,6 +313,13 @@ public final class Constellation {
             }
         }
         return null;
+    }
+
+    /**
+     * @Returns the body with the given index
+     */
+    Body getBody(int index) {
+        return body[index];
     }
 
     void addRocket(Route route) {

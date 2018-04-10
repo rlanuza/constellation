@@ -1,7 +1,7 @@
 #Configuration:
     CALCULUS_METHOD:    1               # 0: basic, 1: jerk, 2:basic_Schwarzschild, 3: jerk_Schwarzschild
-    SIMULATION_STEPS:   1200000
-    STEPS_PER_PLOT:     1               # 24*60*2
+    SIMULATION_STEPS:   2200000
+    STEPS_PER_PLOT:     2880            # 24*60*2
     STEP_TIME:          30.0            # Seconds
     START_EPOCH_TIME:   1520294400      # Epoc of 2018-Mar-06 00:00:00.0000 TDB.
     METERS_PER_PIXEL:   2.0e-09         # UNIX Epoch time is the number of seconds that have elapsed since

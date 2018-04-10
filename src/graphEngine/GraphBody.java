@@ -22,6 +22,6 @@ public final class GraphBody {
     }
 
     public void recalculateGrRadius(double scale) {
-        radius_i = (int) (radius * scale) + 1;
+        radius_i = (int) (radius * scale);
     }
 }

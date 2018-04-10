@@ -80,12 +80,6 @@ public class Body extends Position implements Cloneable {
         this.gz = gz;
     }
 
-    /*
-    public void reset() {
-        merged = false;
-        mergedWith = null;
-    }
-     */
     public String getName() {
         return name;
     }
