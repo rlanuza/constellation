@@ -112,6 +112,7 @@ public class Engine {
                     //System.exit(0);
                     return true;
                 } else if (route.overtaking()) {
+                    constellation.pushToGraphic();
                     return true;
                 }
             } else {

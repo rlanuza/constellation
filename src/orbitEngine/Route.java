@@ -12,6 +12,8 @@ public class Route {
     private final Body spacecraft;
     private Body origin;
     private Body target;
+    private int spacecraftIndex;
+    private int targetIndex;
     private final Position virtualTarget = new Position();
     private final Position missedTargetTarget = new Position();
     private final double startTime;
@@ -23,14 +25,17 @@ public class Route {
     private double time;
     private boolean launched;
     private double speed;
-    private double missedTargetDistance;
+    private double minTargetDistance;
 
     private static final double LAUNCH_ELEVATION = 1;
+    private static final double OVERTAKE_DISTANCE_TOLERANCE = 10000.0;
 
     public Route(Body spacecraft, Body origin, Body target, double startTime, double stopTime, double stepTime, double startSpeed, double stopSpeed, double stepSpeed) {
         this.spacecraft = spacecraft;
         this.origin = origin;
         this.target = target;
+        spacecraftIndex = spacecraft.getIndex();
+        targetIndex = target.getIndex();
         this.startTime = startTime;
         this.stopTime = stopTime;
         this.stepTime = stepTime;
@@ -40,7 +45,7 @@ public class Route {
         time = startTime;
         speed = startSpeed;
         launched = false;
-        missedTargetDistance = 0.0;
+        minTargetDistance = Double.MAX_VALUE;
     }
 
     /**
@@ -55,7 +60,7 @@ public class Route {
      * Set the next virtual target
      */
     private void setNextTarget() {
-        if (missedTargetDistance == 0.0) {
+        if (minTargetDistance == Double.MAX_VALUE) {
             virtualTarget.x = target.x;
             virtualTarget.y = target.y;
             virtualTarget.z = target.z;
@@ -72,7 +77,15 @@ public class Route {
      */
     boolean overtaking() {
         //@Todo decide a good overtaking detection algorithm  and calculate the missedTargetDistance
-        return false;
+        double d = Constellation.dist[targetIndex][spacecraftIndex];
+        if (d < minTargetDistance) {
+            minTargetDistance = d;
+            return false;
+        } else if (d > (minTargetDistance + OVERTAKE_DISTANCE_TOLERANCE)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
