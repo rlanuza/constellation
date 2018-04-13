@@ -15,7 +15,7 @@ public class Route {
     private int spacecraftIndex;
     private int targetIndex;
     private final Position virtualTarget = new Position();
-    private final Position missedTargetTarget = new Position();
+    private final Position targetFailed = new Position();
     private final double startTime;
     private final double stopTime;
     private final double stepTime;
@@ -57,22 +57,6 @@ public class Route {
     }
 
     /**
-     * Set the next virtual target
-     */
-    private void setNextTarget() {
-        if (minTargetDistance == Double.MAX_VALUE) {
-            virtualTarget.x = target.x;
-            virtualTarget.y = target.y;
-            virtualTarget.z = target.z;
-        } else {
-            //@Todo decide a good overtaking correction algorithm
-            virtualTarget.x = (target.x + missedTargetTarget.x) / 2.0;
-            virtualTarget.y = (target.y + missedTargetTarget.y) / 2.0;
-            virtualTarget.z = (target.z + missedTargetTarget.z) / 2.0;
-        }
-    }
-
-    /**
      * Check if the target has been overtaken
      */
     boolean overtaking() {
@@ -82,6 +66,15 @@ public class Route {
             minTargetDistance = d;
             return false;
         } else if (d > (minTargetDistance + OVERTAKE_DISTANCE_TOLERANCE)) {
+            // Prepare a new target
+            targetFailed.x = spacecraft.x;
+            targetFailed.y = spacecraft.y;
+            targetFailed.z = spacecraft.z;
+            virtualTarget.x = target.x;
+            virtualTarget.y = target.y;
+            virtualTarget.z = target.z;
+            //@Todo this is not the solution to the target, lllok a best hipothesys
+            minTargetDistance = Double.MAX_VALUE;
             return true;
         } else {
             return false;
@@ -126,15 +119,26 @@ public class Route {
     }
 
     /**
-     * Launch to the next target iteration point. We will use this to calculate the error if we miss the target and adjust next launch
+     * Launch to the next target iteration point. We will use this to calculate
+     * the error if we miss the target and adjust next launch
      */
     public void launchToNextTarget() {
-        setNextTarget();
-        //@Todo precalculate the spped for this launch with apis to iterate spped and time
+        double virtualTarget_x = target.x;
+        double virtualTarget_y = target.y;
+        double virtualTarget_z = target.z;
+        if (targetFailed != null) {
+            //@Todo decide a good overtaking correction algorithm
+            //@Todo this is not the solution to the target, lllok a best hipothesys
+            virtualTarget_x = (virtualTarget_x + targetFailed.x) / 2.0;
+            virtualTarget_y = (virtualTarget_x + targetFailed.y) / 2.0;
+            virtualTarget_z = (virtualTarget_x + targetFailed.z) / 2.0;
+        }
+        //@Todo precalculate the speed for this launch with apis to iterate speed and time
+        //@Todo we need a aproaching iterator with some edn condition
         // Distance to the target and the 3 distance proyections
-        double dx = virtualTarget.x - origin.x;
-        double dy = virtualTarget.y - origin.y;
-        double dz = virtualTarget.z - origin.z;
+        double dx = virtualTarget_x - origin.x;
+        double dy = virtualTarget_y - origin.y;
+        double dz = virtualTarget_z - origin.z;
         double d = Math.sqrt(dx * dx + dy * dy + dz * dz);
         // Calculate the launch speed as launch speed + origin speed;
         double vxr = speed * dx / d;
