@@ -130,13 +130,16 @@ public class Engine {
         setRoute(cmd);
         long simulationPlots = Parameter.SIMULATION_STEPS / Parameter.STEPS_PER_PLOT;
         do {
-            resetEngine();
-            for (long i = 0; i < simulationPlots; i++) {
-                if (runRoute(Parameter.STEPS_PER_PLOT)) {
-                    i = simulationPlots;
+            do {
+                resetEngine();
+                for (long i = 0; i < simulationPlots; i++) {
+                    if (runRoute(Parameter.STEPS_PER_PLOT)) {
+                        screen.updateConstellation();
+                        break;
+                    }
+                    screen.updateConstellation();
                 }
-                screen.updateConstellation();
-            }
+            } while (route.iterationLaunchContinue());
         } while (route.nextLaunch(cmd.ITERATE_SPEED_FIRST));
     }
 
@@ -144,10 +147,16 @@ public class Engine {
         Body spacecraft = new Body(cmd.NAME, cmd.MASS, cmd.RADIUS, cmd.COLOR);
         Body origin = constellation.getBody(cmd.ORIGIN);
         Body target = constellation.getBody(cmd.TARGET);
+        Body star = constellation.getBody(cmd.STAR);
         if ((origin == null) || (target == null)) {
             System.out.printf("Error, the origin '%s' or the target '%s' is not in our constellation\n", cmd.ORIGIN, cmd.TARGET);
             System.exit(1);
         }
-        route = new Route(spacecraft, origin, target, cmd.MIN_LAUNCH_TIME, cmd.MAX_LAUNCH_TIME, cmd.STEP_LAUNCH_TIME, cmd.MIN_SPEED, cmd.MAX_SPEED, cmd.STEP_SPEED);
+        route = new Route(spacecraft, origin, target, star,
+                cmd.MIN_LAUNCH_TIME, cmd.MAX_LAUNCH_TIME, cmd.STEP_LAUNCH_TIME,
+                cmd.MIN_SPEED, cmd.MAX_SPEED, cmd.STEP_SPEED,
+                cmd.LAUNCH_ELEVATION,
+                cmd.OVERTAKE_DISTANCE_TOLERANCE,
+                cmd.MAX_OVERTAKE_DISTANCE);
     }
 }

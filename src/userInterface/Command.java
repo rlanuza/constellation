@@ -12,19 +12,23 @@ import java.nio.file.Paths;
 
 public class Command extends LineConvert {
 
-    public String NAME;
-    public double MASS;
-    public double RADIUS;
-    public Color COLOR;
-    public String ORIGIN;
-    public String TARGET;
-    public double MIN_SPEED;
-    public double MAX_SPEED;
-    public double STEP_SPEED;
+    public String NAME = "Rocket";
+    public double MASS = 1000;
+    public double RADIUS = 5.0;
+    public Color COLOR = Color.ORANGE;
+    public String ORIGIN = "Earth";
+    public String TARGET = "Mars";
+    public String STAR = "Sun";
+    public double MIN_SPEED = 1;
+    public double MAX_SPEED = 1000;
+    public double STEP_SPEED = 5;
     public boolean ITERATE_SPEED_FIRST;
-    public long MIN_LAUNCH_TIME;
-    public long MAX_LAUNCH_TIME;
-    public long STEP_LAUNCH_TIME;
+    public long MIN_LAUNCH_TIME = 1520294400;
+    public long MAX_LAUNCH_TIME = 1551830400;
+    public long STEP_LAUNCH_TIME = 3600;
+    public double LAUNCH_ELEVATION = 1;
+    public double OVERTAKE_DISTANCE_TOLERANCE = 10000.0;
+    public double MAX_OVERTAKE_DISTANCE = 1E10;
 
     Command(String commandFile) {
         String contents = "";
@@ -42,31 +46,39 @@ public class Command extends LineConvert {
             if ((line.length() == 0) || line.startsWith("#")) {
                 // This is a comment
             } else if (line.startsWith("NAME:")) {
-                this.NAME = getString(line, "Rocket");
+                NAME = getString(line, NAME);
             } else if (line.startsWith("MASS:")) {
-                this.MASS = getDouble(line, 1000.0);
+                MASS = getDouble(line, MASS);
             } else if (line.startsWith("RADIUS:")) {
-                this.RADIUS = getDouble(line, 5.0);
+                RADIUS = getDouble(line, RADIUS);
             } else if (line.startsWith("COLOR:")) {
-                this.COLOR = getColor(line, Color.ORANGE);
+                COLOR = getColor(line, COLOR);
             } else if (line.startsWith("ORIGIN:")) {
-                this.ORIGIN = getString(line, "Earth");
+                ORIGIN = getString(line, ORIGIN);
             } else if (line.startsWith("TARGET:")) {
-                this.TARGET = getString(line, "Mars");
+                TARGET = getString(line, TARGET);
+            } else if (line.startsWith("STAR:")) {
+                STAR = getString(line, STAR);
             } else if (line.startsWith("MIN_SPEED:")) {
-                this.MIN_SPEED = getDouble(line, 1.0);
+                MIN_SPEED = getDouble(line, MIN_SPEED);
             } else if (line.startsWith("MAX_SPEED:")) {
-                this.MAX_SPEED = getDouble(line, 1000.0);
+                MAX_SPEED = getDouble(line, MAX_SPEED);
             } else if (line.startsWith("STEP_SPEED:")) {
-                this.STEP_SPEED = getDouble(line, 5.0);
+                STEP_SPEED = getDouble(line, STEP_SPEED);
             } else if (line.startsWith("MIN_LAUNCH_TIME:")) {
-                this.MIN_LAUNCH_TIME = getLong(line, 1520294400); //Epoc of 2018-Mar-06 00:00:00.0000 TDB)
+                MIN_LAUNCH_TIME = getLong(line, MIN_LAUNCH_TIME); //Epoc of 2018-Mar-06 00:00:00.0000 TDB)
             } else if (line.startsWith("MAX_LAUNCH_TIME:")) {
-                this.MAX_LAUNCH_TIME = getLong(line, 1551830400);
+                MAX_LAUNCH_TIME = getLong(line, MAX_LAUNCH_TIME);
             } else if (line.startsWith("STEP_LAUNCH_TIME:")) {
-                this.STEP_LAUNCH_TIME = getLong(line, 3600);
+                STEP_LAUNCH_TIME = getLong(line, STEP_LAUNCH_TIME);
             } else if (line.startsWith("ITERATE_SPEED_FIRST:")) {
-                this.ITERATE_SPEED_FIRST = getBoolean(line, true);
+                ITERATE_SPEED_FIRST = getBoolean(line, true);
+            } else if (line.startsWith("LAUNCH_ELEVATION:")) {
+                LAUNCH_ELEVATION = getDouble(line, LAUNCH_ELEVATION);
+            } else if (line.startsWith("MAX_OVERTAKE_DISTANCE:")) {
+                OVERTAKE_DISTANCE_TOLERANCE = getDouble(line, OVERTAKE_DISTANCE_TOLERANCE);
+            } else if (line.startsWith("MAX_OVERTAKE_DISTANCE:")) {
+                MAX_OVERTAKE_DISTANCE = getDouble(line, MAX_OVERTAKE_DISTANCE);
             } else {
                 System.out.println("Line not processed: " + line);
             }

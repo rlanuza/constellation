@@ -12,6 +12,7 @@ public class Route {
     private final Body spacecraft;
     private Body origin;
     private Body target;
+    private Body sun;
     private int spacecraftIndex;
     private int targetIndex;
     private final Position virtualTarget = new Position();
@@ -26,14 +27,22 @@ public class Route {
     private boolean launched;
     private double speed;
     private double minTargetDistance;
+    private boolean newIterationLaunch;
 
-    private static final double LAUNCH_ELEVATION = 1;
-    private static final double OVERTAKE_DISTANCE_TOLERANCE = 10000.0;
+    private double LAUNCH_ELEVATION = 1;
+    private double OVERTAKE_DISTANCE_TOLERANCE;
+    private double MAX_OVERTAKE_DISTANCE;
 
-    public Route(Body spacecraft, Body origin, Body target, double startTime, double stopTime, double stepTime, double startSpeed, double stopSpeed, double stepSpeed) {
+    public Route(Body spacecraft, Body origin, Body target, Body sun,
+            double startTime, double stopTime, double stepTime,
+            double startSpeed, double stopSpeed, double stepSpeed,
+            double LAUNCH_ELEVATION,
+            double OVERTAKE_DISTANCE_TOLERANCE,
+            double MAX_OVERTAKE_DISTANCE) {
         this.spacecraft = spacecraft;
         this.origin = origin;
         this.target = target;
+        this.sun = sun;
         spacecraftIndex = spacecraft.getIndex();
         targetIndex = target.getIndex();
         this.startTime = startTime;
@@ -42,8 +51,11 @@ public class Route {
         this.startSpeed = startSpeed;
         this.stopSpeed = stopSpeed;
         this.stepSpeed = stepSpeed;
+        this.OVERTAKE_DISTANCE_TOLERANCE = OVERTAKE_DISTANCE_TOLERANCE;
+        this.MAX_OVERTAKE_DISTANCE = MAX_OVERTAKE_DISTANCE;
         time = startTime;
         speed = startSpeed;
+        newIterationLaunch = true;
         launched = false;
         minTargetDistance = Double.MAX_VALUE;
     }
@@ -63,20 +75,30 @@ public class Route {
         //@Todo decide a good overtaking detection algorithm  and calculate the missedTargetDistance
         double d = Constellation.dist[targetIndex][spacecraftIndex];
         if (d < minTargetDistance) {
+            // A new minimum distance
             minTargetDistance = d;
             return false;
         } else if (d > (minTargetDistance + OVERTAKE_DISTANCE_TOLERANCE)) {
-            // Prepare a new target
-            targetFailed.x = spacecraft.x;
-            targetFailed.y = spacecraft.y;
-            targetFailed.z = spacecraft.z;
-            virtualTarget.x = target.x;
-            virtualTarget.y = target.y;
-            virtualTarget.z = target.z;
+            // A clear overtaking
+            // Heuristic a) the distance must be near than a limit
+            if (d > MAX_OVERTAKE_DISTANCE) {
+                newIterationLaunch = true;
+            } else {
+                // @Todo Heuristic b) the distance to STAR must be far than Target
+                // @Todo Heuristic c) Calculate a new taget based on the error
+                // Prepare a new iteration if the conditions are good modifying the target
+                targetFailed.x = spacecraft.x;
+                targetFailed.y = spacecraft.y;
+                targetFailed.z = spacecraft.z;
+                virtualTarget.x = target.x;
+                virtualTarget.y = target.y;
+                virtualTarget.z = target.z;
+            }
+
             //@Todo this is not the solution to the target, lllok a best hipothesys
-            minTargetDistance = Double.MAX_VALUE;
             return true;
         } else {
+            // A distance in tolerance, but probably getting worse
             return false;
         }
     }
@@ -84,6 +106,7 @@ public class Route {
     /**
      * Program next launch conditions
      *
+     * @param iterateSpeedFirst
      * @return true until no new conditions programmed
      */
     public boolean nextLaunch(boolean iterateSpeedFirst) {
@@ -108,6 +131,7 @@ public class Route {
             }
         }
         System.out.printf("Next Launch time '%s' with speed: %f\n", dateString(time), speed);
+        newIterationLaunch = true;
         return true;
     }
 
@@ -119,26 +143,29 @@ public class Route {
     }
 
     /**
-     * Launch to the next target iteration point. We will use this to calculate
-     * the error if we miss the target and adjust next launch
+     * Launch to the next target iteration point. We will use this to calculate the error if we miss the target and adjust next launch
      */
     public void launchToNextTarget() {
-        double virtualTarget_x = target.x;
-        double virtualTarget_y = target.y;
-        double virtualTarget_z = target.z;
-        if (targetFailed != null) {
+        minTargetDistance = Double.MAX_VALUE;
+        if (newIterationLaunch) {
+            // Straight launch
+            virtualTarget.x = origin.x + origin.vx;
+            virtualTarget.y = origin.y + origin.vy;
+            virtualTarget.z = origin.z + origin.vz;
+            newIterationLaunch = false;
+        } else {
             //@Todo decide a good overtaking correction algorithm
-            //@Todo this is not the solution to the target, lllok a best hipothesys
-            virtualTarget_x = (virtualTarget_x + targetFailed.x) / 2.0;
-            virtualTarget_y = (virtualTarget_x + targetFailed.y) / 2.0;
-            virtualTarget_z = (virtualTarget_x + targetFailed.z) / 2.0;
+            //@Todo this is not the solution to the target, look a best hipothesys
+            virtualTarget.x = (virtualTarget.x + targetFailed.x) / 2.0;
+            virtualTarget.y = (virtualTarget.x + targetFailed.y) / 2.0;
+            virtualTarget.z = (virtualTarget.x + targetFailed.z) / 2.0;
         }
         //@Todo precalculate the speed for this launch with apis to iterate speed and time
         //@Todo we need a aproaching iterator with some edn condition
         // Distance to the target and the 3 distance proyections
-        double dx = virtualTarget_x - origin.x;
-        double dy = virtualTarget_y - origin.y;
-        double dz = virtualTarget_z - origin.z;
+        double dx = virtualTarget.x - origin.x;
+        double dy = virtualTarget.y - origin.y;
+        double dz = virtualTarget.z - origin.z;
         double d = Math.sqrt(dx * dx + dy * dy + dz * dz);
         // Calculate the launch speed as launch speed + origin speed;
         double vxr = speed * dx / d;
@@ -185,5 +212,12 @@ public class Route {
      */
     public boolean isLaunched() {
         return launched;
+    }
+
+    /**
+     * @return true if not newIterationLaunch
+     */
+    public boolean iterationLaunchContinue() {
+        return !newIterationLaunch;
     }
 }
