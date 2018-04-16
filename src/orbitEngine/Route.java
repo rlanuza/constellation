@@ -12,11 +12,14 @@ public class Route {
     private final Body spacecraft;
     private Body origin;
     private Body target;
-    private Body sun;
+    private Body star;
     private int spacecraftIndex;
+    private int originIndex;
     private int targetIndex;
-    private final Position virtualTarget = new Position();
-    private final Position targetFailed = new Position();
+    private int starIndex;
+
+    private final Position spacecraftFail = new Position();
+    private final Position targetFail = new Position();
     private final double startTime;
     private final double stopTime;
     private final double stepTime;
@@ -27,13 +30,13 @@ public class Route {
     private boolean launched;
     private double speed;
     private double minTargetDistance;
-    private boolean newIterationLaunch;
+    private boolean newInitialConditionsLaunch;
 
     private double LAUNCH_ELEVATION = 1;
     private double OVERTAKE_DISTANCE_TOLERANCE;
     private double MAX_OVERTAKE_DISTANCE;
 
-    public Route(Body spacecraft, Body origin, Body target, Body sun,
+    public Route(Body spacecraft, Body origin, Body target, Body star,
             double startTime, double stopTime, double stepTime,
             double startSpeed, double stopSpeed, double stepSpeed,
             double LAUNCH_ELEVATION,
@@ -42,9 +45,11 @@ public class Route {
         this.spacecraft = spacecraft;
         this.origin = origin;
         this.target = target;
-        this.sun = sun;
+        this.star = star;
         spacecraftIndex = spacecraft.getIndex();
+        originIndex = origin.getIndex();
         targetIndex = target.getIndex();
+        starIndex = star.getIndex();
         this.startTime = startTime;
         this.stopTime = stopTime;
         this.stepTime = stepTime;
@@ -55,7 +60,7 @@ public class Route {
         this.MAX_OVERTAKE_DISTANCE = MAX_OVERTAKE_DISTANCE;
         time = startTime;
         speed = startSpeed;
-        newIterationLaunch = true;
+        newInitialConditionsLaunch = true;
         launched = false;
         minTargetDistance = Double.MAX_VALUE;
     }
@@ -64,8 +69,8 @@ public class Route {
      * Reset Origin and destination bodies for a new calculus
      */
     void resetBodyValues(Constellation constellation) {
-        origin = constellation.getBody(origin.getIndex());
-        target = constellation.getBody(target.getIndex());
+        origin = constellation.getBody(originIndex);
+        target = constellation.getBody(targetIndex);
     }
 
     /**
@@ -73,32 +78,33 @@ public class Route {
      */
     boolean overtaking() {
         //@Todo decide a good overtaking detection algorithm  and calculate the missedTargetDistance
-        double d = Constellation.dist[targetIndex][spacecraftIndex];
-        if (d < minTargetDistance) {
-            // A new minimum distance
-            minTargetDistance = d;
+        double dSpacecraftToTarget = Constellation.dist[targetIndex][spacecraftIndex];
+        if (dSpacecraftToTarget < minTargetDistance) {  // A new minimum distance --> Continue this
+            minTargetDistance = dSpacecraftToTarget;
             return false;
-        } else if (d > (minTargetDistance + OVERTAKE_DISTANCE_TOLERANCE)) {
-            // A clear overtaking
-            // Heuristic a) the distance must be near than a limit
-            if (d > MAX_OVERTAKE_DISTANCE) {
-                newIterationLaunch = true;
-            } else {
-                // @Todo Heuristic b) the distance to STAR must be far than Target
-                // @Todo Heuristic c) Calculate a new taget based on the error
-                // Prepare a new iteration if the conditions are good modifying the target
-                targetFailed.x = spacecraft.x;
-                targetFailed.y = spacecraft.y;
-                targetFailed.z = spacecraft.z;
-                virtualTarget.x = target.x;
-                virtualTarget.y = target.y;
-                virtualTarget.z = target.z;
+        } else if (dSpacecraftToTarget > (minTargetDistance + OVERTAKE_DISTANCE_TOLERANCE)) {     // A clear overtaking
+            // Heuristic a) the distance must be near than a limit else reject the iteration
+            if (dSpacecraftToTarget > MAX_OVERTAKE_DISTANCE) {
+                newInitialConditionsLaunch = true;
+                return true;
             }
-
-            //@Todo this is not the solution to the target, lllok a best hipothesys
+            // Heuristic b) the distance to STAR must be far than Target else reject the iteration
+            double dStartToTarget = (targetIndex > starIndex) ? Constellation.dist[starIndex][targetIndex] : Constellation.dist[targetIndex][starIndex];
+            double dStartToSpacecraft = (spacecraftIndex > starIndex) ? Constellation.dist[starIndex][spacecraftIndex] : Constellation.dist[spacecraftIndex][starIndex];
+            if (dStartToTarget > dStartToSpacecraft) {
+                newInitialConditionsLaunch = true;
+                return true;
+            }
+            // Heuristic c) Calculate a new taget based on the error compensation
+            // Prepare a new iteration if the conditions are good modifying the target
+            spacecraftFail.x = spacecraft.x;
+            spacecraftFail.y = spacecraft.y;
+            spacecraftFail.z = spacecraft.z;
+            targetFail.x = target.x;
+            targetFail.y = target.y;
+            targetFail.z = target.z;
             return true;
-        } else {
-            // A distance in tolerance, but probably getting worse
+        } else {    // A distance in tolerance, but probably getting worse
             return false;
         }
     }
@@ -131,7 +137,7 @@ public class Route {
             }
         }
         System.out.printf("Next Launch time '%s' with speed: %f\n", dateString(time), speed);
-        newIterationLaunch = true;
+        newInitialConditionsLaunch = true;
         return true;
     }
 
@@ -146,19 +152,24 @@ public class Route {
      * Launch to the next target iteration point. We will use this to calculate the error if we miss the target and adjust next launch
      */
     public void launchToNextTarget() {
+
         minTargetDistance = Double.MAX_VALUE;
-        if (newIterationLaunch) {
+        final Position virtualTarget = new Position();
+        if (newInitialConditionsLaunch) {
             // Straight launch
             virtualTarget.x = origin.x + origin.vx;
             virtualTarget.y = origin.y + origin.vy;
             virtualTarget.z = origin.z + origin.vz;
-            newIterationLaunch = false;
+            newInitialConditionsLaunch = false;
         } else {
             //@Todo decide a good overtaking correction algorithm
-            //@Todo this is not the solution to the target, look a best hipothesys
-            virtualTarget.x = (virtualTarget.x + targetFailed.x) / 2.0;
-            virtualTarget.y = (virtualTarget.x + targetFailed.y) / 2.0;
-            virtualTarget.z = (virtualTarget.x + targetFailed.z) / 2.0;
+            double dfox = targetFail.x - origin.x;
+            double dfoy = targetFail.y - origin.y;
+            double dfoz = targetFail.z - origin.z;
+            double dfo = Math.sqrt(dfox * dfox + dfoy * dfoy + dfoz * dfoz);
+            virtualTarget.x = origin.x + origin.vx + (targetFail.x - spacecraftFail.x) / (dfo);
+            virtualTarget.y = origin.y + origin.vy + (targetFail.y - spacecraftFail.y) / (dfo);
+            virtualTarget.z = origin.z + origin.vz + (targetFail.z - spacecraftFail.z) / (dfo);
         }
         //@Todo precalculate the speed for this launch with apis to iterate speed and time
         //@Todo we need a aproaching iterator with some edn condition
@@ -215,9 +226,9 @@ public class Route {
     }
 
     /**
-     * @return true if not newIterationLaunch
+     * @return true if not newInitialConditionsLaunch
      */
     public boolean iterationLaunchContinue() {
-        return !newIterationLaunch;
+        return !newInitialConditionsLaunch;
     }
 }
