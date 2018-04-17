@@ -86,6 +86,7 @@ public class Route {
             // Heuristic a) the distance must be near than a limit else reject the iteration
             if (dSpacecraftToTarget > MAX_OVERTAKE_DISTANCE) {
                 newInitialConditionsLaunch = true;
+                launched = false;
                 return true;
             }
             // Heuristic b) the distance to STAR must be far than Target else reject the iteration
@@ -93,6 +94,7 @@ public class Route {
             double dStartToSpacecraft = (spacecraftIndex > starIndex) ? Constellation.dist[starIndex][spacecraftIndex] : Constellation.dist[spacecraftIndex][starIndex];
             if (dStartToTarget > dStartToSpacecraft) {
                 newInitialConditionsLaunch = true;
+                launched = false;
                 return true;
             }
             // Heuristic c) Calculate a new taget based on the error compensation
@@ -103,6 +105,9 @@ public class Route {
             targetFail.x = target.x;
             targetFail.y = target.y;
             targetFail.z = target.z;
+            launched = false;
+            //@Todo the coordenates doesn't match with the visual position
+            //@Todo Also seems tha stop only with x-distance
             return true;
         } else {    // A distance in tolerance, but probably getting worse
             return false;
@@ -152,44 +157,45 @@ public class Route {
      * Launch to the next target iteration point. We will use this to calculate the error if we miss the target and adjust next launch
      */
     public void launchToNextTarget() {
-
         minTargetDistance = Double.MAX_VALUE;
-        final Position virtualTarget = new Position();
-        if (newInitialConditionsLaunch) {
-            // Straight launch
-            virtualTarget.x = origin.x + origin.vx;
-            virtualTarget.y = origin.y + origin.vy;
-            virtualTarget.z = origin.z + origin.vz;
-            newInitialConditionsLaunch = false;
-        } else {
-            //@Todo decide a good overtaking correction algorithm
+        final Position direction = new Position();
+        // Straight launch
+        direction.x = origin.vx;
+        direction.y = origin.vy;
+        direction.z = origin.vz;
+        if (!newInitialConditionsLaunch) {
+            // Distance between fail and origin
             double dfox = targetFail.x - origin.x;
             double dfoy = targetFail.y - origin.y;
             double dfoz = targetFail.z - origin.z;
             double dfo = Math.sqrt(dfox * dfox + dfoy * dfoy + dfoz * dfoz);
-            virtualTarget.x = origin.x + origin.vx + (targetFail.x - spacecraftFail.x) / (dfo);
-            virtualTarget.y = origin.y + origin.vy + (targetFail.y - spacecraftFail.y) / (dfo);
-            virtualTarget.z = origin.z + origin.vz + (targetFail.z - spacecraftFail.z) / (dfo);
+            // Corrected direction @Todo Still not working
+            double dfsx = targetFail.x - spacecraftFail.x;
+            double dfsy = targetFail.y - spacecraftFail.y;
+            double dfsz = targetFail.z - spacecraftFail.z;
+            System.out.printf("Spacecraft fail: x=%f, y=%f, z=%f\n", dfsx / dfo, dfsy / dfo, dfsz / dfo);
+            direction.x += origin.vx * dfsx / dfo;
+            direction.y += origin.vy * dfsy / dfo;
+            direction.z += origin.vz * dfsz / dfo;
         }
+        newInitialConditionsLaunch = false;
+        //System.out.printf("Spacecraft vtarget x:%f , y:%f , z:%f \n", direction.x, direction.y, direction.z);
         //@Todo precalculate the speed for this launch with apis to iterate speed and time
         //@Todo we need a aproaching iterator with some edn condition
-        // Distance to the target and the 3 distance proyections
-        double dx = virtualTarget.x - origin.x;
-        double dy = virtualTarget.y - origin.y;
-        double dz = virtualTarget.z - origin.z;
-        double d = Math.sqrt(dx * dx + dy * dy + dz * dz);
+        // Direction to the target and the 3 distance proyections
+        double directionM = Math.sqrt(direction.x * direction.x + direction.y * direction.y + direction.z * direction.z);
         // Calculate the launch speed as launch speed + origin speed;
-        double vxr = speed * dx / d;
-        double vyr = speed * dy / d;
-        double vzr = speed * dz / d;
+        double vxr = speed * direction.x / directionM;
+        double vyr = speed * direction.y / directionM;
+        double vzr = speed * direction.z / directionM;
         spacecraft.vx = origin.vx + vxr;
         spacecraft.vy = origin.vy + vyr;
         spacecraft.vz = origin.vz + vzr;
         // Calculate the launch position as the origin body position that points to destination
         double r = origin.getRadius() + spacecraft.getRadius() + LAUNCH_ELEVATION;
-        double xr = r * dx / d;
-        double yr = r * dy / d;
-        double zr = r * dz / d;
+        double xr = r * direction.x / directionM;
+        double yr = r * direction.y / directionM;
+        double zr = r * direction.z / directionM;
         spacecraft.x = origin.x + xr;
         spacecraft.y = origin.y + yr;
         spacecraft.z = origin.z + zr;

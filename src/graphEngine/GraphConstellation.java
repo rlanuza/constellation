@@ -99,6 +99,10 @@ public class GraphConstellation {
                     }
                     drawCircle(g2d, x0, y0, grB.radius_i);
                     g2d.drawString(grB.name, x0, y0);
+                    //@Todo Added to debug BEGIN
+                    String s = String.valueOf(x0) + " : " + String.valueOf(-y0);
+                    g2d.drawString(s, x0, y0 + 20);
+                    //@Todo Added to debug END
                 }
             }
         }

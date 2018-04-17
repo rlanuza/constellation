@@ -75,7 +75,7 @@ public class Command extends LineConvert {
                 ITERATE_SPEED_FIRST = getBoolean(line, true);
             } else if (line.startsWith("LAUNCH_ELEVATION:")) {
                 LAUNCH_ELEVATION = getDouble(line, LAUNCH_ELEVATION);
-            } else if (line.startsWith("MAX_OVERTAKE_DISTANCE:")) {
+            } else if (line.startsWith("OVERTAKE_DISTANCE_TOLERANCE:")) {
                 OVERTAKE_DISTANCE_TOLERANCE = getDouble(line, OVERTAKE_DISTANCE_TOLERANCE);
             } else if (line.startsWith("MAX_OVERTAKE_DISTANCE:")) {
                 MAX_OVERTAKE_DISTANCE = getDouble(line, MAX_OVERTAKE_DISTANCE);
