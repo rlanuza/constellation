@@ -156,6 +156,10 @@ public class Route {
     /**
      * Launch to the next target iteration point. We will use this to calculate the error if we miss the target and adjust next launch
      */
+    double dfsx = 0;
+    double dfsy = 0;
+    double dfsz = 0;
+
     public void launchToNextTarget() {
         minTargetDistance = Double.MAX_VALUE;
         final Position direction = new Position();
@@ -163,20 +167,25 @@ public class Route {
         direction.x = origin.vx;
         direction.y = origin.vy;
         direction.z = origin.vz;
-        if (!newInitialConditionsLaunch) {
+        if (newInitialConditionsLaunch) {
+            dfsx = 0;
+            dfsy = 0;
+            dfsz = 0;
+        } else {
             // Distance between fail and origin
             double dfox = targetFail.x - origin.x;
             double dfoy = targetFail.y - origin.y;
             double dfoz = targetFail.z - origin.z;
             double dfo = Math.sqrt(dfox * dfox + dfoy * dfoy + dfoz * dfoz);
             // Corrected direction @Todo Still not working
-            double dfsx = targetFail.x - spacecraftFail.x;
-            double dfsy = targetFail.y - spacecraftFail.y;
-            double dfsz = targetFail.z - spacecraftFail.z;
+            dfsx += targetFail.x - spacecraftFail.x;
+            dfsy += targetFail.y - spacecraftFail.y;
+            dfsz += targetFail.z - spacecraftFail.z;
             System.out.printf("Spacecraft fail: x=%f, y=%f, z=%f\n", dfsx / dfo, dfsy / dfo, dfsz / dfo);
             direction.x += origin.vx * dfsx / dfo;
             direction.y += origin.vy * dfsy / dfo;
             direction.z += origin.vz * dfsz / dfo;
+
         }
         newInitialConditionsLaunch = false;
         //System.out.printf("Spacecraft vtarget x:%f , y:%f , z:%f \n", direction.x, direction.y, direction.z);

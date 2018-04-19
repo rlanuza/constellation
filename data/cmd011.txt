@@ -6,10 +6,10 @@
   ORIGIN:                       Earth           # Origin body
   TARGET:                       Mars            # Target body
   STAR:                         Sun             # Star or center of the constellation
-  MIN_SPEED:                    12500           # The minimum speed to test (m/s) >11170
+  MIN_SPEED:                    12900           # The minimum speed to test (m/s) >11170
   MAX_SPEED:                    13000           # The maximum speed to test (m/s)
   STEP_SPEED:                   5               # The steep used for each iteration of the test (m/s)
-  MIN_LAUNCH_TIME:              1595500000      # The minimum Epoc time of the launch (1520294400==2018-Mar-06 00:00:00.0000 TDB.)
+  MIN_LAUNCH_TIME:              1595775000      # The minimum Epoc time of the launch (1520294400==2018-Mar-06 00:00:00.0000 TDB.)
   MAX_LAUNCH_TIME:              1611830400      # The minimum Epoc time of the launch (1520294400==2018-Mar-06 00:00:00.0000 TDB.)
   STEP_LAUNCH_TIME:             86400           # The minimum Epoc time of the launch (1520294400==2018-Mar-06 00:00:00.0000 TDB.)
   ITERATE_SPEED_FIRST:          true            # Iterate first speed or launch time
