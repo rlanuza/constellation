@@ -32,7 +32,9 @@ public class Route {
     private double speed;
     private double minTargetDistance;
     private boolean newInitialConditionsLaunch;
+    private int stepsLimitOnCandidate;
 
+    private int STEPS_LIMIT_ON_CANDIDATE;
     private double LAUNCH_ELEVATION = 1;
     private double OVERTAKE_DISTANCE_TOLERANCE;
     private double MAX_OVERTAKE_DISTANCE;
@@ -42,7 +44,8 @@ public class Route {
             double startSpeed, double stopSpeed, double stepSpeed,
             double LAUNCH_ELEVATION,
             double OVERTAKE_DISTANCE_TOLERANCE,
-            double MAX_OVERTAKE_DISTANCE) {
+            double MAX_OVERTAKE_DISTANCE,
+            int stepsLimOnCandidate) {
         this.spacecraft = spacecraft;
         this.origin = origin;
         this.target = target;
@@ -59,6 +62,7 @@ public class Route {
         this.stepSpeed = stepSpeed;
         this.OVERTAKE_DISTANCE_TOLERANCE = OVERTAKE_DISTANCE_TOLERANCE;
         this.MAX_OVERTAKE_DISTANCE = MAX_OVERTAKE_DISTANCE;
+        this.STEPS_LIMIT_ON_CANDIDATE = stepsLimOnCandidate;
         time = startTime;
         speed = startSpeed;
         newInitialConditionsLaunch = true;
@@ -100,16 +104,25 @@ public class Route {
             }
             // Heuristic c) Calculate a new taget based on the error compensation
             // Prepare a new iteration if the conditions are good modifying the target
-            spacecraftFail.x = spacecraft.x;
-            spacecraftFail.y = spacecraft.y;
-            spacecraftFail.z = spacecraft.z;
-            targetFail.x = target.x;
-            targetFail.y = target.y;
-            targetFail.z = target.z;
-            launched = false;
-            //@Todo the coordenates doesn't match with the visual position
-            //@Todo Also seems tha stop only with x-distance
-            return true;
+            if (stepsLimitOnCandidate > 0) {
+                stepsLimitOnCandidate--;
+                spacecraftFail.x = spacecraft.x;
+                spacecraftFail.y = spacecraft.y;
+                spacecraftFail.z = spacecraft.z;
+                targetFail.x = target.x;
+                targetFail.y = target.y;
+                targetFail.z = target.z;
+                launched = false;
+
+                //@Todo the coordenates doesn't match with the visual position
+                //@Todo Also seems tha stop only with x-distance
+                return true;
+            } else {
+                newInitialConditionsLaunch = true;
+                launched = false;
+                return true;
+            }
+
         } else {    // A distance in tolerance, but probably getting worse
             return false;
         }
@@ -155,8 +168,7 @@ public class Route {
     }
 
     /**
-     * Launch to the next target iteration point. We will use this to calculate
-     * the error if we miss the target and adjust next launch
+     * Launch to the next target iteration point. We will use this to calculate the error if we miss the target and adjust next launch
      */
     public void launchToNextTarget() {
         minTargetDistance = Double.MAX_VALUE;
@@ -167,6 +179,7 @@ public class Route {
         direction.z = origin.vz;
         if (newInitialConditionsLaunch) {
             correction.reset();
+            stepsLimitOnCandidate = STEPS_LIMIT_ON_CANDIDATE;
         } else {
             // Distance between fail and origin
             double dfox = targetFail.x - origin.x;

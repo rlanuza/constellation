@@ -157,6 +157,7 @@ public class Engine {
                 cmd.MIN_SPEED, cmd.MAX_SPEED, cmd.STEP_SPEED,
                 cmd.LAUNCH_ELEVATION,
                 cmd.OVERTAKE_DISTANCE_TOLERANCE,
-                cmd.MAX_OVERTAKE_DISTANCE);
+                cmd.MAX_OVERTAKE_DISTANCE,
+                cmd.STEPS_LIMIT_ON_CANDIDATE);
     }
 }
