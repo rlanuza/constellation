@@ -20,6 +20,7 @@ public class Route {
 
     private final Position spacecraftFail = new Position();
     private final Position targetFail = new Position();
+    private final Position correction = new Position();
     private final double startTime;
     private final double stopTime;
     private final double stepTime;
@@ -154,12 +155,9 @@ public class Route {
     }
 
     /**
-     * Launch to the next target iteration point. We will use this to calculate the error if we miss the target and adjust next launch
+     * Launch to the next target iteration point. We will use this to calculate
+     * the error if we miss the target and adjust next launch
      */
-    double dfsx = 0;
-    double dfsy = 0;
-    double dfsz = 0;
-
     public void launchToNextTarget() {
         minTargetDistance = Double.MAX_VALUE;
         final Position direction = new Position();
@@ -168,9 +166,7 @@ public class Route {
         direction.y = origin.vy;
         direction.z = origin.vz;
         if (newInitialConditionsLaunch) {
-            dfsx = 0;
-            dfsy = 0;
-            dfsz = 0;
+            correction.reset();
         } else {
             // Distance between fail and origin
             double dfox = targetFail.x - origin.x;
@@ -178,13 +174,13 @@ public class Route {
             double dfoz = targetFail.z - origin.z;
             double dfo = Math.sqrt(dfox * dfox + dfoy * dfoy + dfoz * dfoz);
             // Corrected direction @Todo Still not working
-            dfsx += targetFail.x - spacecraftFail.x;
-            dfsy += targetFail.y - spacecraftFail.y;
-            dfsz += targetFail.z - spacecraftFail.z;
-            System.out.printf("Spacecraft fail: x=%f, y=%f, z=%f\n", dfsx / dfo, dfsy / dfo, dfsz / dfo);
-            direction.x += origin.vx * dfsx / dfo;
-            direction.y += origin.vy * dfsy / dfo;
-            direction.z += origin.vz * dfsz / dfo;
+            correction.x += targetFail.x - spacecraftFail.x;
+            correction.y += targetFail.y - spacecraftFail.y;
+            correction.z += targetFail.z - spacecraftFail.z;
+            System.out.printf("Spacecraft fail: x=%f, y=%f, z=%f\n", correction.x / dfo, correction.y / dfo, correction.z / dfo);
+            direction.x += origin.vx * correction.x / dfo;
+            direction.y += origin.vy * correction.y / dfo;
+            direction.z += origin.vz * correction.z / dfo;
 
         }
         newInitialConditionsLaunch = false;
