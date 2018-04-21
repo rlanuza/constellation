@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import userInterface.Command;
 import userInterface.Parameter;
+import userInterface.Report;
 
 public class Engine {
 
@@ -87,6 +88,9 @@ public class Engine {
         }
     }
 
+    /**
+     * @return true when the spacecraft land or lost the target
+     */
     private boolean runRoute(long steepsPerPlot) {
         for (int i = 0; i < steepsPerPlot; i++) {
             switch (Parameter.CALCULUS_METHOD) {
@@ -126,8 +130,9 @@ public class Engine {
         return false;
     }
 
-    public void runSimulationTravel(Command cmd) {
+    public void runSimulationTravel(Command cmd, Report report) {
         setRoute(cmd);
+        report.print("+++++++++++++++++++++\nNew simulation");
         long simulationPlots = Parameter.SIMULATION_STEPS / Parameter.STEPS_PER_PLOT;
         do {
             do {
@@ -139,7 +144,7 @@ public class Engine {
                     }
                     screen.updateConstellation();
                 }
-            } while (route.iterationLaunchContinue());
+            } while (route.sameInitialConditionsIteration());
         } while (route.nextLaunch(cmd.ITERATE_SPEED_FIRST));
     }
 

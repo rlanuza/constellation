@@ -56,7 +56,7 @@ public class main {
             screen = new GraphScreen(eng);
 
             if (commandFile != null) {
-                eng.runSimulationTravel(new Command(commandFile));
+                eng.runSimulationTravel(new Command(commandFile), new Report(outputFile));
             } else {
                 eng.runSimulation();
             }

@@ -102,7 +102,7 @@ public class Route {
                 launched = false;
                 return true;
             }
-            // Heuristic c) Calculate a new taget based on the error compensation
+            // Heuristic c) Calculate a new taget based on the error compensation with a sinple iteration counter limit
             // Prepare a new iteration if the conditions are good modifying the target
             if (stepsLimitOnCandidate > 0) {
                 stepsLimitOnCandidate--;
@@ -173,7 +173,7 @@ public class Route {
     public void launchToNextTarget() {
         minTargetDistance = Double.MAX_VALUE;
         final Position direction = new Position();
-        // Straight launch
+        // Straight launch using the planet speed vector
         direction.x = origin.vx;
         direction.y = origin.vy;
         direction.z = origin.vz;
@@ -186,15 +186,14 @@ public class Route {
             double dfoy = targetFail.y - origin.y;
             double dfoz = targetFail.z - origin.z;
             double dfo = Math.sqrt(dfox * dfox + dfoy * dfoy + dfoz * dfoz);
-            // Corrected direction @Todo Still not working
+            // Corrected direction
             correction.x += targetFail.x - spacecraftFail.x;
             correction.y += targetFail.y - spacecraftFail.y;
             correction.z += targetFail.z - spacecraftFail.z;
-            System.out.printf("Spacecraft fail: x=%f, y=%f, z=%f\n", correction.x / dfo, correction.y / dfo, correction.z / dfo);
+            System.out.printf("  Spacecraft fail: x=%f, y=%f, z=%f\n", correction.x / dfo, correction.y / dfo, correction.z / dfo);
             direction.x += origin.vx * correction.x / dfo;
             direction.y += origin.vy * correction.y / dfo;
             direction.z += origin.vz * correction.z / dfo;
-
         }
         newInitialConditionsLaunch = false;
         //System.out.printf("Spacecraft vtarget x:%f , y:%f , z:%f \n", direction.x, direction.y, direction.z);
@@ -252,7 +251,7 @@ public class Route {
     /**
      * @return true if not newInitialConditionsLaunch
      */
-    public boolean iterationLaunchContinue() {
-        return !newInitialConditionsLaunch;
+    public boolean sameInitialConditionsIteration() {
+        return !(spacecraft.merged || newInitialConditionsLaunch);
     }
 }
