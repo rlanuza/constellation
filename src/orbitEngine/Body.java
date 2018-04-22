@@ -29,11 +29,13 @@ public class Body extends Position implements Cloneable {
     double gy;
     double gz;
 
+    double kineticLost;
+
     // Energy on new bodies creation in Joule
     // Todo split translational kinetic energy and rotational energy or angular kinetic energy i
     public double kinetic() {
         // Kinetic energy = 1/2*m*v^2 = 1/2*m*sqr(vx^2+vy^2+vz^2)^2 = 1/2*m*vx^2+vy^2+vz^2)
-        return 0.5 * mass * (vx * vx + vy * vy + vz * vz);  // Joules
+        return ((mass * (vx * vx + vy * vy + vz * vz)) / 2);  // Joules
     }
 
     /**
@@ -53,6 +55,7 @@ public class Body extends Position implements Cloneable {
         this.vz = vz;
         this.color = astroColor;
         this.index = nextIndex;
+        kineticLost = 0;
         nextIndex++;
     }
 

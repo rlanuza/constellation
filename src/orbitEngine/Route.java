@@ -6,6 +6,7 @@
 package orbitEngine;
 
 import static orbitEngine.Engine.dateString;
+import userInterface.Report;
 
 public class Route {
 
@@ -38,14 +39,16 @@ public class Route {
     private double LAUNCH_ELEVATION = 1;
     private double OVERTAKE_DISTANCE_TOLERANCE;
     private double MAX_OVERTAKE_DISTANCE;
+    private Report report;
 
-    public Route(Body spacecraft, Body origin, Body target, Body star,
+    public Route(Report report, Body spacecraft, Body origin, Body target, Body star,
             double startTime, double stopTime, double stepTime,
             double startSpeed, double stopSpeed, double stepSpeed,
             double LAUNCH_ELEVATION,
             double OVERTAKE_DISTANCE_TOLERANCE,
             double MAX_OVERTAKE_DISTANCE,
             int stepsLimOnCandidate) {
+        this.report = report;
         this.spacecraft = spacecraft;
         this.origin = origin;
         this.target = target;
@@ -155,7 +158,7 @@ public class Route {
                 }
             }
         }
-        System.out.printf("Next Launch time '%s' with speed: %f\n", dateString(time), speed);
+        report.print("Next Launch time '%s' with speed: %f\n", dateString(time), speed);
         newInitialConditionsLaunch = true;
         return true;
     }
@@ -190,7 +193,7 @@ public class Route {
             correction.x += targetFail.x - spacecraftFail.x;
             correction.y += targetFail.y - spacecraftFail.y;
             correction.z += targetFail.z - spacecraftFail.z;
-            System.out.printf("  Spacecraft fail: x=%f, y=%f, z=%f\n", correction.x / dfo, correction.y / dfo, correction.z / dfo);
+            report.print("  Spacecraft fail: x=%f, y=%f, z=%f\n", correction.x / dfo, correction.y / dfo, correction.z / dfo);
             direction.x += origin.vx * correction.x / dfo;
             direction.y += origin.vy * correction.y / dfo;
             direction.z += origin.vz * correction.z / dfo;
@@ -251,7 +254,7 @@ public class Route {
     /**
      * @return true if not newInitialConditionsLaunch
      */
-    public boolean sameInitialConditionsIteration() {
+    public boolean repeatInitialConditions() {
         return !(spacecraft.merged || newInitialConditionsLaunch);
     }
 }

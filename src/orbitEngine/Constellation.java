@@ -37,7 +37,7 @@ public final class Constellation {
 
     void resetConstellation() {
         int n = bodyList.size();
-        // Now we'll generate array copies (faster) of the ArrayList and left the ArrayList to let us recover initial positions 
+        // Now we'll generate array copies (faster) of the ArrayList and left the ArrayList to let us recover initial positions
         body = new Body[n];
         // @Todo remove:  body = bodyList.toArray(new Body[n]);
         int i = 0;
@@ -104,8 +104,8 @@ public final class Constellation {
         int newBColor = Math.min(b1.color.getBlue() + b2.color.getBlue(), 255);
         Color astroColor = new Color(newRColor, newGColor, newBColor);
         bodyTmp[j] = new Body(name, mass, radius, x, y, z, vx, vy, vz, astroColor);
-        double kineticLost = bodyTmp[j].kinetic() - (b1.kinetic() + b2.kinetic());
-        System.out.printf("Kinetic lost on %s generation: %e\n", name, kineticLost);
+        b2.kineticLost = bodyTmp[j].kinetic() - b1.kinetic() - b2.kinetic();
+        //System.out.printf("Kinetic lost on %s generation: %e\n", name, b2.kineticLost);
         body = bodyTmp;
         resizeDistanceArrays(body.length);
         graphConstellation.reindexConstellation(body);

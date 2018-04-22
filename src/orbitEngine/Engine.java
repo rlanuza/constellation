@@ -91,7 +91,7 @@ public class Engine {
     /**
      * @return true when the spacecraft land or lost the target
      */
-    private boolean runRoute(long steepsPerPlot) {
+    private boolean runRoute(long steepsPerPlot, Report report) {
         for (int i = 0; i < steepsPerPlot; i++) {
             switch (Parameter.CALCULUS_METHOD) {
                 case 0:
@@ -111,11 +111,12 @@ public class Engine {
             seconds += stepTime;
             if (route.isLaunched()) {
                 if (route.spacecraftLand()) {
-                    System.out.printf("Spacecraft Land on time '%s' in: %s\n", dateString(), route.spacecraftLandBody().name);
+                    report.print("Spacecraft Land on time '%s' in: %s. Energy lost on landing: %eJoules", dateString(), route.spacecraftLandBody().name, route.getSpacecraft().kineticLost);
+                    //System.out.printf("Kinetic lost on %s generation: %e\n", name, b2.kineticLost);
                     constellation.pushToGraphic();
-                    //System.exit(0);
                     return true;
                 } else if (route.overtaking()) {
+                    report.print(" overtaking");
                     constellation.pushToGraphic();
                     return true;
                 }
@@ -131,33 +132,34 @@ public class Engine {
     }
 
     public void runSimulationTravel(Command cmd, Report report) {
-        setRoute(cmd);
+        setRoute(cmd, report);
         report.print("+++++++++++++++++++++\nNew simulation");
         long simulationPlots = Parameter.SIMULATION_STEPS / Parameter.STEPS_PER_PLOT;
         do {
             do {
                 resetEngine();
                 for (long i = 0; i < simulationPlots; i++) {
-                    if (runRoute(Parameter.STEPS_PER_PLOT)) {
+                    if (runRoute(Parameter.STEPS_PER_PLOT, report)) {
                         screen.updateConstellation();
                         break;
                     }
                     screen.updateConstellation();
                 }
-            } while (route.sameInitialConditionsIteration());
+            } while (route.repeatInitialConditions());
         } while (route.nextLaunch(cmd.ITERATE_SPEED_FIRST));
+        report.dump();
     }
 
-    private void setRoute(Command cmd) {
+    private void setRoute(Command cmd, Report report) {
         Body spacecraft = new Body(cmd.NAME, cmd.MASS, cmd.RADIUS, cmd.COLOR);
         Body origin = constellation.getBody(cmd.ORIGIN);
         Body target = constellation.getBody(cmd.TARGET);
         Body star = constellation.getBody(cmd.STAR);
         if ((origin == null) || (target == null)) {
-            System.out.printf("Error, the origin '%s' or the target '%s' is not in our constellation\n", cmd.ORIGIN, cmd.TARGET);
+            report.print("Error, the origin '%s' or the target '%s' is not in our constellation", cmd.ORIGIN, cmd.TARGET);
             System.exit(1);
         }
-        route = new Route(spacecraft, origin, target, star,
+        route = new Route(report, spacecraft, origin, target, star,
                 cmd.MIN_LAUNCH_TIME, cmd.MAX_LAUNCH_TIME, cmd.STEP_LAUNCH_TIME,
                 cmd.MIN_SPEED, cmd.MAX_SPEED, cmd.STEP_SPEED,
                 cmd.LAUNCH_ELEVATION,
