@@ -1,5 +1,8 @@
 *.class
-/nbproject/private/
 /build/
 /dist/
 /doc/
+/data/out*.txt
+/nbproject/private/private.properties
+/nbproject/private/private.xml
+/data/*.bak

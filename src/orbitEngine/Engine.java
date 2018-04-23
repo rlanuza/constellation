@@ -43,13 +43,13 @@ public class Engine {
     static public String dateString() {
         LocalDateTime dateTime = LocalDateTime.ofEpochSecond((long) seconds, 0, ZoneOffset.UTC);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/LL/dd-HH:mm:ss", Locale.ENGLISH);
-        return "Date: " + dateTime.format(formatter);
+        return dateTime.format(formatter);
     }
 
     static public String dateString(double seconds_time) {
         LocalDateTime dateTime = LocalDateTime.ofEpochSecond((long) seconds_time, 0, ZoneOffset.UTC);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/LL/dd-HH:mm:ss", Locale.ENGLISH);
-        return "Date: " + dateTime.format(formatter);
+        return dateTime.format(formatter);
     }
 
     private void run(long steepsPerPlot) {
@@ -111,12 +111,9 @@ public class Engine {
             seconds += stepTime;
             if (route.isLaunched()) {
                 if (route.spacecraftLand()) {
-                    report.print("Spacecraft Land on time '%s' in: %s. Energy lost on landing: %eJoules", dateString(), route.spacecraftLandBody().name, route.getSpacecraft().kineticLost);
-                    //System.out.printf("Kinetic lost on %s generation: %e\n", name, b2.kineticLost);
                     constellation.pushToGraphic();
                     return true;
                 } else if (route.overtaking()) {
-                    report.print(" overtaking");
                     constellation.pushToGraphic();
                     return true;
                 }
@@ -133,7 +130,7 @@ public class Engine {
 
     public void runSimulationTravel(Command cmd, Report report) {
         setRoute(cmd, report);
-        report.print("+++++++++++++++++++++\nNew simulation");
+        report.print("+++++++++++++++++++++\n-Start a new simulation");
         long simulationPlots = Parameter.SIMULATION_STEPS / Parameter.STEPS_PER_PLOT;
         do {
             do {

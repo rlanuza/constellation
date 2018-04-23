@@ -108,7 +108,7 @@ public class GraphScreen extends JComponent implements KeyListener {
         if (gc != null) {
             g.setColor(Parameter.COLOR_DATE);
             g.setFont(new Font("Courier New", Font.BOLD, 22));
-            g.drawString(Engine.dateString(), 10, 22);
+            g.drawString("Date: " + Engine.dateString(), 10, 22);
             g.setColor(Parameter.COLOR_SCALE);
             g.drawString(gc.getScaleString(), 10, 44);
             g.setColor(Parameter.COLOR_ANGLE);

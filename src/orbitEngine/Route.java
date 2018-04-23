@@ -85,7 +85,6 @@ public class Route {
      * Check if the target has been overtaken
      */
     boolean overtaking() {
-        //@Todo decide a good overtaking detection algorithm  and calculate the missedTargetDistance
         double dSpacecraftToTarget = Constellation.dist[targetIndex][spacecraftIndex];
         if (dSpacecraftToTarget < minTargetDistance) {  // A new minimum distance --> Continue this
             minTargetDistance = dSpacecraftToTarget;
@@ -93,6 +92,8 @@ public class Route {
         } else if (dSpacecraftToTarget > (minTargetDistance + OVERTAKE_DISTANCE_TOLERANCE)) {     // A clear overtaking
             // Heuristic a) the distance must be near than a limit else reject the iteration
             if (dSpacecraftToTarget > MAX_OVERTAKE_DISTANCE) {
+                report.print(" -> overtaking: As the distance to target %e > %e [MAX_OVERTAKE_DISTANCE]. This launch iteration is dismissed",
+                        dSpacecraftToTarget, MAX_OVERTAKE_DISTANCE);
                 newInitialConditionsLaunch = true;
                 launched = false;
                 return true;
@@ -101,10 +102,15 @@ public class Route {
             double dStartToTarget = (targetIndex > starIndex) ? Constellation.dist[starIndex][targetIndex] : Constellation.dist[targetIndex][starIndex];
             double dStartToSpacecraft = (spacecraftIndex > starIndex) ? Constellation.dist[starIndex][spacecraftIndex] : Constellation.dist[spacecraftIndex][starIndex];
             if (dStartToTarget > dStartToSpacecraft) {
+                report.print(" -> overtaking: As the star distance to target %e > %e, the rocket distance to target. This launch iteration is dismissed",
+                        dStartToTarget, dStartToSpacecraft);
                 newInitialConditionsLaunch = true;
                 launched = false;
                 return true;
             }
+
+            report.print("  Spacecraft fail: dist.:%e [dx=%e, dy=%e, dz=%e]\n", distance(spacecraft, target),
+                    target.x - spacecraft.x, target.y - spacecraft.y, target.z - spacecraft.z);
             // Heuristic c) Calculate a new taget based on the error compensation with a sinple iteration counter limit
             // Prepare a new iteration if the conditions are good modifying the target
             if (stepsLimitOnCandidate > 0) {
@@ -115,17 +121,16 @@ public class Route {
                 targetFail.x = target.x;
                 targetFail.y = target.y;
                 targetFail.z = target.z;
+                report.print(" -> overtaking: New temptative [%d of %d] adjusting the initial speed vector",
+                        STEPS_LIMIT_ON_CANDIDATE - stepsLimitOnCandidate, STEPS_LIMIT_ON_CANDIDATE);
                 launched = false;
-
-                //@Todo the coordenates doesn't match with the visual position
-                //@Todo Also seems tha stop only with x-distance
                 return true;
             } else {
+                report.print(" -> overtaking: No more temptative all STEPS_LIMIT_ON_CANDIDATE = %d were consumed", STEPS_LIMIT_ON_CANDIDATE);
                 newInitialConditionsLaunch = true;
                 launched = false;
                 return true;
             }
-
         } else {    // A distance in tolerance, but probably getting worse
             return false;
         }
@@ -158,7 +163,7 @@ public class Route {
                 }
             }
         }
-        report.print("Next Launch time '%s' with speed: %f\n", dateString(time), speed);
+        report.print("- Next Launch time: %s (epoch: %.2f), with speed: %e", dateString(time), time, speed);
         newInitialConditionsLaunch = true;
         return true;
     }
@@ -184,19 +189,14 @@ public class Route {
             correction.reset();
             stepsLimitOnCandidate = STEPS_LIMIT_ON_CANDIDATE;
         } else {
-            // Distance between fail and origin
-            double dfox = targetFail.x - origin.x;
-            double dfoy = targetFail.y - origin.y;
-            double dfoz = targetFail.z - origin.z;
-            double dfo = Math.sqrt(dfox * dfox + dfoy * dfoy + dfoz * dfoz);
+            double dTargetToOrigin = distance(origin, targetFail);
             // Corrected direction
             correction.x += targetFail.x - spacecraftFail.x;
             correction.y += targetFail.y - spacecraftFail.y;
             correction.z += targetFail.z - spacecraftFail.z;
-            report.print("  Spacecraft fail: x=%f, y=%f, z=%f\n", correction.x / dfo, correction.y / dfo, correction.z / dfo);
-            direction.x += origin.vx * correction.x / dfo;
-            direction.y += origin.vy * correction.y / dfo;
-            direction.z += origin.vz * correction.z / dfo;
+            direction.x += origin.vx * correction.x / dTargetToOrigin;
+            direction.y += origin.vy * correction.y / dTargetToOrigin;
+            direction.z += origin.vz * correction.z / dTargetToOrigin;
         }
         newInitialConditionsLaunch = false;
         //System.out.printf("Spacecraft vtarget x:%f , y:%f , z:%f \n", direction.x, direction.y, direction.z);
@@ -223,6 +223,13 @@ public class Route {
         launched = true;
     }
 
+    private double distance(Position a, Position b) {
+        double dabx = b.x - a.x;
+        double daby = b.y - a.y;
+        double dabz = b.z - a.z;
+        return Math.sqrt(dabx * dabx + daby * daby + dabz * dabz);
+    }
+
     /**
      * @return the spacecraft
      */
@@ -234,7 +241,12 @@ public class Route {
      * @return if spacecraft land
      */
     public boolean spacecraftLand() {
-        return spacecraft.merged;
+        if (spacecraft.merged) {
+            report.print("****************\nSpacecraft Land on date: %s, in: %s.\n Energy lost on landing: %e Joules\n++++++++++++++++", dateString(), spacecraft.mergedWith.name, spacecraft.kineticLost);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
