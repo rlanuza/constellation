@@ -32,14 +32,24 @@ public final class Constellation {
     private GraphConstellation graphConstellation;
 
     Constellation() {
-        resetConstellation();
+        recoverConstellation();
     }
 
-    void resetConstellation() {
+    /**
+     * Save the constellation when a simulation is active before a launch to let
+     * us save calculus
+     */
+    void saveConstellation() {
+        int i = 0;
+        for (Body b : bodyList) {
+            b = body[i++];
+        }
+    }
+
+    void recoverConstellation() {
         int n = bodyList.size();
-        // Now we'll generate array copies (faster) of the ArrayList and left the ArrayList to let us recover initial positions
+        // Now we'll generate array copies (faster) of the ArrayList and left the ArrayList to let us recover seved positions
         body = new Body[n];
-        // @Todo remove:  body = bodyList.toArray(new Body[n]);
         int i = 0;
         for (Body b : bodyList) {
             body[i++] = (Body) b.clone();

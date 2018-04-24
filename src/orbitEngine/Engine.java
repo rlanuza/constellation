@@ -18,6 +18,7 @@ public class Engine {
 
     private final double stepTime;
     private static double seconds;
+    private static double secondsToRecover;
     private final Constellation constellation;
     private Route route;
     private GraphScreen screen;
@@ -25,13 +26,19 @@ public class Engine {
     public Engine() {
         constellation = new Constellation();
         stepTime = Parameter.STEP_TIME;
+        secondsToRecover = Parameter.START_EPOCH_TIME;
     }
 
-    private void resetEngine() {
-        constellation.resetConstellation();
+    private void saveEngine() {
+        constellation.saveConstellation();
+        secondsToRecover = seconds;
+    }
+
+    private void recoverEngine() {
+        constellation.recoverConstellation();
         constellation.resetGrConstellation();
         route.resetBodyValues(constellation);
-        seconds = Parameter.START_EPOCH_TIME;
+        seconds = secondsToRecover;
     }
 
     public void link(GraphScreen screen) {
@@ -119,6 +126,7 @@ public class Engine {
                 }
             } else {
                 if (route.timeToLaunch(seconds)) {
+                    saveEngine();
                     route.launchToNextTarget();
                     constellation.addRocket(route); //@Todo Check if this place is correect to launch teh rocket
                 }
@@ -134,7 +142,7 @@ public class Engine {
         long simulationPlots = Parameter.SIMULATION_STEPS / Parameter.STEPS_PER_PLOT;
         do {
             do {
-                resetEngine();
+                recoverEngine();
                 for (long i = 0; i < simulationPlots; i++) {
                     if (runRoute(Parameter.STEPS_PER_PLOT, report)) {
                         screen.updateConstellation();
