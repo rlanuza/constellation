@@ -19,6 +19,7 @@ public class Engine {
     private final double stepTime;
     private static double seconds;
     private static double secondsToRecover;
+    private static boolean secondsToRecoverStored;
     private final Constellation constellation;
     private Route route;
     private GraphScreen screen;
@@ -32,6 +33,7 @@ public class Engine {
     private void saveEngine() {
         constellation.saveConstellation();
         secondsToRecover = seconds;
+        secondsToRecoverStored = true;
     }
 
     private void recoverEngine() {
@@ -39,6 +41,7 @@ public class Engine {
         constellation.resetGrConstellation();
         route.resetBodyValues(constellation);
         seconds = secondsToRecover;
+        secondsToRecoverStored = false;
     }
 
     public void link(GraphScreen screen) {
@@ -125,8 +128,10 @@ public class Engine {
                     return true;
                 }
             } else {
-                if (route.timeToLaunch(seconds)) {
+                if (!secondsToRecoverStored && route.timeToSave(seconds, stepTime * 10)) {
+                    // @Todo                    someting fails in stored initial conditions that stop iterations.Compare with version without optimization
                     saveEngine();
+                } else if (route.timeToLaunch(seconds)) {
                     route.launchToNextTarget();
                     constellation.addRocket(route); //@Todo Check if this place is correect to launch teh rocket
                 }

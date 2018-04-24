@@ -175,8 +175,13 @@ public class Route {
         return (seconds >= time);
     }
 
+    boolean timeToSave(double seconds, double stepTime) {
+        return ((seconds + stepTime) >= time);
+    }
+
     /**
-     * Launch to the next target iteration point. We will use this to calculate the error if we miss the target and adjust next launch
+     * Launch to the next target iteration point. We will use this to calculate
+     * the error if we miss the target and adjust next launch
      */
     public void launchToNextTarget() {
         minTargetDistance = Double.MAX_VALUE;
