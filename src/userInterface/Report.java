@@ -25,16 +25,11 @@ public class Report {
         String result = String.format(strFormat, args);
         String[] lines = result.split("\\r?\\n|\\r");;
         for (String line : lines) {
-            reportList.add(line);
             System.out.println(line);
+            reportList.add(line);
         }
     }
 
-    /*
-    String fillInString(String str, String ... token){
-    return String.format(str, token);
-}
-     */
     public void print(String line) {
         System.out.println(line);
         reportList.add(line);

@@ -22,13 +22,12 @@ public class Route {
     private final Position spacecraftFail = new Position();
     private final Position targetFail = new Position();
     private final Position correction = new Position();
-    private final double startTime;
+    private double startTime;
     private final double stopTime;
     private final double stepTime;
     private final double startSpeed;
     private final double stopSpeed;
     private final double stepSpeed;
-    private double time;
     private boolean launched;
     private double speed;
     private double minTargetDistance;
@@ -66,7 +65,6 @@ public class Route {
         this.OVERTAKE_DISTANCE_TOLERANCE = OVERTAKE_DISTANCE_TOLERANCE;
         this.MAX_OVERTAKE_DISTANCE = MAX_OVERTAKE_DISTANCE;
         this.STEPS_LIMIT_ON_CANDIDATE = stepsLimOnCandidate;
-        time = startTime;
         speed = startSpeed;
         newInitialConditionsLaunch = true;
         launched = false;
@@ -139,31 +137,19 @@ public class Route {
     /**
      * Program next launch conditions
      *
-     * @param iterateSpeedFirst
      * @return true until no new conditions programmed
      */
-    public boolean nextLaunch(boolean iterateSpeedFirst) {
+    public boolean nextLaunch() {
         launched = false;
-        if (iterateSpeedFirst) {
-            speed += stepSpeed;
-            if (speed > stopSpeed) {
-                speed = startSpeed;
-                time += stepTime;
-                if (time > stopTime) {
-                    return false;
-                }
-            }
-        } else {
-            time += stepTime;
-            if (time > stopTime) {
-                time = startTime;
-                speed += stepSpeed;
-                if (speed > stopSpeed) {
-                    return false;
-                }
+        speed += stepSpeed;
+        if (speed > stopSpeed) {
+            speed = startSpeed;
+            startTime += stepTime;
+            if (startTime > stopTime) {
+                return false;
             }
         }
-        report.print("- Next Launch time: %s (epoch: %.2f), with speed: %e", dateString(time), time, speed);
+        report.print("- Next Launch time: %s (epoch: %.2f), with speed: %e", dateString(startTime), startTime, speed);
         newInitialConditionsLaunch = true;
         return true;
     }
@@ -172,16 +158,15 @@ public class Route {
      * Time to launch check
      */
     boolean timeToLaunch(double seconds) {
-        return (seconds >= time);
+        return (seconds >= startTime);
     }
 
     boolean timeToSave(double seconds, double stepTime) {
-        return ((seconds + stepTime) >= time);
+        return ((seconds + stepTime) >= startTime);
     }
 
     /**
-     * Launch to the next target iteration point. We will use this to calculate
-     * the error if we miss the target and adjust next launch
+     * Launch to the next target iteration point. We will use this to calculate the error if we miss the target and adjust next launch
      */
     public void launchToNextTarget() {
         minTargetDistance = Double.MAX_VALUE;
@@ -204,9 +189,6 @@ public class Route {
             direction.z += origin.vz * correction.z / dTargetToOrigin;
         }
         newInitialConditionsLaunch = false;
-        //System.out.printf("Spacecraft vtarget x:%f , y:%f , z:%f \n", direction.x, direction.y, direction.z);
-        //@Todo precalculate the speed for this launch with apis to iterate speed and time
-        //@Todo we need a aproaching iterator with some edn condition
         // Direction to the target and the 3 distance proyections
         double directionM = Math.sqrt(direction.x * direction.x + direction.y * direction.y + direction.z * direction.z);
         // Calculate the launch speed as launch speed + origin speed;

@@ -25,7 +25,6 @@ public class Command extends LineConvert {
     public long MIN_LAUNCH_TIME = 1520294400;
     public long MAX_LAUNCH_TIME = 1551830400;
     public long STEP_LAUNCH_TIME = 3600;
-    public boolean ITERATE_SPEED_FIRST;
     public int STEPS_LIMIT_ON_CANDIDATE = 50;
     public double LAUNCH_ELEVATION = 1;
     public double OVERTAKE_DISTANCE_TOLERANCE = 10000.0;
@@ -74,8 +73,6 @@ public class Command extends LineConvert {
                 STEP_LAUNCH_TIME = getLong(line, STEP_LAUNCH_TIME);
             } else if (line.startsWith("STEPS_LIMIT_ON_CANDIDATE:")) {
                 STEPS_LIMIT_ON_CANDIDATE = (int) getLong(line, STEPS_LIMIT_ON_CANDIDATE);
-            } else if (line.startsWith("ITERATE_SPEED_FIRST:")) {
-                ITERATE_SPEED_FIRST = getBoolean(line, true);
             } else if (line.startsWith("LAUNCH_ELEVATION:")) {
                 LAUNCH_ELEVATION = getDouble(line, LAUNCH_ELEVATION);
             } else if (line.startsWith("OVERTAKE_DISTANCE_TOLERANCE:")) {

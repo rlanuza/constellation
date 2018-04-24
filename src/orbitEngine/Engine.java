@@ -27,7 +27,7 @@ public class Engine {
     public Engine() {
         constellation = new Constellation();
         stepTime = Parameter.STEP_TIME;
-        secondsToRecover = Parameter.START_EPOCH_TIME;
+        seconds = Parameter.START_EPOCH_TIME;
     }
 
     private void saveEngine() {
@@ -128,7 +128,8 @@ public class Engine {
                     return true;
                 }
             } else {
-                if (!secondsToRecoverStored && route.timeToSave(seconds, stepTime * 10)) {
+
+                if (!secondsToRecoverStored && route.timeToSave(seconds, stepTime * 2)) {
                     // @Todo                    someting fails in stored initial conditions that stop iterations.Compare with version without optimization
                     saveEngine();
                 } else if (route.timeToLaunch(seconds)) {
@@ -145,9 +146,11 @@ public class Engine {
         setRoute(cmd, report);
         report.print("+++++++++++++++++++++\n-Start a new simulation");
         long simulationPlots = Parameter.SIMULATION_STEPS / Parameter.STEPS_PER_PLOT;
+        saveEngine();
         do {
             do {
                 recoverEngine();
+                constellation.pushToGraphic();//@Todo REMOVE
                 for (long i = 0; i < simulationPlots; i++) {
                     if (runRoute(Parameter.STEPS_PER_PLOT, report)) {
                         screen.updateConstellation();
@@ -156,7 +159,7 @@ public class Engine {
                     screen.updateConstellation();
                 }
             } while (route.repeatInitialConditions());
-        } while (route.nextLaunch(cmd.ITERATE_SPEED_FIRST));
+        } while (route.nextLaunch());
         report.dump();
     }
 

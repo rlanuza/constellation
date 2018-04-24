@@ -20,6 +20,7 @@ public final class Constellation {
 
     // Once we'll have all data loaded we'll convert o array and implement 2 copies to store old and new position each step
     static Body[] body;
+    static Body[] bodyBackup;
     static double[][] dist;
     static double[][] dist3;
     static double[][] dist_x;
@@ -32,28 +33,38 @@ public final class Constellation {
     private GraphConstellation graphConstellation;
 
     Constellation() {
-        recoverConstellation();
-    }
-
-    /**
-     * Save the constellation when a simulation is active before a launch to let
-     * us save calculus
-     */
-    void saveConstellation() {
-        int i = 0;
-        for (Body b : bodyList) {
-            b = body[i++];
-        }
-    }
-
-    void recoverConstellation() {
         int n = bodyList.size();
-        // Now we'll generate array copies (faster) of the ArrayList and left the ArrayList to let us recover seved positions
+        // Now we'll generate array copies (faster) of the ArrayList and left the ArrayList to let us recover initial positions
         body = new Body[n];
         int i = 0;
         for (Body b : bodyList) {
             body[i++] = (Body) b.clone();
         }
+        Body.nextIndex = body.length;
+        resizeDistanceArrays(n);
+        // Calculate the initial gravity of the system
+        initGravity();
+        saveConstellation();
+    }
+
+    /**
+     * Save the constellation when a simulation is active before a launch to let us save calculus
+     */
+    void saveConstellation() {
+        int n = bodyList.size();
+        bodyBackup = new Body[n];
+        for (int i = 0; i < n; i++) {
+            bodyBackup[i] = (Body) body[i].clone();
+        }
+    }
+
+    void recoverConstellation() {
+        int n = bodyList.size();
+        body = new Body[n];
+        for (int i = 0; i < n; i++) {
+            body[i] = (Body) bodyBackup[i].clone();
+        }
+
         Body.nextIndex = body.length;
         resizeDistanceArrays(n);
         // Calculate the initial gravity of the system
