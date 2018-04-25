@@ -101,7 +101,7 @@ public class Engine {
     /**
      * @return true when the spacecraft land or lost the target
      */
-    private boolean runRoute(long steepsPerPlot, Report report) {
+    private boolean runRoute(long steepsPerPlot) {
         for (int i = 0; i < steepsPerPlot; i++) {
             switch (Parameter.CALCULUS_METHOD) {
                 case 0:
@@ -128,12 +128,11 @@ public class Engine {
                     return true;
                 }
             } else {
-
-                if (!secondsToRecoverStored && route.timeToSave(seconds, stepTime)) {
+                if (!secondsToRecoverStored && route.timeToSave(seconds + stepTime)) {
                     saveEngine();
                 } else if (route.timeToLaunch(seconds)) {
                     route.launchToNextTarget();
-                    constellation.addRocket(route); //@Todo Check if this place is correect to launch teh rocket
+                    constellation.addRocket(route);
                 }
             }
         }
@@ -149,14 +148,14 @@ public class Engine {
         do {
             do {
                 recoverEngine();
-                constellation.pushToGraphic();//@Todo REMOVE
                 for (long i = 0; i < simulationPlots; i++) {
-                    if (runRoute(Parameter.STEPS_PER_PLOT, report)) {
+                    if (runRoute(Parameter.STEPS_PER_PLOT)) {
                         screen.updateConstellation();
                         break;
                     }
                     screen.updateConstellation();
                 }
+                route.clearLaunched();
             } while (route.repeatInitialConditions());
         } while (route.nextLaunch());
         report.dump();
@@ -176,7 +175,7 @@ public class Engine {
                 cmd.MIN_SPEED, cmd.MAX_SPEED, cmd.STEP_SPEED,
                 cmd.LAUNCH_ELEVATION,
                 cmd.OVERTAKE_DISTANCE_TOLERANCE,
-                cmd.MAX_OVERTAKE_DISTANCE,
+                cmd.MAX_OVERTAKE_RADIUS,
                 cmd.STEPS_LIMIT_ON_CANDIDATE);
     }
 }

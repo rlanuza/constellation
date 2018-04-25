@@ -32,7 +32,7 @@ public class Body extends Position implements Cloneable {
     double kineticLost;
 
     // Energy on new bodies creation in Joule
-    // Todo split translational kinetic energy and rotational energy or angular kinetic energy i
+    // @Todo split translational kinetic energy and rotational energy or angular kinetic energy i
     public double kinetic() {
         // Kinetic energy = 1/2*m*v^2 = 1/2*m*sqr(vx^2+vy^2+vz^2)^2 = 1/2*m*vx^2+vy^2+vz^2)
         return ((mass * (vx * vx + vy * vy + vz * vz)) / 2);  // Joules

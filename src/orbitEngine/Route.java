@@ -45,7 +45,7 @@ public class Route {
             double startSpeed, double stopSpeed, double stepSpeed,
             double LAUNCH_ELEVATION,
             double OVERTAKE_DISTANCE_TOLERANCE,
-            double MAX_OVERTAKE_DISTANCE,
+            double MAX_OVERTAKE_RADIUS,
             int stepsLimOnCandidate) {
         this.report = report;
         this.spacecraft = spacecraft;
@@ -63,7 +63,7 @@ public class Route {
         this.stopSpeed = stopSpeed;
         this.stepSpeed = stepSpeed;
         this.OVERTAKE_DISTANCE_TOLERANCE = OVERTAKE_DISTANCE_TOLERANCE;
-        this.MAX_OVERTAKE_DISTANCE = MAX_OVERTAKE_DISTANCE;
+        this.MAX_OVERTAKE_DISTANCE = MAX_OVERTAKE_RADIUS * target.radius;
         this.STEPS_LIMIT_ON_CANDIDATE = stepsLimOnCandidate;
         speed = startSpeed;
         newInitialConditionsLaunch = true;
@@ -83,35 +83,41 @@ public class Route {
      * Check if the target has been overtaken
      */
     boolean overtaking() {
-        // @Todo Heuristic changes 1) MAX_OVERTAKE_DISTANCE = F(Radius planet)
-        // @Todo Heuristic changes 2) Accept some (dStartToTarget > dStartToSpacecraft) to fine adjust
+        // @Todo-DONE Heuristic changes 1) MAX_OVERTAKE_DISTANCE = F(Radius planet).
+        // @Todo-DONE Heuristic changes 2) Accept some (dStartToTarget > dStartToSpacecraft) to fine adjust
         // @Todo Heuristic changes 3) Correct time and energy delta if near
         // @Todo Heuristic changes 4) Correct launch speed with angle to avoid lost energy sum with planet
-        double dSpacecraftToTarget = Constellation.dist[targetIndex][spacecraftIndex];
+        double dSpacecraftToTarget = 0;
+        try {
+            dSpacecraftToTarget = Constellation.dist[targetIndex][spacecraftIndex];
+        } catch (Exception ex) {
+            System.out.printf("Error [%s]\n", ex.toString());
+        }
+
         if (dSpacecraftToTarget < minTargetDistance) {  // A new minimum distance --> Continue this
             minTargetDistance = dSpacecraftToTarget;
             return false;
         } else if (dSpacecraftToTarget > (minTargetDistance + OVERTAKE_DISTANCE_TOLERANCE)) {     // A clear overtaking
             // Heuristic a) the distance must be near than a limit else reject the iteration
             if (dSpacecraftToTarget > MAX_OVERTAKE_DISTANCE) {
-                report.print(" -> overtaking: As the distance to target %e > %e [MAX_OVERTAKE_DISTANCE]. This launch iteration is dismissed",
+                report.print(" -> overtaking: distance to target %e > %e [MAX_OVERTAKE_DISTANCE] --> Iteration end",
                         dSpacecraftToTarget, MAX_OVERTAKE_DISTANCE);
                 newInitialConditionsLaunch = true;
-                launched = false;
                 return true;
             }
             // Heuristic b) the distance to STAR must be far than Target else reject the iteration
+            /*
             double dStartToTarget = (targetIndex > starIndex) ? Constellation.dist[starIndex][targetIndex] : Constellation.dist[targetIndex][starIndex];
             double dStartToSpacecraft = (spacecraftIndex > starIndex) ? Constellation.dist[starIndex][spacecraftIndex] : Constellation.dist[spacecraftIndex][starIndex];
             if (dStartToTarget > dStartToSpacecraft) {
                 report.print(" -> overtaking: As the star distance to target %e > %e, the rocket distance to target. This launch iteration is dismissed",
                         dStartToTarget, dStartToSpacecraft);
                 newInitialConditionsLaunch = true;
-                launched = false;
                 return true;
             }
+             */
 
-            report.printLog(" -> overtaking: dist.:%e [dx=%e, dy=%e, dz=%e].", distance(spacecraft, target), target.x - spacecraft.x, target.y - spacecraft.y, target.z - spacecraft.z);
+            String sLog = String.format(" -> overtaking: distance:%e [dx=%e, dy=%e, dz=%e].", dSpacecraftToTarget, target.x - spacecraft.x, target.y - spacecraft.y, target.z - spacecraft.z);
             // Heuristic c) Calculate a new taget based on the error compensation with a sinple iteration counter limit
             // Prepare a new iteration if the conditions are good modifying the target
             if (stepsLimitOnCandidate > 0) {
@@ -122,13 +128,11 @@ public class Route {
                 targetFail.x = target.x;
                 targetFail.y = target.y;
                 targetFail.z = target.z;
-                report.printLog(" New temptative [%d of %d] with a new speed vector", STEPS_LIMIT_ON_CANDIDATE - stepsLimitOnCandidate, STEPS_LIMIT_ON_CANDIDATE);
-                launched = false;
+                report.printLog("%s New temptative [%d of %d] with speed vector correction", sLog, STEPS_LIMIT_ON_CANDIDATE - stepsLimitOnCandidate, STEPS_LIMIT_ON_CANDIDATE);
                 return true;
             } else {
-                report.print(" No more temptative all STEPS_LIMIT_ON_CANDIDATE = %d were consumed", STEPS_LIMIT_ON_CANDIDATE);
+                report.print("%s The STEPS_LIMIT_ON_CANDIDATE = %d temptatives were consumed", sLog, STEPS_LIMIT_ON_CANDIDATE);
                 newInitialConditionsLaunch = true;
-                launched = false;
                 return true;
             }
         } else {    // A distance in tolerance, but probably getting worse
@@ -142,7 +146,7 @@ public class Route {
      * @return true until no new conditions programmed
      */
     public boolean nextLaunch() {
-        launched = false;
+        // setLaunched(false);
         speed += stepSpeed;
         if (speed > stopSpeed) {
             speed = startSpeed;
@@ -151,7 +155,7 @@ public class Route {
                 return false;
             }
         }
-        report.print("- Next Launch time: %s (epoch: %.2f), with speed: %e", dateString(startTime), startTime, speed);
+        report.print("- Next Launch time: %s (epoch: %.0f), with speed: %g", dateString(startTime), startTime, speed);
         newInitialConditionsLaunch = true;
         return true;
     }
@@ -163,8 +167,8 @@ public class Route {
         return (seconds >= startTime);
     }
 
-    boolean timeToSave(double seconds, double stepTime) {
-        return ((seconds + stepTime) >= startTime);
+    boolean timeToSave(double seconds) {
+        return (seconds >= startTime);
     }
 
     /**
@@ -249,7 +253,14 @@ public class Route {
      * @return if the rocket is launched
      */
     public boolean isLaunched() {
-        return launched;
+        return this.launched;
+    }
+
+    /**
+     * Set launched to false
+     */
+    public void clearLaunched() {
+        this.launched = false;
     }
 
     /**

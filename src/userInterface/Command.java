@@ -28,7 +28,7 @@ public class Command extends LineConvert {
     public int STEPS_LIMIT_ON_CANDIDATE = 50;
     public double LAUNCH_ELEVATION = 1;
     public double OVERTAKE_DISTANCE_TOLERANCE = 10000.0;
-    public double MAX_OVERTAKE_DISTANCE = 1E10;
+    public double MAX_OVERTAKE_RADIUS = 10;
 
     Command(String commandFile) {
         String contents = "";
@@ -77,8 +77,8 @@ public class Command extends LineConvert {
                 LAUNCH_ELEVATION = getDouble(line, LAUNCH_ELEVATION);
             } else if (line.startsWith("OVERTAKE_DISTANCE_TOLERANCE:")) {
                 OVERTAKE_DISTANCE_TOLERANCE = getDouble(line, OVERTAKE_DISTANCE_TOLERANCE);
-            } else if (line.startsWith("MAX_OVERTAKE_DISTANCE:")) {
-                MAX_OVERTAKE_DISTANCE = getDouble(line, MAX_OVERTAKE_DISTANCE);
+            } else if (line.startsWith("MAX_OVERTAKE_RADIUS:")) {
+                MAX_OVERTAKE_RADIUS = getDouble(line, MAX_OVERTAKE_RADIUS);
             } else {
                 System.out.println("Line not processed: " + line);
             }
