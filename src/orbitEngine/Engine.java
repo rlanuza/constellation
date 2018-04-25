@@ -129,8 +129,7 @@ public class Engine {
                 }
             } else {
 
-                if (!secondsToRecoverStored && route.timeToSave(seconds, stepTime * 2)) {
-                    // @Todo                    someting fails in stored initial conditions that stop iterations.Compare with version without optimization
+                if (!secondsToRecoverStored && route.timeToSave(seconds, stepTime)) {
                     saveEngine();
                 } else if (route.timeToLaunch(seconds)) {
                     route.launchToNextTarget();

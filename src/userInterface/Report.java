@@ -21,6 +21,14 @@ public class Report {
         this.reportFile = reportFile;
     }
 
+    public void printLog(String strFormat, Object... args) {
+        String result = String.format(strFormat, args);
+        String[] lines = result.split("\\r?\\n|\\r");;
+        for (String line : lines) {
+            reportList.add(line);
+        }
+    }
+
     public void print(String strFormat, Object... args) {
         String result = String.format(strFormat, args);
         String[] lines = result.split("\\r?\\n|\\r");;

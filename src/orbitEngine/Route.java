@@ -107,8 +107,7 @@ public class Route {
                 return true;
             }
 
-            report.print("  Spacecraft fail: dist.:%e [dx=%e, dy=%e, dz=%e]\n", distance(spacecraft, target),
-                    target.x - spacecraft.x, target.y - spacecraft.y, target.z - spacecraft.z);
+            report.printLog(" -> overtaking: dist.:%e [dx=%e, dy=%e, dz=%e].", distance(spacecraft, target), target.x - spacecraft.x, target.y - spacecraft.y, target.z - spacecraft.z);
             // Heuristic c) Calculate a new taget based on the error compensation with a sinple iteration counter limit
             // Prepare a new iteration if the conditions are good modifying the target
             if (stepsLimitOnCandidate > 0) {
@@ -119,12 +118,11 @@ public class Route {
                 targetFail.x = target.x;
                 targetFail.y = target.y;
                 targetFail.z = target.z;
-                report.print(" -> overtaking: New temptative [%d of %d] adjusting the initial speed vector",
-                        STEPS_LIMIT_ON_CANDIDATE - stepsLimitOnCandidate, STEPS_LIMIT_ON_CANDIDATE);
+                report.printLog(" New temptative [%d of %d] with a new speed vector", STEPS_LIMIT_ON_CANDIDATE - stepsLimitOnCandidate, STEPS_LIMIT_ON_CANDIDATE);
                 launched = false;
                 return true;
             } else {
-                report.print(" -> overtaking: No more temptative all STEPS_LIMIT_ON_CANDIDATE = %d were consumed", STEPS_LIMIT_ON_CANDIDATE);
+                report.print(" No more temptative all STEPS_LIMIT_ON_CANDIDATE = %d were consumed", STEPS_LIMIT_ON_CANDIDATE);
                 newInitialConditionsLaunch = true;
                 launched = false;
                 return true;
