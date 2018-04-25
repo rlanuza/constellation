@@ -83,6 +83,10 @@ public class Route {
      * Check if the target has been overtaken
      */
     boolean overtaking() {
+        // @Todo Heuristic changes 1) MAX_OVERTAKE_DISTANCE = F(Radius planet)
+        // @Todo Heuristic changes 2) Accept some (dStartToTarget > dStartToSpacecraft) to fine adjust
+        // @Todo Heuristic changes 3) Correct time and energy delta if near
+        // @Todo Heuristic changes 4) Correct launch speed with angle to avoid lost energy sum with planet
         double dSpacecraftToTarget = Constellation.dist[targetIndex][spacecraftIndex];
         if (dSpacecraftToTarget < minTargetDistance) {  // A new minimum distance --> Continue this
             minTargetDistance = dSpacecraftToTarget;
