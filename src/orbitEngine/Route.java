@@ -32,12 +32,15 @@ public class Route {
     private double speed;
     private double minTargetDistance;
     private boolean newInitialConditionsLaunch;
+    private boolean farLaunch;
+    private boolean nearLaunchCounter;
     private int stepsLimitOnCandidate;
 
-    private int STEPS_LIMIT_ON_CANDIDATE;
-    private double LAUNCH_ELEVATION = 1;
-    private double OVERTAKE_DISTANCE_TOLERANCE;
-    private double MAX_OVERTAKE_DISTANCE;
+    private final int STEPS_LIMIT_ON_CANDIDATE;
+    private final double LAUNCH_ELEVATION;
+    private final double OVERTAKE_DISTANCE_TOLERANCE;
+    private final double MAX_OVERTAKE_DISTANCE;
+    private final double MAX_OVERTAKE_DISTANCE_10;
     private Report report;
 
     public Route(Report report, Body spacecraft, Body origin, Body target, Body star,
@@ -46,7 +49,7 @@ public class Route {
             double LAUNCH_ELEVATION,
             double OVERTAKE_DISTANCE_TOLERANCE,
             double MAX_OVERTAKE_RADIUS,
-            int stepsLimOnCandidate) {
+            int STEPS_LIMIT_ON_CANDIDATE) {
         this.report = report;
         this.spacecraft = spacecraft;
         this.origin = origin;
@@ -63,11 +66,15 @@ public class Route {
         this.stopSpeed = stopSpeed;
         this.stepSpeed = stepSpeed;
         this.OVERTAKE_DISTANCE_TOLERANCE = OVERTAKE_DISTANCE_TOLERANCE;
-        this.MAX_OVERTAKE_DISTANCE = MAX_OVERTAKE_RADIUS * target.radius;
-        this.STEPS_LIMIT_ON_CANDIDATE = stepsLimOnCandidate;
+        MAX_OVERTAKE_DISTANCE = MAX_OVERTAKE_RADIUS * target.radius;
+        MAX_OVERTAKE_DISTANCE_10 = MAX_OVERTAKE_DISTANCE * 10;
+        this.STEPS_LIMIT_ON_CANDIDATE = STEPS_LIMIT_ON_CANDIDATE;
+        this.LAUNCH_ELEVATION = LAUNCH_ELEVATION;
         speed = startSpeed;
         newInitialConditionsLaunch = true;
+        farLaunch = false;
         launched = false;
+        nearLaunchCounter = false;
         minTargetDistance = Double.MAX_VALUE;
     }
 
@@ -87,20 +94,22 @@ public class Route {
         // @Todo-DONE Heuristic changes 2) Accept some (dStartToTarget > dStartToSpacecraft) to fine adjust
         // @Todo Heuristic changes 3) Correct time and energy delta if near
         // @Todo Heuristic changes 4) Correct launch speed with angle to avoid lost energy sum with planet
-        double dSpacecraftToTarget = 0;
-        try {
-            dSpacecraftToTarget = Constellation.dist[targetIndex][spacecraftIndex];
-        } catch (Exception ex) {
-            System.out.printf("Error [%s]\n", ex.toString());
-        }
+        double dSpacecraftToTarget = Constellation.dist[targetIndex][spacecraftIndex];
 
         if (dSpacecraftToTarget < minTargetDistance) {  // A new minimum distance --> Continue this
             minTargetDistance = dSpacecraftToTarget;
             return false;
         } else if (dSpacecraftToTarget > (minTargetDistance + OVERTAKE_DISTANCE_TOLERANCE)) {     // A clear overtaking
             // Heuristic a) the distance must be near than a limit else reject the iteration
+            if (dSpacecraftToTarget > MAX_OVERTAKE_DISTANCE_10) {
+                report.print(" -> overtaking: distance to target %e > %e [10*MAX_OVERTAKE_DISTANCE] --> Far, iteration end",
+                        dSpacecraftToTarget, MAX_OVERTAKE_DISTANCE_10);
+                farLaunch = true;
+                newInitialConditionsLaunch = true;
+                return true;
+            }
             if (dSpacecraftToTarget > MAX_OVERTAKE_DISTANCE) {
-                report.print(" -> overtaking: distance to target %e > %e [MAX_OVERTAKE_DISTANCE] --> Iteration end",
+                report.print(" -> overtaking: distance to target %e > %e [MAX_OVERTAKE_DISTANCE] --> Near, iteration end",
                         dSpacecraftToTarget, MAX_OVERTAKE_DISTANCE);
                 newInitialConditionsLaunch = true;
                 return true;
@@ -146,11 +155,22 @@ public class Route {
      * @return true until no new conditions programmed
      */
     public boolean nextLaunch() {
-        // setLaunched(false);
-        speed += stepSpeed;
+        if (farLaunch) {
+            farLaunch = false;
+            speed += stepSpeed * 10;
+        } else {
+            nearLaunchCounter = true;
+            speed += stepSpeed;
+        }
+
         if (speed > stopSpeed) {
+            if (nearLaunchCounter) {
+                nearLaunchCounter = false;
+                startTime += stepTime;
+            } else {
+                startTime += stepTime * 10;
+            }
             speed = startSpeed;
-            startTime += stepTime;
             if (startTime > stopTime) {
                 return false;
             }

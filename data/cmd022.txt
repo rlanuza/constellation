@@ -15,4 +15,4 @@
   STEPS_LIMIT_ON_CANDIDATE:     80              # Max iterations for the same initial conditions on good candidate
   LAUNCH_ELEVATION:             1.0             # Elevation of the launcher, necessary to avid immediate collision with origin
   OVERTAKE_DISTANCE_TOLERANCE:  10.0            # Tolerance to determine the a overtake has been produced
-  MAX_OVERTAKE_RADIUS:          1000            # If this overtake distance to the target, in n-target-radius, is overcome the fine adjust is discarded
+  MAX_OVERTAKE_RADIUS:           100            # If this overtake distance to the target, in n-target-radius, is overcome the fine adjust is discarded

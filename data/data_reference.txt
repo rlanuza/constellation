@@ -2686,3 +2686,137 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
+*******************************************************************************
+JPL/HORIZONS              101955 Bennu (1999 RQ36)         2018-Apr-27 11:34:10
+Rec #:  101955 (+COV) Soln.date: 2018-Feb-20_14:12:34    # obs: 515 (1999-2017)
+ 
+IAU76/J2000 helio. ecliptic osc. elements (au, days, deg., period=Julian yrs): 
+ 
+  EPOCH=  2455562.5 ! 2011-Jan-01.00 (TDB)         Residual RMS= .23182        
+   EC= .2037451091021815   QR= .8968943634637236   TP= 2455439.1419458799      
+   OM= 2.060867345656037   W=  66.22306861256421   IN= 6.034939457097049       
+   A= 1.126391025934458    MA= 101.7039478688145   ADIST= 1.355887688405192    
+   PER= 1.19548            N= .824461327           ANGMOM= .017873901          
+   DAN= .99768             DDN= 1.17626            L= 68.1662334               
+   B= 5.5210404            MOID= .0032228          TP= 2010-Aug-30.6419458799  
+ 
+Asteroid physical parameters (km, seconds, rotational period in hours):        
+   GM= 5.2E-9              RAD= .246               ROTPER= 4.297               
+   H= 20.19                G= -.080                B-V= .640                   
+                           ALBEDO= .046            STYP= B                     
+ 
+Asteroid non-gravitational force model (AMRAT= m^2/kg;A1,A2,A3=au/d^2;R0=au):  
+   AMRAT=  3.070000048E-6                                                      
+   A1= 0.                  A2= -4.61444233224E-14  A3= 0.                      
+ Non-standard or simulated/proxy model:                                        
+   ALN=  1.            NK=  0.       NM=  2.25     NN=  0.       R0=  1.       
+ 
+ASTEROID comments: 
+1: soln ref.= JPL#96, PHA  OCC=0       radar(22 delay, 7 Dop.)
+2: source=ORB; Nongravitational accels. using nonstandard g(r) = (1 AU/ r)^2.25
+*******************************************************************************
+ 
+ 
+*******************************************************************************
+Ephemeris / WWW_USER Fri Apr 27 11:34:10 2018 Pasadena, USA      / Horizons    
+*******************************************************************************
+Target body name: 101955 Bennu (1999 RQ36)        {source: JPL#96}
+Center body name: Solar System Barycenter (0)     {source: DE431}
+Center-site name: BODY CENTER
+*******************************************************************************
+Start time      : A.D. 2018-Mar-06 00:00:00.0000 TDB
+Stop  time      : A.D. 2018-Mar-16 00:00:00.0000 TDB
+Step-size       : 2880 minutes
+*******************************************************************************
+Center geodetic : 0.00000000,0.00000000,0.0000000 {E-lon(deg),Lat(deg),Alt(km)}
+Center cylindric: 0.00000000,0.00000000,0.0000000 {E-lon(deg),Dxy(km),Dz(km)}
+Center radii    : (undefined)                                                  
+Small perturbers: Yes                             {source: SB431-N16}
+Output units    : KM-S                                                         
+Output type     : GEOMETRIC cartesian states
+Output format   : 2 (position and velocity)
+Reference frame : ICRF/J2000.0                                                 
+Coordinate systm: Ecliptic and Mean Equinox of Reference Epoch                 
+*******************************************************************************
+Initial IAU76/J2000 heliocentric ecliptic osculating elements (au, days, deg.):
+  EPOCH=  2455562.5 ! 2011-Jan-01.00 (TDB)         Residual RMS= .23182        
+   EC= .2037451091021815   QR= .8968943634637236   TP= 2455439.1419458799      
+   OM= 2.060867345656037   W=  66.22306861256421   IN= 6.034939457097049       
+  Equivalent ICRF heliocentric equatorial cartesian coordinates (au, au/d):
+   X=-1.190961321644135E+00  Y=-2.079065398977402E-01  Z=-1.123139118793361E-01
+  VX= 8.799336078087108E-05 VY=-1.305063201622871E-02 VZ=-7.375163452512394E-03
+Asteroid physical parameters (km, seconds, rotational period in hours):        
+   GM= 5.2E-9              RAD= .246               ROTPER= 4.297               
+   H= 20.19                G= -.080                B-V= .640                   
+                           ALBEDO= .046            STYP= B                     
+Asteroid non-gravitational force model (AMRAT= m^2/kg;A1,A2,A3=au/d^2;R0=au):  
+   AMRAT=  3.070000048E-6                                                      
+   A1= 0.                  A2= -4.61444233224E-14  A3= 0.                      
+ Non-standard or simulated/proxy model:                                        
+   ALN=  1.            NK=  0.       NM=  2.25     NN=  0.       R0=  1.       
+*******************************************************************************
+JDTDB
+   X     Y     Z
+   VX    VY    VZ
+*******************************************************************************
+$$SOE
+2458183.500000000 = A.D. 2018-Mar-06 00:00:00.0000 TDB 
+ X =-1.777347626056983E+08 Y =-3.946855610211396E+07 Z =-3.622497527940942E+06
+ VX= 9.385476490468541E-01 VY=-2.564445934672321E+01 VZ=-2.713562640061291E+00
+2458185.500000000 = A.D. 2018-Mar-08 00:00:00.0000 TDB 
+ X =-1.775148775080168E+08 Y =-4.388632776677411E+07 Z =-4.090180665108148E+06
+ VX= 1.604779061080053E+00 VY=-2.548475780581242E+01 VZ=-2.699176976400329E+00
+2458187.500000000 = A.D. 2018-Mar-10 00:00:00.0000 TDB 
+ X =-1.771807202408590E+08 Y =-4.827527274680450E+07 Z =-4.555244776411764E+06
+ VX= 2.261127627614487E+00 VY=-2.531089508144953E+01 VZ=-2.683258018179519E+00
+2458189.500000000 = A.D. 2018-Mar-12 00:00:00.0000 TDB 
+ X =-1.767340057251356E+08 Y =-5.263298391724604E+07 Z =-5.017429100061029E+06
+ VX= 2.907512638322532E+00 VY=-2.512333061583406E+01 VZ=-2.665854003112539E+00
+2458191.500000000 = A.D. 2018-Mar-14 00:00:00.0000 TDB 
+ X =-1.761764617122394E+08 Y =-5.695713216285834E+07 Z =-5.476481067886606E+06
+ VX= 3.543866104059600E+00 VY=-2.492250790735613E+01 VZ=-2.647011531634551E+00
+2458193.500000000 = A.D. 2018-Mar-16 00:00:00.0000 TDB 
+ X =-1.755098266865241E+08 Y =-6.124546364995919E+07 Z =-5.932156024883647E+06
+ VX= 4.170131604044498E+00 VY=-2.470885482696502E+01 VZ=-2.626775595971035E+00
+$$EOE
+*******************************************************************************
+Coordinate system description:
+
+  Ecliptic and Mean Equinox of Reference Epoch
+
+    Reference epoch: J2000.0
+    XY-plane: plane of the Earth's orbit at the reference epoch
+              Note: obliquity of 84381.448 arcseconds wrt ICRF equator (IAU76)
+    X-axis  : out along ascending node of instantaneous plane of the Earth's
+              orbit and the Earth's mean equator at the reference epoch
+    Z-axis  : perpendicular to the xy-plane in the directional (+ or -) sense
+              of Earth's north pole at the reference epoch.
+
+  Symbol meaning:
+
+    JDTDB    Julian Day Number, Barycentric Dynamical Time
+      X      X-component of position vector (km)                               
+      Y      Y-component of position vector (km)                               
+      Z      Z-component of position vector (km)                               
+      VX     X-component of velocity vector (km/sec)                           
+      VY     Y-component of velocity vector (km/sec)                           
+      VZ     Z-component of velocity vector (km/sec)                           
+
+Geometric states/elements have no aberrations applied.
+
+ Computations by ...
+     Solar System Dynamics Group, Horizons On-Line Ephemeris System
+     4800 Oak Grove Drive, Jet Propulsion Laboratory
+     Pasadena, CA  91109   USA
+     Information: http://ssd.jpl.nasa.gov/
+     Connect    : telnet://ssd.jpl.nasa.gov:6775  (via browser)
+                  http://ssd.jpl.nasa.gov/?horizons
+                  telnet ssd.jpl.nasa.gov 6775    (via command-line)
+     Author     : Jon.D.Giorgini@jpl.nasa.gov
+*******************************************************************************
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+

@@ -5,9 +5,9 @@
  */
 package userInterface;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Report {
@@ -21,29 +21,52 @@ public class Report {
         this.reportFile = reportFile;
     }
 
-    public void printLog(String strFormat, Object... args) {
+    public synchronized void printLog(String strFormat, Object... args) {
         String result = String.format(strFormat, args);
         String[] lines = result.split("\\r?\\n|\\r");;
         for (String line : lines) {
-            reportList.add(line);
+            reportList.add(line + "\n");
+        }
+        if (reportList.size() > 100) {
+            partiallDump();
         }
     }
 
-    public void print(String strFormat, Object... args) {
+    public synchronized void print(String strFormat, Object... args) {
         String result = String.format(strFormat, args);
         String[] lines = result.split("\\r?\\n|\\r");;
         for (String line : lines) {
             System.out.println(line);
-            reportList.add(line);
+            reportList.add(line + "\n");
+        }
+        if (reportList.size() > 100) {
+            partiallDump();
         }
     }
 
-    public void print(String line) {
+    public synchronized void print(String line) {
         System.out.println(line);
-        reportList.add(line);
+        reportList.add(line + "\n");
+        if (reportList.size() > 100) {
+            partiallDump();
+        }
     }
 
-    public void dump() {
+    private void partiallDump() {
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(reportFile, true))) {
+            for (String line : reportList) {
+                writer.append(line);
+            }
+            reportList.clear();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public synchronized void dump() {
+        partiallDump();
+        /*
         try {
             File file = new File(reportFile);
             file.getParentFile().mkdirs();
@@ -57,5 +80,6 @@ public class Report {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+         */
     }
 }

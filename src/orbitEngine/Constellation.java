@@ -10,7 +10,7 @@ import java.awt.Color;
 import java.util.logging.Logger;
 import static userInterface.Parameter.bodyList;
 
-public final class Constellation {
+public class Constellation {
 
     public static final int ASTRO_STRING_FIELDS = 12;
     static final double C = 299792458;
@@ -19,16 +19,16 @@ public final class Constellation {
     static final Logger LOG = Logger.getLogger(Constellation.class.getName());
 
     // Once we'll have all data loaded we'll convert o array and implement 2 copies to store old and new position each step
-    static Body[] body;
-    static Body[] bodyBackup;
+    private Body[] body;
+    private Body[] bodyBackup;
     static double[][] dist;
-    static double[][] dist3;
-    static double[][] dist_x;
-    static double[][] dist_y;
-    static double[][] dist_z;
-    double gx;
-    double gy;
-    double gz;
+    private static double[][] dist3;
+    private static double[][] dist_x;
+    private static double[][] dist_y;
+    private static double[][] dist_z;
+    private double gx;
+    private double gy;
+    private double gz;
 
     private GraphConstellation graphConstellation;
 
