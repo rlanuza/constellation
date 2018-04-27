@@ -33,7 +33,7 @@ public class Route {
     private double minTargetDistance;
     private boolean newInitialConditionsLaunch;
     private boolean farLaunch;
-    private boolean nearLaunchCounter;
+    private boolean nearLaunchOnSpeedScan;
     private int stepsLimitOnCandidate;
 
     private final int STEPS_LIMIT_ON_CANDIDATE;
@@ -74,7 +74,7 @@ public class Route {
         newInitialConditionsLaunch = true;
         farLaunch = false;
         launched = false;
-        nearLaunchCounter = false;
+        nearLaunchOnSpeedScan = false;
         minTargetDistance = Double.MAX_VALUE;
     }
 
@@ -159,13 +159,13 @@ public class Route {
             farLaunch = false;
             speed += stepSpeed * 10;
         } else {
-            nearLaunchCounter = true;
+            nearLaunchOnSpeedScan = true;
             speed += stepSpeed;
         }
 
         if (speed > stopSpeed) {
-            if (nearLaunchCounter) {
-                nearLaunchCounter = false;
+            if (nearLaunchOnSpeedScan) {
+                nearLaunchOnSpeedScan = false;
                 startTime += stepTime;
             } else {
                 startTime += stepTime * 10;
