@@ -7,12 +7,12 @@
   TARGET:                       Mars            # Target body
   STAR:                         Sun             # Star or center of the constellation
   MIN_SPEED:                    11175           # The minimum speed to test (m/s) >11170
-  MAX_SPEED:                    13575           # The maximum speed to test (m/s)
+  MAX_SPEED:                    13000           # The maximum speed to test (m/s)
   STEP_SPEED:                   1               # The steep used for each iteration of the test (m/s)
-  MIN_LAUNCH_TIME:              1594000000      # The minimum Epoc time of the launch (1520294400==2018-Mar-06 00:00:00.0000 TDB.)
+  MIN_LAUNCH_TIME:              1587000000      # The minimum Epoc time of the launch (1520294400==2018-Mar-06 00:00:00.0000 TDB.)
   MAX_LAUNCH_TIME:              1597000000      # The minimum Epoc time of the launch (1520294400==2018-Mar-06 00:00:00.0000 TDB.)
-  STEP_LAUNCH_TIME:             3600            # Seconds
-  STEPS_LIMIT_ON_CANDIDATE:     80              # Max iterations for the same initial conditions on good candidate
+  STEP_LAUNCH_TIME:             1800            # Seconds
+  STEPS_LIMIT_ON_CANDIDATE:     200             # Max iterations for the same initial conditions on good candidate
   LAUNCH_ELEVATION:             1.0             # Elevation of the launcher, necessary to avid immediate collision with origin
   OVERTAKE_DISTANCE_TOLERANCE:  10.0            # Tolerance to determine the a overtake has been produced
-  MAX_OVERTAKE_RADIUS:           100            # If this overtake distance to the target, in n-target-radius, is overcome the fine adjust is discarded
+  MAX_OVERTAKE_RADIUS:           500            # If this overtake distance to the target, in n-target-radius, is overcome the fine adjust is discarded

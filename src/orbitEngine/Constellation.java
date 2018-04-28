@@ -31,6 +31,7 @@ public class Constellation {
     private double gz;
 
     private GraphConstellation graphConstellation;
+    private Route route = null;
 
     Constellation() {
         int n = bodyList.size();
@@ -104,10 +105,6 @@ public class Constellation {
             b2 = tmp;
         }
         String name = b1.name + "-" + b2.name;
-        b1.merged = true;
-        b1.mergedWith = b2;
-        b2.merged = true;
-        b2.mergedWith = b1;
         double mass = b1.mass + b2.mass;
         double radius = Math.cbrt(Math.pow(b1.radius, 3) + Math.pow(b2.radius, 3));
         // The new barycentre r1 = d*m2/(m1+m2)
@@ -125,8 +122,11 @@ public class Constellation {
         int newBColor = Math.min(b1.color.getBlue() + b2.color.getBlue(), 255);
         Color astroColor = new Color(newRColor, newGColor, newBColor);
         bodyTmp[j] = new Body(name, mass, radius, x, y, z, vx, vy, vz, astroColor);
-        b2.kineticLost = bodyTmp[j].kinetic() - b1.kinetic() - b2.kinetic();
-        //System.out.printf("Kinetic lost on %s generation: %e\n", name, b2.kineticLost);
+        double kineticLost = bodyTmp[j].kinetic() - b1.kinetic() - b2.kinetic();
+        //System.out.printf("Kinetic lost on %s generation: %e\n", name, kineticLost);
+        if (route != null) {
+            route.mergeBodies(b1, b2, kineticLost);
+        }
         body = bodyTmp;
         resizeDistanceArrays(body.length);
         graphConstellation.reindexConstellation(body);
@@ -345,6 +345,7 @@ public class Constellation {
 
     void addRocket(Route route) {
         int i;
+        this.route = route;
         Body[] bodyTmp = new Body[body.length + 1];
         for (i = 0; i < body.length; i++) {
             bodyTmp[i] = body[i];

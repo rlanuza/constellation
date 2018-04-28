@@ -5,6 +5,7 @@
  */
 package orbitEngine;
 
+import java.util.ArrayList;
 import static orbitEngine.Engine.dateString;
 import userInterface.Report;
 
@@ -14,10 +15,13 @@ public class Route {
     private Body origin;
     private Body target;
     private Body star;
+    private Body landBody;
     private int spacecraftIndex;
     private int originIndex;
     private int targetIndex;
     private int starIndex;
+    private boolean spacecraftLand;
+    private double kineticLost;
 
     private final Position spacecraftFail = new Position();
     private final Position targetFail = new Position();
@@ -33,6 +37,7 @@ public class Route {
     private double minTargetDistance;
     private boolean newInitialConditionsLaunch;
     private boolean farLaunch;
+    private boolean nearLaunch;
     private boolean nearLaunchOnSpeedScan;
     private int stepsLimitOnCandidate;
 
@@ -41,7 +46,10 @@ public class Route {
     private final double OVERTAKE_DISTANCE_TOLERANCE;
     private final double MAX_OVERTAKE_DISTANCE;
     private final double MAX_OVERTAKE_DISTANCE_10;
+    private final double MAX_OVERTAKE_DISTANCE_01;
     private Report report;
+
+    private ArrayList<RouteCandidate> routecandidates = new ArrayList<>();
 
     public Route(Report report, Body spacecraft, Body origin, Body target, Body star,
             double startTime, double stopTime, double stepTime,
@@ -68,14 +76,19 @@ public class Route {
         this.OVERTAKE_DISTANCE_TOLERANCE = OVERTAKE_DISTANCE_TOLERANCE;
         MAX_OVERTAKE_DISTANCE = MAX_OVERTAKE_RADIUS * target.radius;
         MAX_OVERTAKE_DISTANCE_10 = MAX_OVERTAKE_DISTANCE * 10;
+        MAX_OVERTAKE_DISTANCE_01 = MAX_OVERTAKE_DISTANCE / 10;
+
         this.STEPS_LIMIT_ON_CANDIDATE = STEPS_LIMIT_ON_CANDIDATE;
         this.LAUNCH_ELEVATION = LAUNCH_ELEVATION;
         speed = startSpeed;
         newInitialConditionsLaunch = true;
         farLaunch = false;
+        nearLaunch = false;
         launched = false;
         nearLaunchOnSpeedScan = false;
         minTargetDistance = Double.MAX_VALUE;
+        spacecraftLand = false;
+
     }
 
     /**
@@ -84,6 +97,19 @@ public class Route {
     void resetBodyValues(Constellation constellation) {
         origin = constellation.getBody(originIndex);
         target = constellation.getBody(targetIndex);
+    }
+
+    void mergeBodies(Body b1, Body b2, double kineticLost) {
+        if (b2 == spacecraft) {
+            landBody = b1;
+        } else if (b1 == spacecraft) {
+            landBody = b2;
+        } else {
+            return;
+        }
+        spacecraftLand = true;
+        this.kineticLost = kineticLost;
+        routecandidates.add(0, new RouteCandidate(true, 0, startTime, speed, 1, kineticLost));
     }
 
     /**
@@ -109,10 +135,17 @@ public class Route {
                 return true;
             }
             if (dSpacecraftToTarget > MAX_OVERTAKE_DISTANCE) {
-                report.print(" -> overtaking: distance to target %e > %e [MAX_OVERTAKE_DISTANCE] --> Near, iteration end",
+                report.print(" -> overtaking: distance to target %e > %e [MAX_OVERTAKE_DISTANCE] --> Iteration end",
                         dSpacecraftToTarget, MAX_OVERTAKE_DISTANCE);
                 newInitialConditionsLaunch = true;
                 return true;
+            }
+            String sLog;
+            if (dSpacecraftToTarget < MAX_OVERTAKE_DISTANCE_01) {
+                nearLaunch = true;
+                sLog = String.format(" -> overtaking: distance:%e [dx=%e, dy=%e, dz=%e]. [NEAR]", dSpacecraftToTarget, target.x - spacecraft.x, target.y - spacecraft.y, target.z - spacecraft.z);
+            } else {
+                sLog = String.format(" -> overtaking: distance:%e [dx=%e, dy=%e, dz=%e].", dSpacecraftToTarget, target.x - spacecraft.x, target.y - spacecraft.y, target.z - spacecraft.z);
             }
             // Heuristic b) the distance to STAR must be far than Target else reject the iteration
             /*
@@ -126,7 +159,6 @@ public class Route {
             }
              */
 
-            String sLog = String.format(" -> overtaking: distance:%e [dx=%e, dy=%e, dz=%e].", dSpacecraftToTarget, target.x - spacecraft.x, target.y - spacecraft.y, target.z - spacecraft.z);
             // Heuristic c) Calculate a new taget based on the error compensation with a sinple iteration counter limit
             // Prepare a new iteration if the conditions are good modifying the target
             if (stepsLimitOnCandidate > 0) {
@@ -141,6 +173,7 @@ public class Route {
                 return true;
             } else {
                 report.print("%s The STEPS_LIMIT_ON_CANDIDATE = %d temptatives were consumed", sLog, STEPS_LIMIT_ON_CANDIDATE);
+                routecandidates.add(new RouteCandidate(false, dSpacecraftToTarget, startTime, speed, 2, 0));
                 newInitialConditionsLaunch = true;
                 return true;
             }
@@ -158,6 +191,10 @@ public class Route {
         if (farLaunch) {
             farLaunch = false;
             speed += stepSpeed * 10;
+        } else if (nearLaunch) {
+            nearLaunch = false;
+            nearLaunchOnSpeedScan = true;
+            speed += stepSpeed / 10;
         } else {
             nearLaunchOnSpeedScan = true;
             speed += stepSpeed;
@@ -232,7 +269,7 @@ public class Route {
         spacecraft.x = origin.x + xr;
         spacecraft.y = origin.y + yr;
         spacecraft.z = origin.z + zr;
-        spacecraft.merged = false;
+        spacecraftLand = false;
         launched = true;
     }
 
@@ -254,19 +291,12 @@ public class Route {
      * @return if spacecraft land
      */
     public boolean spacecraftLand() {
-        if (spacecraft.merged) {
-            report.print("****************\nSpacecraft Land on date: %s, in: %s.\n Energy lost on landing: %e Joules\n++++++++++++++++", dateString(), spacecraft.mergedWith.name, spacecraft.kineticLost);
+        if (spacecraftLand) {
+            report.print("****************\nSpacecraft Land on date: %s, in: %s.\n Energy lost on landing: %e Joules\n++++++++++++++++", dateString(), landBody.name, kineticLost);
             return true;
         } else {
             return false;
         }
-    }
-
-    /**
-     * @return spacecraft land name
-     */
-    public Body spacecraftLandBody() {
-        return spacecraft.mergedWith;
     }
 
     /**
@@ -287,6 +317,6 @@ public class Route {
      * @return true if not newInitialConditionsLaunch
      */
     public boolean repeatInitialConditions() {
-        return !(spacecraft.merged || newInitialConditionsLaunch);
+        return !(spacecraftLand || newInitialConditionsLaunch);
     }
 }

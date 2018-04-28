@@ -13,8 +13,6 @@ public class Body extends Position implements Cloneable {
     private int index;
     String name;
     double mass;
-    public boolean merged;
-    public Body mergedWith;
     double g_mass;
     double radius;
     Color color;
@@ -28,8 +26,6 @@ public class Body extends Position implements Cloneable {
     double gx;
     double gy;
     double gz;
-
-    double kineticLost;
 
     // Energy on new bodies creation in Joule
     // @Todo split translational kinetic energy and rotational energy or angular kinetic energy i
@@ -46,7 +42,6 @@ public class Body extends Position implements Cloneable {
         this.mass = mass;
         this.g_mass = mass * G_UNIVERSAL;
         this.radius = radius;
-        merged = false;
         this.x = x;
         this.y = y;
         this.z = z;
@@ -55,7 +50,6 @@ public class Body extends Position implements Cloneable {
         this.vz = vz;
         this.color = astroColor;
         this.index = nextIndex;
-        kineticLost = 0;
         nextIndex++;
     }
 
