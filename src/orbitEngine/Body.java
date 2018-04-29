@@ -7,7 +7,7 @@ import static orbitEngine.Constellation.G_UNIVERSAL;
  *
  * @author Roberto
  */
-public class Body extends Position implements Cloneable {
+public class Body extends Vector3d implements Cloneable {
 
     static int nextIndex = 0;
     private int index;

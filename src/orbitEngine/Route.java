@@ -23,9 +23,10 @@ public class Route {
     private boolean spacecraftLand;
     private double kineticLost;
 
-    private final Position spacecraftFail = new Position();
-    private final Position targetFail = new Position();
-    private final Position correction = new Position();
+    private Vector3d spacecraftFail;
+    private Vector3d targetFail;
+    Vector3d direction;
+
     private double startTime;
     private final double stopTime;
     private final double stepTime;
@@ -163,13 +164,11 @@ public class Route {
             // Prepare a new iteration if the conditions are good modifying the target
             if (stepsLimitOnCandidate > 0) {
                 stepsLimitOnCandidate--;
-                spacecraftFail.x = spacecraft.x;
-                spacecraftFail.y = spacecraft.y;
-                spacecraftFail.z = spacecraft.z;
-                targetFail.x = target.x;
-                targetFail.y = target.y;
-                targetFail.z = target.z;
-                report.printLog("%s New temptative [%d of %d] with speed vector correction", sLog, STEPS_LIMIT_ON_CANDIDATE - stepsLimitOnCandidate, STEPS_LIMIT_ON_CANDIDATE);
+                spacecraftFail = new Vector3d(spacecraft);
+                targetFail = new Vector3d(target);
+
+                //@Todo this for release report.printLog("%s New temptative [%d of %d] with speed vector correction", sLog, STEPS_LIMIT_ON_CANDIDATE - stepsLimitOnCandidate, STEPS_LIMIT_ON_CANDIDATE);
+                report.print("%s New temptative [%d of %d] with speed vector correction", sLog, STEPS_LIMIT_ON_CANDIDATE - stepsLimitOnCandidate, STEPS_LIMIT_ON_CANDIDATE);                //@Todo this NOT for release
                 return true;
             } else {
                 report.print("%s The STEPS_LIMIT_ON_CANDIDATE = %d temptatives were consumed", sLog, STEPS_LIMIT_ON_CANDIDATE);
@@ -233,34 +232,29 @@ public class Route {
      */
     public void launchToNextTarget() {
         minTargetDistance = Double.MAX_VALUE;
-        final Position direction = new Position();
-        // Straight launch using the planet speed vector
-        direction.x = origin.vx;
-        direction.y = origin.vy;
-        direction.z = origin.vz;
         if (newInitialConditionsLaunch) {
-            correction.reset();
+            // Old approach: correction.reset();
             stepsLimitOnCandidate = STEPS_LIMIT_ON_CANDIDATE;
+            // Straight launch using the planet speed vector
+            direction = new Vector3d(origin.vx, origin.vy, origin.vz);
         } else {
-            double dTargetToOrigin = distance(origin, targetFail);
-            // Corrected direction
-            correction.x += targetFail.x - spacecraftFail.x;
-            correction.y += targetFail.y - spacecraftFail.y;
-            correction.z += targetFail.z - spacecraftFail.z;
-            direction.x += origin.vx * correction.x / dTargetToOrigin;
-            direction.y += origin.vy * correction.y / dTargetToOrigin;
-            direction.z += origin.vz * correction.z / dTargetToOrigin;
+            Vector3d speedAdjust = targetFail.minus(spacecraftFail).scale(direction.magnitude() / distance(origin, targetFail));
+            direction = direction.plus(speedAdjust);
         }
         newInitialConditionsLaunch = false;
         // Direction to the target and the 3 distance proyections
-        double directionM = Math.sqrt(direction.x * direction.x + direction.y * direction.y + direction.z * direction.z);
+        double directionM = direction.magnitude();
         // Calculate the launch speed as launch speed + origin speed;
-        double vxr = speed * direction.x / directionM;
-        double vyr = speed * direction.y / directionM;
-        double vzr = speed * direction.z / directionM;
-        spacecraft.vx = origin.vx + vxr;
-        spacecraft.vy = origin.vy + vyr;
-        spacecraft.vz = origin.vz + vzr;
+        Vector3d launchSpeed = direction.scale(speed / directionM);
+        spacecraft.vx = origin.vx + launchSpeed.x;
+        spacecraft.vy = origin.vy + launchSpeed.y;
+        spacecraft.vz = origin.vz + launchSpeed.z;
+
+        if (targetFail != null) {
+            report.print(">>>> d:%g,    dx:%g, dy:%g,    sx:%g, sy:%g", targetFail.minus(spacecraftFail).magnitude(),
+                    direction.x, direction.y,
+                    launchSpeed.x, launchSpeed.y);
+        }
         // Calculate the launch position as the origin body position that points to destination
         double r = origin.getRadius() + spacecraft.getRadius() + LAUNCH_ELEVATION;
         double xr = r * direction.x / directionM;
@@ -273,7 +267,7 @@ public class Route {
         launched = true;
     }
 
-    private double distance(Position a, Position b) {
+    private double distance(Body a, Vector3d b) {
         double dabx = b.x - a.x;
         double daby = b.y - a.y;
         double dabz = b.z - a.z;

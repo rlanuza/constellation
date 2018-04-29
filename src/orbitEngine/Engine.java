@@ -156,6 +156,7 @@ public class Engine {
                     screen.updateConstellation();
                 }
                 route.clearLaunched();
+                screen.updateConstellation(); ////////////////KKKKKKKKKKKKKKKK
             } while (route.repeatInitialConditions());
         } while (route.nextLaunch());
         report.dump();

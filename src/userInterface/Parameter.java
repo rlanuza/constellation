@@ -10,20 +10,21 @@ import static orbitEngine.Constellation.ASTRO_STRING_FIELDS;
 
 public class Parameter extends LineConvert {
 
-    public static int CALCULUS_METHOD;
-    public static long SIMULATION_STEPS;
-    public static long STEPS_PER_PLOT;
-    public static long START_EPOCH_TIME;
-    public static double STEP_TIME;
-    public static double METERS_PER_PIXEL;
-    public static long MAX_ORBIT_POINTS;
-    public static int SCREEN_PERCENT;
+    public static int CALCULUS_METHOD = 1;
+    public static boolean ONLY_2D_DATA = false;
+    public static long SIMULATION_STEPS = 1440 * 10000;
+    public static long STEPS_PER_PLOT = 1440;
+    public static long START_EPOCH_TIME = 1520294400; //Epoc of 2018-Mar-06 00:00:00.0000 TDB)
+    public static double STEP_TIME = 60.0;
+    public static double METERS_PER_PIXEL = 1.3e-10;
+    public static long MAX_ORBIT_POINTS = 1000;
+    public static int SCREEN_PERCENT = 50;
     public static ArrayList<Body> bodyList = new ArrayList<Body>();
-    public static boolean SCREEN_RESIZABLE;
-    public static Color COLOR_SCREEN;
-    public static Color COLOR_DATE;
-    public static Color COLOR_SCALE;
-    public static Color COLOR_ANGLE;
+    public static boolean SCREEN_RESIZABLE = false;
+    public static Color COLOR_SCREEN = Color.BLACK;
+    public static Color COLOR_DATE = Color.RED;
+    public static Color COLOR_SCALE = Color.ORANGE;
+    public static Color COLOR_ANGLE = Color.YELLOW;
 
     Parameter(String constellationFile) {
         String contents = "";
@@ -40,31 +41,33 @@ public class Parameter extends LineConvert {
             if ((line.length() == 0) || line.startsWith("#")) {
                 // This is a comment
             } else if (line.startsWith("STEP_TIME:")) {
-                Parameter.STEP_TIME = getDouble(line, 60.0);
+                STEP_TIME = getDouble(line, STEP_TIME);
             } else if (line.startsWith("SIMULATION_STEPS:")) {
-                Parameter.SIMULATION_STEPS = getLong(line, 1440 * 10000);
+                SIMULATION_STEPS = getLong(line, SIMULATION_STEPS);
             } else if (line.startsWith("STEPS_PER_PLOT:")) {
-                Parameter.STEPS_PER_PLOT = getLong(line, 1440);
+                STEPS_PER_PLOT = getLong(line, STEPS_PER_PLOT);
             } else if (line.startsWith("START_EPOCH_TIME:")) {
-                Parameter.START_EPOCH_TIME = getLong(line, 1520294400); //Epoc of 2018-Mar-06 00:00:00.0000 TDB)
+                START_EPOCH_TIME = getLong(line, START_EPOCH_TIME);
             } else if (line.startsWith("CALCULUS_METHOD:")) {
-                Parameter.CALCULUS_METHOD = (int) getLong(line, 0);
+                CALCULUS_METHOD = (int) getLong(line, CALCULUS_METHOD);
             } else if (line.startsWith("METERS_PER_PIXEL:")) {
-                Parameter.METERS_PER_PIXEL = getDouble(line, 1.3e-10);
+                METERS_PER_PIXEL = getDouble(line, METERS_PER_PIXEL);
             } else if (line.startsWith("MAX_ORBIT_POINTS:")) {
-                Parameter.MAX_ORBIT_POINTS = getLong(line, 1000);
+                MAX_ORBIT_POINTS = getLong(line, MAX_ORBIT_POINTS);
             } else if (line.startsWith("SCREEN_PERCENT:")) {
-                Parameter.SCREEN_PERCENT = (int) getLong(line, 1000);
+                SCREEN_PERCENT = (int) getLong(line, SCREEN_PERCENT);
             } else if (line.startsWith("SCREEN_RESIZABLE:")) {
-                Parameter.SCREEN_RESIZABLE = getBoolean(line, false);
+                SCREEN_RESIZABLE = getBoolean(line, SCREEN_RESIZABLE);
+            } else if (line.startsWith("ONLY_2D_DATA:")) {
+                ONLY_2D_DATA = getBoolean(line, ONLY_2D_DATA);
             } else if (line.startsWith("COLOR_SCREEN:")) {
-                Parameter.COLOR_SCREEN = getColor(line, Color.BLACK);
+                COLOR_SCREEN = getColor(line, COLOR_SCREEN);
             } else if (line.startsWith("COLOR_DATE:")) {
-                Parameter.COLOR_DATE = getColor(line, Color.RED);
+                COLOR_DATE = getColor(line, COLOR_DATE);
             } else if (line.startsWith("COLOR_SCALE:")) {
-                Parameter.COLOR_SCALE = getColor(line, Color.ORANGE);
+                COLOR_SCALE = getColor(line, COLOR_SCALE);
             } else if (line.startsWith("COLOR_ANGLE:")) {
-                Parameter.COLOR_ANGLE = getColor(line, Color.YELLOW);
+                COLOR_ANGLE = getColor(line, COLOR_ANGLE);
             } else {
                 String[] datas = line.split(",");
                 if (datas.length == ASTRO_STRING_FIELDS) {
@@ -73,10 +76,10 @@ public class Parameter extends LineConvert {
                     double radius = Double.valueOf(datas[2].trim());
                     double x = Double.valueOf(datas[3].trim()) * 1000;
                     double y = Double.valueOf(datas[4].trim()) * 1000;
-                    double z = Double.valueOf(datas[5].trim()) * 1000;
+                    double z = ONLY_2D_DATA ? 0.0 : Double.valueOf(datas[5].trim()) * 1000;
                     double vx = Double.valueOf(datas[6].trim()) * 1000;
                     double vy = Double.valueOf(datas[7].trim()) * 1000;
-                    double vz = Double.valueOf(datas[8].trim()) * 1000;
+                    double vz = ONLY_2D_DATA ? 0.0 : Double.valueOf(datas[8].trim()) * 1000;
                     Color astroColor = getColor(":" + datas[9] + "," + datas[10] + "," + datas[11], Color.YELLOW);
                     Body new_body = new Body(name, mass, radius, x, y, z, vx, vy, vz, astroColor);
                     bodyList.add(new_body);

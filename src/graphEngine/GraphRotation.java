@@ -1,6 +1,6 @@
 package graphEngine;
 
-import orbitEngine.Position;
+import orbitEngine.Vector3d;
 
 public class GraphRotation {
 
@@ -58,8 +58,8 @@ public class GraphRotation {
         cos_z_rot = Math.cos(z_rot);
     }
 
-    public Position rotatePosition(Position pos) {
-        Position newPos = pos;
+    public Vector3d rotatePosition(Vector3d pos) {
+        Vector3d newPos = pos;
         if (x_steps != 0) {
             newPos = x_rotation(newPos);
         }
@@ -72,8 +72,8 @@ public class GraphRotation {
         return newPos;
     }
 
-    private Position x_rotation(Position pos) {
-        Position pos2 = new Position();
+    private Vector3d x_rotation(Vector3d pos) {
+        Vector3d pos2 = new Vector3d();
         // Axis X
         // y' = y*cos q - z*sin q
         // z' = y*sin q + z*cos q
@@ -84,8 +84,8 @@ public class GraphRotation {
         return pos2;
     }
 
-    private Position y_rotation(Position pos) {
-        Position pos2 = new Position();
+    private Vector3d y_rotation(Vector3d pos) {
+        Vector3d pos2 = new Vector3d();
         // Axis Y
         //z' = z*cos q - x*sin q
         //x' = z*sin q + x*cos q
@@ -96,8 +96,8 @@ public class GraphRotation {
         return pos2;
     }
 
-    private Position z_rotation(Position pos) {
-        Position pos2 = new Position();
+    private Vector3d z_rotation(Vector3d pos) {
+        Vector3d pos2 = new Vector3d();
         //x' = x*cos q - y*sin q
         //y' = x*sin q + y*cos q
         //z' = z
