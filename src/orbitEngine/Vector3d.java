@@ -49,7 +49,23 @@ public class Vector3d {
     }
 
     /**
-     * Returns the difference between this vector and the specified vector.
+     * Returns the sum of this vector3d and the specified coordinates.
+     *
+     * @param x the x to add to this Vector3d
+     * @param y the y to add to this Vector3d
+     * @param z the z to add to this Vector3d
+     * @return the Vector3d whose value is {@code (this + ^(x,y,z))}
+     */
+    public Vector3d plus(double x, double y, double z) {
+        Vector3d r = new Vector3d();
+        r.x = this.x + x;
+        r.y = this.y + y;
+        r.z = this.z + z;
+        return r;
+    }
+
+    /**
+     * Returns the difference between this vector3d and the specified vector3d.
      *
      * @param that the Vector3d to subtract from this Vector3d
      * @return the Vector3d whose value is {@code (this - that)}
@@ -59,6 +75,22 @@ public class Vector3d {
         r.x = this.x - that.x;
         r.y = this.y - that.y;
         r.z = this.z - that.z;
+        return r;
+    }
+
+    /**
+     * Returns the difference between this vector3d and the specified coordinates.
+     *
+     * @param x the x to subtract to this Vector3d
+     * @param y the y to subtract to this Vector3d
+     * @param z the z to subtract to this Vector3d
+     * @return the Vector3d whose value is {@code (this - ^(x,y,z))}
+     */
+    public Vector3d minus(double x, double y, double z) {
+        Vector3d r = new Vector3d();
+        r.x = this.x - x;
+        r.y = this.y - y;
+        r.z = this.z - z;
         return r;
     }
 

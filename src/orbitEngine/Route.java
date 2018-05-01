@@ -164,6 +164,7 @@ public class Route {
             // Prepare a new iteration if the conditions are good modifying the target
             if (stepsLimitOnCandidate > 0) {
                 stepsLimitOnCandidate--;
+                // Store the position of the Spacecraft and Target on overtaking time to let us plan a new fine adjust launch
                 spacecraftFail = new Vector3d(spacecraft);
                 targetFail = new Vector3d(target);
 
@@ -238,31 +239,22 @@ public class Route {
             // Straight launch using the planet speed vector
             direction = new Vector3d(origin.vx, origin.vy, origin.vz);
         } else {
+            // ^speedAdjust = (^targetFail - ^spacecraftFail) * (direction / distance(origin, targetFail)
             Vector3d speedAdjust = targetFail.minus(spacecraftFail).scale(direction.magnitude() / distance(origin, targetFail));
             direction = direction.plus(speedAdjust);
         }
         newInitialConditionsLaunch = false;
         // Direction to the target and the 3 distance proyections
         double directionM = direction.magnitude();
-        // Calculate the launch speed as launch speed + origin speed;
-        Vector3d launchSpeed = direction.scale(speed / directionM);
-        spacecraft.vx = origin.vx + launchSpeed.x;
-        spacecraft.vy = origin.vy + launchSpeed.y;
-        spacecraft.vz = origin.vz + launchSpeed.z;
+        // Calculate the launch speed with the original speed and the vector ^direction normalized;
+        // ^launchSpeed = ^direction * ( ||speedMagnitude|| / ||directionMagnitude||)
+        spacecraft.loadSpeed(direction.scale(speed / directionM).plus(origin.vx, origin.vy, origin.vz));
 
-        if (targetFail != null) {
-            report.print(">>>> d:%g,    dx:%g, dy:%g,    sx:%g, sy:%g", targetFail.minus(spacecraftFail).magnitude(),
-                    direction.x, direction.y,
-                    launchSpeed.x, launchSpeed.y);
-        }
         // Calculate the launch position as the origin body position that points to destination
-        double r = origin.getRadius() + spacecraft.getRadius() + LAUNCH_ELEVATION;
-        double xr = r * direction.x / directionM;
-        double yr = r * direction.y / directionM;
-        double zr = r * direction.z / directionM;
-        spacecraft.x = origin.x + xr;
-        spacecraft.y = origin.y + yr;
-        spacecraft.z = origin.z + zr;
+        // ^launchPosition = ^direction * ( launchRadius / ||directionMagnitude||) + ^origin
+        double launchRadius = origin.getRadius() + LAUNCH_ELEVATION + spacecraft.getRadius();
+        spacecraft.loadPosition(direction.scale(launchRadius / directionM).plus(origin));
+
         spacecraftLand = false;
         launched = true;
     }

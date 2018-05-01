@@ -71,7 +71,19 @@ public class Body extends Vector3d implements Cloneable {
         return null;
     }
 
-    public void addGravity(double gx, double gy, double gz) {
+    public void loadPosition(Vector3d v3d) {
+        this.x = v3d.x;
+        this.y = v3d.y;
+        this.z = v3d.z;
+    }
+
+    public void loadSpeed(Vector3d v3d) {
+        this.vx = v3d.x;
+        this.vy = v3d.y;
+        this.vz = v3d.z;
+    }
+
+    public void loadGravity(double gx, double gy, double gz) {
         this.gx = gx;
         this.gy = gy;
         this.gz = gz;
