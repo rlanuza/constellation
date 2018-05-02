@@ -128,7 +128,7 @@ public class Engine {
                     return true;
                 }
             } else {
-                if (!secondsToRecoverStored && route.timeToSave(seconds + stepTime)) {
+                if (!secondsToRecoverStored && route.timeToLaunch(seconds + stepTime)) {
                     saveEngine();
                 } else if (route.timeToLaunch(seconds)) {
                     route.launchToNextTarget();
