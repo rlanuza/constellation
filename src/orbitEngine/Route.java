@@ -117,9 +117,9 @@ public class Route {
      * Check if the target has been overtaken
      */
     boolean overtaking() {
-        // @Todo-DONE Heuristic changes 1) MAX_OVERTAKE_DISTANCE = F(Radius planet).
-        // @Todo-DONE Heuristic changes 2) Accept some (dStartToTarget > dStartToSpacecraft) to fine adjust
-        // @Todo Heuristic changes 3) Correct time and energy delta if near
+        // @Todo-DONE Heuristic a changes 1) MAX_OVERTAKE_DISTANCE = F(Radius planet).
+        // @Todo-DONE Heuristic b changes 2) Accept some (dStartToTarget > dStartToSpacecraft) to fine adjust
+        // @Todo-DONE Heuristic changes 3) Correct time and energy delta if near
         // @Todo Heuristic changes 4) Correct launch speed with angle to avoid lost energy sum with planet
         double dSpacecraftToTarget = Constellation.dist[targetIndex][spacecraftIndex];
 
@@ -149,6 +149,7 @@ public class Route {
                 sLog = String.format(" -> overtaking: distance:%e [dx=%e, dy=%e, dz=%e].", dSpacecraftToTarget, target.x - spacecraft.x, target.y - spacecraft.y, target.z - spacecraft.z);
             }
             // Heuristic b) the distance to STAR must be far than Target else reject the iteration
+            // @Todo Heuristic check if a adaptation is possible or finally deprecate the "Heuristic b" filter
             /*
             double dStartToTarget = (targetIndex > starIndex) ? Constellation.dist[starIndex][targetIndex] : Constellation.dist[targetIndex][starIndex];
             double dStartToSpacecraft = (spacecraftIndex > starIndex) ? Constellation.dist[starIndex][spacecraftIndex] : Constellation.dist[spacecraftIndex][starIndex];
@@ -177,6 +178,9 @@ public class Route {
                 newInitialConditionsLaunch = true;
                 return true;
             }
+            // @Todo Heuristic check if a adaptation is possible or finally deprecate the "Heuristic b" filter
+            // @Todo Heuristic by independent axis
+
         } else {    // A distance in tolerance, but probably getting worse
             return false;
         }
@@ -229,7 +233,8 @@ public class Route {
     }
 
     /**
-     * Launch to the next target iteration point. We will use this to calculate the error if we miss the target and adjust next launch
+     * Launch to the next target iteration point. We will use this to calculate
+     * the error if we miss the target and adjust next launch
      */
     public void launchToNextTarget() {
         minTargetDistance = Double.MAX_VALUE;
