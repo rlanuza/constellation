@@ -12,7 +12,7 @@
   MIN_LAUNCH_TIME:              1520294400      # The minimum Epoc time of the launch (1520294400==2018-Mar-06 00:00:00.0000 TDB.)
   MAX_LAUNCH_TIME:              1520295400      # The minimum Epoc time of the launch (1520294400==2018-Mar-06 00:00:00.0000 TDB.)
   STEP_LAUNCH_TIME:             1000            # Seconds
-  STEPS_LIMIT_ON_CANDIDATE:    100              # Max iterations for the same initial conditions on good candidate
+  STEPS_LIMIT_ON_CANDIDATE:     300             # Max iterations for the same initial conditions on good candidate
   LAUNCH_ELEVATION:             1.0             # Elevation of the launcher, necessary to avid immediate collision with origin
   OVERTAKE_DISTANCE_TOLERANCE:  100000.0        # Tolerance to determine the a overtake has been produced
   MAX_OVERTAKE_RADIUS:          100000          # If this overtake distance to the target, in n-target-radius, is overcome the fine adjust is discarded
