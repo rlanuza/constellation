@@ -125,7 +125,8 @@ public class Route {
 
         if (dSpacecraftToTarget < minTargetDistance) {  // A new minimum distance --> Continue this
             minTargetDistance = dSpacecraftToTarget;
-            return false;
+            return false; //@Todo There is a error this must not return false now. this hiddes a clear aproach
+
         } else if (dSpacecraftToTarget > (minTargetDistance + OVERTAKE_DISTANCE_TOLERANCE)) {     // A clear overtaking
             // Heuristic a) the distance must be near than a limit else reject the iteration
             if (dSpacecraftToTarget > MAX_OVERTAKE_DISTANCE_10) {
