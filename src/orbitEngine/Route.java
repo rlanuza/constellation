@@ -120,71 +120,62 @@ public class Route {
         // @Todo-DONE Heuristic a changes 1) MAX_OVERTAKE_DISTANCE = F(Radius planet).
         // @Todo-DONE Heuristic b changes 2) Accept some (dStartToTarget > dStartToSpacecraft) to fine adjust
         // @Todo-DONE Heuristic changes 3) Correct time and energy delta if near
-        // @Todo Heuristic changes 4) Correct launch speed with angle to avoid lost energy sum with planet
+        // @Todo Think if it's useful a heuristic changes 4) Correct launch speed with angle to avoid lost energy sum with planet
         double dSpacecraftToTarget = Constellation.dist[targetIndex][spacecraftIndex];
 
+        // Aproaching to the target
         if (dSpacecraftToTarget < minTargetDistance) {  // A new minimum distance --> Continue this
             minTargetDistance = dSpacecraftToTarget;
-            return false; //@Todo There is a error this must not return false now. this hiddes a clear aproach
-
-        } else if (dSpacecraftToTarget > (minTargetDistance + OVERTAKE_DISTANCE_TOLERANCE)) {     // A clear overtaking
-            // Heuristic a) the distance must be near than a limit else reject the iteration
-            if (dSpacecraftToTarget > MAX_OVERTAKE_DISTANCE_10) {
-                report.print(" -> overtaking: distance to target %e > %e [10*MAX_OVERTAKE_DISTANCE] --> Far, iteration end",
-                        dSpacecraftToTarget, MAX_OVERTAKE_DISTANCE_10);
-                farLaunch = true;
-                newInitialConditionsLaunch = true;
-                return true;
-            }
-            if (dSpacecraftToTarget > MAX_OVERTAKE_DISTANCE) {
-                report.print(" -> overtaking: distance to target %e > %e [MAX_OVERTAKE_DISTANCE] --> Iteration end",
-                        dSpacecraftToTarget, MAX_OVERTAKE_DISTANCE);
-                newInitialConditionsLaunch = true;
-                return true;
-            }
-            String sLog;
-            if (dSpacecraftToTarget < MAX_OVERTAKE_DISTANCE_01) {
-                nearLaunch = true;
-                sLog = String.format(" -> overtaking: distance:%e [dx=%e, dy=%e, dz=%e]. [NEAR]", dSpacecraftToTarget, target.x - spacecraft.x, target.y - spacecraft.y, target.z - spacecraft.z);
-            } else {
-                sLog = String.format(" -> overtaking: distance:%e [dx=%e, dy=%e, dz=%e].", dSpacecraftToTarget, target.x - spacecraft.x, target.y - spacecraft.y, target.z - spacecraft.z);
-            }
-            // Heuristic b) the distance to STAR must be far than Target else reject the iteration
-            // @Todo Heuristic check if a adaptation is possible or finally deprecate the "Heuristic b" filter
-            /*
-            double dStartToTarget = (targetIndex > starIndex) ? Constellation.dist[starIndex][targetIndex] : Constellation.dist[targetIndex][starIndex];
-            double dStartToSpacecraft = (spacecraftIndex > starIndex) ? Constellation.dist[starIndex][spacecraftIndex] : Constellation.dist[spacecraftIndex][starIndex];
-            if (dStartToTarget > dStartToSpacecraft) {
-                report.print(" -> overtaking: As the star distance to target %e > %e, the rocket distance to target. This launch iteration is dismissed",
-                        dStartToTarget, dStartToSpacecraft);
-                newInitialConditionsLaunch = true;
-                return true;
-            }
-             */
-
-            // Heuristic c) Calculate a new taget based on the error compensation with a sinple iteration counter limit
-            // Prepare a new iteration if the conditions are good modifying the target
-            if (stepsLimitOnCandidate > 0) {
-                stepsLimitOnCandidate--;
-                // Store the position of the Spacecraft and Target on overtaking time to let us plan a new fine adjust launch
-                spacecraftFail = new Vector3d(spacecraft);
-                targetFail = new Vector3d(target);
-
-                //@Todo this for release report.printLog("%s New temptative [%d of %d] with speed vector correction", sLog, STEPS_LIMIT_ON_CANDIDATE - stepsLimitOnCandidate, STEPS_LIMIT_ON_CANDIDATE);
-                report.print("%s New temptative [%d of %d] with speed vector correction", sLog, STEPS_LIMIT_ON_CANDIDATE - stepsLimitOnCandidate, STEPS_LIMIT_ON_CANDIDATE);                //@Todo this NOT for release
-                return true;
-            } else {
-                report.print("%s The STEPS_LIMIT_ON_CANDIDATE = %d temptatives were consumed", sLog, STEPS_LIMIT_ON_CANDIDATE);
-                routecandidates.add(new RouteCandidate(false, dSpacecraftToTarget, startTime, speed, 2, 0));
-                newInitialConditionsLaunch = true;
-                return true;
-            }
-            // @Todo Heuristic check if a adaptation is possible or finally deprecate the "Heuristic b" filter
-            // @Todo Heuristic by independent axis
-
-        } else {    // A distance in tolerance, but probably getting worse
+            return false;
+        } else if (dSpacecraftToTarget < (minTargetDistance + OVERTAKE_DISTANCE_TOLERANCE)) {
+            // Distance growing but still into tolerance. Probably getting worse
             return false;
         }
+        // Overtaking the target:
+        // Heuristic a) the distance must be near than a limit else reject the iteration
+        if (dSpacecraftToTarget > MAX_OVERTAKE_DISTANCE_10) {
+            report.print(" -> End test iteration: very far target overtaking. (%6.1f-radius) [distance: %e > %e :10*MAX_OVERTAKE_DISTANCE].",
+                    dSpacecraftToTarget / target.radius, dSpacecraftToTarget, MAX_OVERTAKE_DISTANCE_10);
+            farLaunch = true;
+            newInitialConditionsLaunch = true;
+            return true;
+        }
+        if (dSpacecraftToTarget > MAX_OVERTAKE_DISTANCE) {
+            report.print(" -> End test iteration: far target overtaking. (%6.1f-radius) [distance: %e > %e :MAX_OVERTAKE_DISTANCE].",
+                    dSpacecraftToTarget / target.radius, dSpacecraftToTarget, MAX_OVERTAKE_DISTANCE);
+            newInitialConditionsLaunch = true;
+            return true;
+        }
+        // Heuristic b) if the distance is really short the iteration steps will be reduced with a nea-launch query
+        String sLog1;
+        if (dSpacecraftToTarget < MAX_OVERTAKE_DISTANCE_01) {
+            nearLaunch = true;
+            sLog1 = " -> Near overtaking.";
+        } else {
+            sLog1 = " -> Far overtaking. ";
+        }
+        String sLog2 = String.format("distance:%.3e (%6.1f-radius) [dx=% .3e, dy=% .3e, dz=% .3e].",
+                dSpacecraftToTarget, dSpacecraftToTarget / target.radius, target.x - spacecraft.x, target.y - spacecraft.y, target.z - spacecraft.z);
+        // Heuristic c) Calculate a new taget based on the error compensation with a sinple iteration counter limit
+        // Prepare a new iteration if the conditions are good modifying the target
+        if (stepsLimitOnCandidate > 0) {
+            stepsLimitOnCandidate--;
+            // Store the position of the Spacecraft and Target on overtaking time to let us plan a new fine adjust launch
+            spacecraftFail = new Vector3d(spacecraft);
+            targetFail = new Vector3d(target);
+
+            //@Todo this for release report.printLog("%s New temptative [%d of %d] with speed vector correction", sLog, STEPS_LIMIT_ON_CANDIDATE - stepsLimitOnCandidate, STEPS_LIMIT_ON_CANDIDATE);
+            report.print("%s %s New temptative [%3d of %3d] with speed vector correction", sLog1, sLog2,
+                    STEPS_LIMIT_ON_CANDIDATE - stepsLimitOnCandidate, STEPS_LIMIT_ON_CANDIDATE);                //@Todo this NOT for release
+            return true;
+        } else {
+            report.print("%s %s The STEPS_LIMIT_ON_CANDIDATE = %d temptatives were consumed", sLog1, sLog2, STEPS_LIMIT_ON_CANDIDATE);
+            routecandidates.add(new RouteCandidate(false, dSpacecraftToTarget, startTime, speed, 2, 0));
+            newInitialConditionsLaunch = true;
+            return true;
+        }
+        // @Todo Heuristic check if a adaptation is possible or finally deprecate the "Heuristic b" filter
+        // @Todo Heuristic by independent axis
     }
 
     /**
@@ -193,31 +184,37 @@ public class Route {
      * @return true until no new conditions programmed
      */
     public boolean nextLaunch() {
+        String sLog;
         if (farLaunch) {
             farLaunch = false;
             speed += stepSpeed * 10;
+            sLog = "far-launch";
         } else if (nearLaunch) {
             nearLaunch = false;
             nearLaunchOnSpeedScan = true;
             speed += stepSpeed / 10;
+            sLog = "near-launch";
         } else {
             nearLaunchOnSpeedScan = true;
             speed += stepSpeed;
+            sLog = "std-launch";
         }
 
         if (speed > stopSpeed) {
             if (nearLaunchOnSpeedScan) {
                 nearLaunchOnSpeedScan = false;
                 startTime += stepTime;
+                sLog = "time-std-launch";
             } else {
                 startTime += stepTime * 10;
+                sLog = "time-far-launch";
             }
             speed = startSpeed;
             if (startTime > stopTime) {
                 return false;
             }
         }
-        report.print("- Next Launch time: %s (epoch: %.0f), with speed: %g", dateString(startTime), startTime, speed);
+        report.print("- Next Launch time: %s (epoch: %.0f), with speed: %g node:'%s'", dateString(startTime), startTime, speed, sLog);
         newInitialConditionsLaunch = true;
         return true;
     }
@@ -240,8 +237,8 @@ public class Route {
             // Straight launch using the planet speed vector
             direction = new Vector3d(origin.vx, origin.vy, origin.vz);
         } else {
-            // ^speedAdjust = (^targetFail - ^spacecraftFail) * (direction / distance(origin, targetFail)
-            Vector3d speedAdjust = targetFail.minus(spacecraftFail).scale(direction.magnitude() / distance(origin, targetFail));
+            // ^speedAdjust = (^targetFail - ^spacecraftFail) * (direction / distance(origin, targetFail) * 4??
+            Vector3d speedAdjust = targetFail.minus(spacecraftFail).scale(3 * direction.magnitude() / distance(origin, targetFail));
             direction = direction.plus(speedAdjust);
         }
         newInitialConditionsLaunch = false;
