@@ -110,17 +110,16 @@ public class Route {
         }
         spacecraftLand = true;
         this.kineticLost = kineticLost;
+        // @Todo Calculate collision speed
+        // @Todo Add and calculate collision angle
         routecandidates.add(0, new RouteCandidate(true, 0, startTime, speed, 1, kineticLost));
     }
 
     /**
      * Check if the target has been overtaken
+     * @Todo Think if a heuristic by independent axis can help
      */
     boolean overtaking() {
-        // @Todo-DONE Heuristic a changes 1) MAX_OVERTAKE_DISTANCE = F(Radius planet).
-        // @Todo-DONE Heuristic b changes 2) Accept some (dStartToTarget > dStartToSpacecraft) to fine adjust
-        // @Todo-DONE Heuristic changes 3) Correct time and energy delta if near
-        // @Todo Think if it's useful a heuristic changes 4) Correct launch speed with angle to avoid lost energy sum with planet
         double dSpacecraftToTarget = Constellation.dist[targetIndex][spacecraftIndex];
 
         // Aproaching to the target
@@ -157,15 +156,12 @@ public class Route {
         String sLog2 = String.format("distance:%.3e (%6.1f-radius) [dx=% .3e, dy=% .3e, dz=% .3e].",
                 dSpacecraftToTarget, dSpacecraftToTarget / target.radius, target.x - spacecraft.x, target.y - spacecraft.y, target.z - spacecraft.z);
         // Heuristic c) Calculate a new taget based on the error compensation with a sinple iteration counter limit
-        // Prepare a new iteration if the conditions are good modifying the target
-        if (stepsLimitOnCandidate > 0) {
+        if (stepsLimitOnCandidate > 0) {    // Prepare a new iteration modifying the target with the last error
             stepsLimitOnCandidate--;
             // Store the position of the Spacecraft and Target on overtaking time to let us plan a new fine adjust launch
             spacecraftFail = new Vector3d(spacecraft);
             targetFail = new Vector3d(target);
-
-            //@Todo this for release report.printLog("%s New temptative [%d of %d] with speed vector correction", sLog, STEPS_LIMIT_ON_CANDIDATE - stepsLimitOnCandidate, STEPS_LIMIT_ON_CANDIDATE);
-            report.print("%s %s New temptative [%3d of %3d] with speed vector correction", sLog1, sLog2,
+            report.printLog("%s %s New temptative [%3d of %3d] with speed vector correction", sLog1, sLog2,
                     STEPS_LIMIT_ON_CANDIDATE - stepsLimitOnCandidate, STEPS_LIMIT_ON_CANDIDATE);                //@Todo this NOT for release
             return true;
         } else {
@@ -174,8 +170,6 @@ public class Route {
             newInitialConditionsLaunch = true;
             return true;
         }
-        // @Todo Heuristic check if a adaptation is possible or finally deprecate the "Heuristic b" filter
-        // @Todo Heuristic by independent axis
     }
 
     /**
@@ -211,6 +205,7 @@ public class Route {
             }
             speed = startSpeed;
             if (startTime > stopTime) {
+                //@Todo report all routecandidates 
                 return false;
             }
         }
