@@ -1,7 +1,7 @@
 #Configuration:
     CALCULUS_METHOD:    1               # 0: basic, 1: jerk, 2:basic_Schwarzschild, 3: jerk_Schwarzschild
-    ONLY_2D_DATA:       false            # true: use only x,y coordinates
-    SIMULATION_STEPS:   2200000
+    ONLY_2D_DATA:       false           # If true, then use only x,y coordinates
+    SIMULATION_STEPS:   2200000         # Seconds/STEP_TIME
     STEPS_PER_PLOT:     10080           # 24*60*14
     STEP_TIME:          60.0            # Seconds
     START_EPOCH_TIME:   1520294400      # Epoc of 2018-Mar-06 00:00:00.0000 TDB.

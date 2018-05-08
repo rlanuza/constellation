@@ -50,7 +50,8 @@ public class Route {
     private final double MAX_OVERTAKE_DISTANCE_01;
     private Report report;
 
-    private ArrayList<RouteCandidate> routecandidates = new ArrayList<>();
+    private ArrayList<RouteCandidate> routeCandidate = new ArrayList<>();
+    private ArrayList<RouteCandidate> routeLandings = new ArrayList<>();
 
     public Route(Report report, Body spacecraft, Body origin, Body target, Body star,
             double startTime, double stopTime, double stepTime,
@@ -110,13 +111,16 @@ public class Route {
         }
         spacecraftLand = true;
         this.kineticLost = kineticLost;
-        // @Todo Calculate collision speed
         // @Todo Add and calculate collision angle
-        routecandidates.add(0, new RouteCandidate(true, 0, startTime, speed, 1, kineticLost));
+        double relativeLandSpeed = new Vector3d(spacecraft.vx, spacecraft.vy, spacecraft.vz).minus(landBody.vx, landBody.vy, landBody.vz).magnitude();
+        String arrivalDate = dateString();
+        routeLandings.add(new RouteCandidate(0, startTime, speed, spacecraft.mass, relativeLandSpeed, kineticLost, arrivalDate));
+        report.print("****************\nSpacecraft Land on date: %s, in: %s.\n Energy lost on landing: %e Joules\n++++++++++++++++", arrivalDate, landBody.name, kineticLost);
     }
 
     /**
      * Check if the target has been overtaken
+     *
      * @Todo Think if a heuristic by independent axis can help
      */
     boolean overtaking() {
@@ -166,7 +170,7 @@ public class Route {
             return true;
         } else {
             report.print("%s %s The STEPS_LIMIT_ON_CANDIDATE = %d temptatives were consumed", sLog1, sLog2, STEPS_LIMIT_ON_CANDIDATE);
-            routecandidates.add(new RouteCandidate(false, dSpacecraftToTarget, startTime, speed, 2, 0));
+            routeCandidate.add(new RouteCandidate(dSpacecraftToTarget, startTime, speed, spacecraft.mass, 0, 0, dateString()));
             newInitialConditionsLaunch = true;
             return true;
         }
@@ -205,7 +209,15 @@ public class Route {
             }
             speed = startSpeed;
             if (startTime > stopTime) {
-                //@Todo report all routecandidates 
+                //@Todo report all routecandidates
+                report.print("\n=====================\n-Correct Landings");
+                for (RouteCandidate routeLand : routeLandings) {
+                    report.print(" Landing: %s", routeLand.report());
+                }
+                report.print("\n~~~~~~~~~~~~~~~~~~~~~\n-Near Approachs");
+                for (RouteCandidate routeNear : routeCandidate) {
+                    report.print(" Landing: %s", routeNear.report());
+                }
                 return false;
             }
         }
@@ -240,7 +252,8 @@ public class Route {
         // Direction to the target and the 3 distance proyections
         double directionM = direction.magnitude();
         // Calculate the launch speed with the original speed and the vector ^direction normalized;
-        // ^launchSpeed = ^direction * ( ||speedMagnitude|| / ||directionMagnitude||)
+        // ^relativeSpacecraftSpeed = ^direction * ( ||speedMagnitude|| / ||directionMagnitude||)
+        // ^absoluteSpacecraftSpeed = ^relativeSpacecraftSpeed   + ^origin
         spacecraft.loadSpeed(direction.scale(speed / directionM).plus(origin.vx, origin.vy, origin.vz));
 
         // Calculate the launch position as the origin body position that points to destination
@@ -271,7 +284,6 @@ public class Route {
      */
     public boolean spacecraftLand() {
         if (spacecraftLand) {
-            report.print("****************\nSpacecraft Land on date: %s, in: %s.\n Energy lost on landing: %e Joules\n++++++++++++++++", dateString(), landBody.name, kineticLost);
             return true;
         } else {
             return false;

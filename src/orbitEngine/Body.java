@@ -31,7 +31,7 @@ public class Body extends Vector3d implements Cloneable {
     // @Todo split translational kinetic energy and rotational energy or angular kinetic energy i
     public double kinetic() {
         // Kinetic energy = 1/2*m*v^2 = 1/2*m*sqr(vx^2+vy^2+vz^2)^2 = 1/2*m*vx^2+vy^2+vz^2)
-        return ((mass * (vx * vx + vy * vy + vz * vz)) / 2);  // Joules
+        return ((mass * (vx * vx + vy * vy + vz * vz)) / 2.0);  // Joules
     }
 
     /**
@@ -107,5 +107,9 @@ public class Body extends Vector3d implements Cloneable {
 
     public static int getNextIndex() {
         return nextIndex;
+    }
+
+    double speed() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
