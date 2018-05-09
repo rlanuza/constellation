@@ -260,7 +260,7 @@ public class Route {
         // ^launchPosition = ^direction * ( launchRadius / ||directionMagnitude||) + ^origin
         double launchRadius = origin.getRadius() + LAUNCH_ELEVATION + spacecraft.getRadius();
         spacecraft.loadPosition(direction.scale(launchRadius / directionM).plus(origin));
-        report.print("  Origin at x:%g, y:%g, z:%g", origin.x, origin.y, origin.z);
+        report.printLog("  Origin at x:%g, y:%g, z:%g", origin.x, origin.y, origin.z);
 
         spacecraftLand = false;
         launched = true;
