@@ -260,6 +260,7 @@ public class Route {
         // ^launchPosition = ^direction * ( launchRadius / ||directionMagnitude||) + ^origin
         double launchRadius = origin.getRadius() + LAUNCH_ELEVATION + spacecraft.getRadius();
         spacecraft.loadPosition(direction.scale(launchRadius / directionM).plus(origin));
+        report.print("  Origin at x:%g, y:%g, z:%g", origin.x, origin.y, origin.z);
 
         spacecraftLand = false;
         launched = true;
@@ -310,4 +311,9 @@ public class Route {
     public boolean repeatInitialConditions() {
         return !(spacecraftLand || newInitialConditionsLaunch);
     }
+    /*
+    public void debug() {
+        //report.print("Origin: x:%g, y:%g, z:%g, vx:%g, vy:%g, vz:%g {date:%s}", origin.x, origin.y, origin.z, origin.vx, origin.vy, origin.vz, dateString());
+    }
+     */
 }

@@ -103,6 +103,24 @@ public class Engine {
      */
     private boolean runRoute(long steepsPerPlot) {
         for (int i = 0; i < steepsPerPlot; i++) {
+            if (route.isLaunched()) {
+                if (route.spacecraftLand()) {
+                    constellation.pushToGraphic();
+                    return true;
+                } else if (route.overtaking()) {
+                    constellation.pushToGraphic();
+                    return true;
+                }
+            } else {
+                if (!secondsToRecoverStored) {
+                    if (route.timeToLaunch(seconds + stepTime)) {
+                        saveEngine();
+                    }
+                } else if (route.timeToLaunch(seconds)) {
+                    route.launchToNextTarget();
+                    constellation.addRocket(route);
+                }
+            }
             switch (Parameter.CALCULUS_METHOD) {
                 case 0:
                     constellation.step_basic(stepTime);
@@ -119,22 +137,6 @@ public class Engine {
                 default:
             }
             seconds += stepTime;
-            if (route.isLaunched()) {
-                if (route.spacecraftLand()) {
-                    constellation.pushToGraphic();
-                    return true;
-                } else if (route.overtaking()) {
-                    constellation.pushToGraphic();
-                    return true;
-                }
-            } else {
-                if (!secondsToRecoverStored && route.timeToLaunch(seconds + stepTime)) {
-                    saveEngine();
-                } else if (route.timeToLaunch(seconds)) {
-                    route.launchToNextTarget();
-                    constellation.addRocket(route);
-                }
-            }
         }
         constellation.pushToGraphic();
         return false;
@@ -148,6 +150,7 @@ public class Engine {
         do {
             do {
                 recoverEngine();
+
                 for (long i = 0; i < simulationPlots; i++) {
                     if (runRoute(Parameter.STEPS_PER_PLOT)) {
                         screen.updateConstellation();

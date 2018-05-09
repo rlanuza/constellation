@@ -22,6 +22,9 @@ public class Report {
     }
 
     public synchronized void printLog(String strFormat, Object... args) {
+        /* DEBUG_MODE
+            print(strFormat, args);    return;
+         */
         String result = String.format(strFormat, args);
         String[] lines = result.split("\\r?\\n|\\r");;
         for (String line : lines) {
@@ -53,7 +56,6 @@ public class Report {
     }
 
     private void partiallDump() {
-
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(reportFile, true))) {
             for (String line : reportList) {
                 writer.append(line);
@@ -66,20 +68,5 @@ public class Report {
 
     public synchronized void dump() {
         partiallDump();
-        /*
-        try {
-            File file = new File(reportFile);
-            file.getParentFile().mkdirs();
-
-            try (PrintWriter out = new PrintWriter(reportFile)) {
-                for (String line : reportList) {
-                    out.println(line);
-                }
-                out.close();
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-         */
     }
 }

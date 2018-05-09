@@ -27,7 +27,7 @@ public class RouteCandidate {
     }
 
     String report() {
-        return String.format("distance: %e; Start time: %e; Start speed: %e; Land energy: %e; Landing speed: %e; Land energy: %e; Date %s",
+        return String.format("distance: %e; Start time: %.0f; Start speed: %e; Land energy: %e; Landing speed: %e; Land energy: %e; Date %s",
                 distance, startTime, startSpeed, landSpeed, launchEnergy, landEnergy, arrivalDate);
     }
 }

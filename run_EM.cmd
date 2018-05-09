@@ -1,4 +1,4 @@
 
-java -jar dist\constellation.jar --parameters:data\em%1.txt --command:data\cmd%1.txt --output:data\out%1.txt
+java -jar dist\constellation.jar --parameters:data\%1_em.txt --command:data\%1_cmd.txt --output:data\%1_out.txt
 
 timeout 60
