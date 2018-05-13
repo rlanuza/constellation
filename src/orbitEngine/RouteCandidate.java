@@ -5,29 +5,33 @@
  */
 package orbitEngine;
 
+import static orbitEngine.Engine.dateString;
+
 public class RouteCandidate {
 
     private double distance;
-    private double startTime;
-    private double startSpeed;
+    private double launchTime;
+    private double launchSpeed;
     private double launchEnergy;
     private double landSpeed;
     private double landEnergy;
-    private String arrivalDate;
+    private double lostKineticEnergy;
+    private double landTime;
 
-    public RouteCandidate(double distance, double startTime, double startSpeed, double mass, double landSpeed, double landEnergy,
-            String arrivalDate) {
+    public RouteCandidate(double distance, double launchTime, double launchSpeed, double mass, double landSpeed, double lostKineticEnergy,
+            double landTime) {
         this.distance = distance;
-        this.startTime = startTime;
-        this.startSpeed = startSpeed;
-        this.launchEnergy = startSpeed * startSpeed * mass / 2.0;
+        this.launchTime = launchTime;
+        this.launchSpeed = launchSpeed;
+        this.launchEnergy = launchSpeed * launchSpeed * mass / 2.0;
         this.landSpeed = landSpeed;
-        this.landEnergy = landEnergy;
-        this.arrivalDate = arrivalDate;
+        this.landEnergy = landSpeed * landSpeed * mass / 2.0;
+        this.lostKineticEnergy = lostKineticEnergy;
+        this.landTime = landTime;
     }
 
     String report() {
-        return String.format("distance: %e; Start time: %.0f; Start speed: %e; Land energy: %e; Landing speed: %e; Land energy: %e; Date %s",
-                distance, startTime, startSpeed, landSpeed, launchEnergy, landEnergy, arrivalDate);
+        return String.format("Distance: %e; Launch time: (%.0f) %s; Launch speed: %e; Launch energy: %e; Landing speed: %e; Land energy: %e; EnergyLost: %e; Land date: (%.0f) %s",
+                distance, launchTime, dateString(launchTime), launchSpeed, landSpeed, launchEnergy, landEnergy, lostKineticEnergy, landTime, dateString(landTime));
     }
 }

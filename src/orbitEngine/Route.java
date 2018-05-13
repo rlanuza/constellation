@@ -6,6 +6,7 @@
 package orbitEngine;
 
 import java.util.ArrayList;
+import static orbitEngine.Engine.dateEpoch;
 import static orbitEngine.Engine.dateString;
 import userInterface.Report;
 
@@ -14,12 +15,10 @@ public class Route {
     private final Body spacecraft;
     private Body origin;
     private Body target;
-    private Body star;
     private Body landBody;
     private int spacecraftIndex;
     private int originIndex;
     private int targetIndex;
-    private int starIndex;
     private boolean spacecraftLand;
     private double kineticLost;
 
@@ -53,7 +52,7 @@ public class Route {
     private ArrayList<RouteCandidate> routeCandidate = new ArrayList<>();
     private ArrayList<RouteCandidate> routeLandings = new ArrayList<>();
 
-    public Route(Report report, Body spacecraft, Body origin, Body target, Body star,
+    public Route(Report report, Body spacecraft, Body origin, Body target,
             double startTime, double stopTime, double stepTime,
             double startSpeed, double stopSpeed, double stepSpeed,
             double LAUNCH_ELEVATION,
@@ -64,11 +63,9 @@ public class Route {
         this.spacecraft = spacecraft;
         this.origin = origin;
         this.target = target;
-        this.star = star;
         spacecraftIndex = spacecraft.getIndex();
         originIndex = origin.getIndex();
         targetIndex = target.getIndex();
-        starIndex = star.getIndex();
         this.startTime = startTime;
         this.stopTime = stopTime;
         this.stepTime = stepTime;
@@ -113,9 +110,8 @@ public class Route {
         this.kineticLost = kineticLost;
         // @Todo Add and calculate collision angle
         double relativeLandSpeed = new Vector3d(spacecraft.vx, spacecraft.vy, spacecraft.vz).minus(landBody.vx, landBody.vy, landBody.vz).magnitude();
-        String arrivalDate = dateString();
-        routeLandings.add(new RouteCandidate(0, startTime, speed, spacecraft.mass, relativeLandSpeed, kineticLost, arrivalDate));
-        report.print("****************\nSpacecraft Land on date: %s, in: %s.\n Energy lost on landing: %e Joules\n++++++++++++++++", arrivalDate, landBody.name, kineticLost);
+        routeLandings.add(new RouteCandidate(0, startTime, speed, spacecraft.mass, relativeLandSpeed, kineticLost, dateEpoch()));
+        report.print("****************\nSpacecraft Land on date: %s, in: %s.\n Energy lost on landing: %e Joules\n++++++++++++++++", dateString(), landBody.name, kineticLost);
     }
 
     /**
@@ -170,7 +166,7 @@ public class Route {
             return true;
         } else {
             report.print("%s %s The STEPS_LIMIT_ON_CANDIDATE = %d temptatives were consumed", sLog1, sLog2, STEPS_LIMIT_ON_CANDIDATE);
-            routeCandidate.add(new RouteCandidate(dSpacecraftToTarget, startTime, speed, spacecraft.mass, 0, 0, dateString()));
+            routeCandidate.add(new RouteCandidate(dSpacecraftToTarget, startTime, speed, spacecraft.mass, 0, 0, dateEpoch()));
             newInitialConditionsLaunch = true;
             return true;
         }
@@ -311,9 +307,4 @@ public class Route {
     public boolean repeatInitialConditions() {
         return !(spacecraftLand || newInitialConditionsLaunch);
     }
-    /*
-    public void debug() {
-        //report.print("Origin: x:%g, y:%g, z:%g, vx:%g, vy:%g, vz:%g {date:%s}", origin.x, origin.y, origin.z, origin.vx, origin.vy, origin.vz, dateString());
-    }
-     */
 }

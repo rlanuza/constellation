@@ -50,6 +50,10 @@ public class Engine {
         constellation.pushToGraphic();
     }
 
+    static public double dateEpoch() {
+        return seconds;
+    }
+
     static public String dateString() {
         LocalDateTime dateTime = LocalDateTime.ofEpochSecond((long) seconds, 0, ZoneOffset.UTC);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/LL/dd-HH:mm:ss", Locale.ENGLISH);
@@ -168,12 +172,11 @@ public class Engine {
         Body spacecraft = new Body(cmd.NAME, cmd.MASS, cmd.RADIUS, cmd.COLOR);
         Body origin = constellation.getBody(cmd.ORIGIN);
         Body target = constellation.getBody(cmd.TARGET);
-        Body star = constellation.getBody(cmd.STAR);
         if ((origin == null) || (target == null)) {
             report.print("Error, the origin '%s' or the target '%s' is not in our constellation", cmd.ORIGIN, cmd.TARGET);
             System.exit(1);
         }
-        route = new Route(report, spacecraft, origin, target, star,
+        route = new Route(report, spacecraft, origin, target,
                 cmd.MIN_LAUNCH_TIME, cmd.MAX_LAUNCH_TIME, cmd.STEP_LAUNCH_TIME,
                 cmd.MIN_SPEED, cmd.MAX_SPEED, cmd.STEP_SPEED,
                 cmd.LAUNCH_ELEVATION,

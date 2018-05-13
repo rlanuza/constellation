@@ -18,7 +18,6 @@ public class Command extends LineConvert {
     public Color COLOR = Color.ORANGE;
     public String ORIGIN = "Earth";
     public String TARGET = "Mars";
-    public String STAR = "Sun";
     public double MIN_SPEED = 1;
     public double MAX_SPEED = 1000;
     public double STEP_SPEED = 5;
@@ -57,8 +56,6 @@ public class Command extends LineConvert {
                 ORIGIN = getString(line, ORIGIN);
             } else if (line.startsWith("TARGET:")) {
                 TARGET = getString(line, TARGET);
-            } else if (line.startsWith("STAR:")) {
-                STAR = getString(line, STAR);
             } else if (line.startsWith("MIN_SPEED:")) {
                 MIN_SPEED = getDouble(line, MIN_SPEED);
             } else if (line.startsWith("MAX_SPEED:")) {
