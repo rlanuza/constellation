@@ -1,5 +1,5 @@
 #Configuration:
-    CALCULUS_METHOD:    0               # 0: basic, 1: jerk, 2:basic_Schwarzschild, 3: jerk_Schwarzschild
+    CALCULUS_METHOD:    3               # 0: basic, 1: jerk, 2:basic_Schwarzschild, 3: jerk_Schwarzschild
     ONLY_2D_DATA:       false           # If true, then use only x,y coordinates
     SIMULATION_STEPS:   2200000         # Seconds/STEP_TIME
     STEPS_PER_PLOT:     20160           # 24*60*14
