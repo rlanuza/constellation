@@ -33,7 +33,7 @@ public class Route {
     private final double stopSpeed;
     private final double stepSpeed;
     private boolean launched;
-    private double speed;
+    private double launchSpeed;
     private double minTargetDistance;
     private boolean newInitialConditionsLaunch;
     private boolean farLaunch;
@@ -79,7 +79,7 @@ public class Route {
 
         this.STEPS_LIMIT_ON_CANDIDATE = STEPS_LIMIT_ON_CANDIDATE;
         this.LAUNCH_ELEVATION = LAUNCH_ELEVATION;
-        speed = startSpeed;
+        launchSpeed = startSpeed;
         newInitialConditionsLaunch = true;
         farLaunch = false;
         nearLaunch = false;
@@ -110,7 +110,7 @@ public class Route {
         this.kineticLost = kineticLost;
         // @Todo Add and calculate collision angle
         double relativeLandSpeed = new Vector3d(spacecraft.vx, spacecraft.vy, spacecraft.vz).minus(landBody.vx, landBody.vy, landBody.vz).magnitude();
-        routeLandings.add(new RouteCandidate(0, startTime, speed, spacecraft.mass, relativeLandSpeed, kineticLost, dateEpoch()));
+        routeLandings.add(new RouteCandidate(startTime, dateEpoch(), launchSpeed, spacecraft.mass, relativeLandSpeed, kineticLost));
         report.print("****************\nSpacecraft Land on date: %s, in: %s.\n Energy lost on landing: %e Joules\n++++++++++++++++", dateString(), landBody.name, kineticLost);
     }
 
@@ -166,7 +166,7 @@ public class Route {
             return true;
         } else {
             report.print("%s %s The STEPS_LIMIT_ON_CANDIDATE = %d temptatives were consumed", sLog1, sLog2, STEPS_LIMIT_ON_CANDIDATE);
-            routeCandidate.add(new RouteCandidate(dSpacecraftToTarget, startTime, speed, spacecraft.mass, 0, 0, dateEpoch()));
+            routeCandidate.add(new RouteCandidate(dSpacecraftToTarget, startTime, dateEpoch(), launchSpeed, spacecraft.mass));
             newInitialConditionsLaunch = true;
             return true;
         }
@@ -181,20 +181,20 @@ public class Route {
         String sLog;
         if (farLaunch) {
             farLaunch = false;
-            speed += stepSpeed * 10;
+            launchSpeed += stepSpeed * 10;
             sLog = "far-launch";
         } else if (nearLaunch) {
             nearLaunch = false;
             nearLaunchOnSpeedScan = true;
-            speed += stepSpeed / 10;
+            launchSpeed += stepSpeed / 10;
             sLog = "near-launch";
         } else {
             nearLaunchOnSpeedScan = true;
-            speed += stepSpeed;
+            launchSpeed += stepSpeed;
             sLog = "std-launch";
         }
 
-        if (speed > stopSpeed) {
+        if (launchSpeed > stopSpeed) {
             if (nearLaunchOnSpeedScan) {
                 nearLaunchOnSpeedScan = false;
                 startTime += stepTime;
@@ -203,7 +203,7 @@ public class Route {
                 startTime += stepTime * 10;
                 sLog = "time-far-launch";
             }
-            speed = startSpeed;
+            launchSpeed = startSpeed;
             if (startTime > stopTime) {
                 //@Todo report all routecandidates
                 report.print("\n=====================\n-Correct Landings");
@@ -212,12 +212,20 @@ public class Route {
                 }
                 report.print("\n~~~~~~~~~~~~~~~~~~~~~\n-Near Approachs");
                 for (RouteCandidate routeNear : routeCandidate) {
-                    report.print(" Landing: %s", routeNear.report());
+                    report.print(" Overtake: %s", routeNear.report());
+                }
+                report.print_LandCSV(RouteCandidate.reportCSV_landHead());
+                for (RouteCandidate routeLand : routeLandings) {
+                    report.print_LandCSV(routeLand.reportCSV());
+                }
+                report.print_NearCSV(RouteCandidate.reportCSV_overtakeHead());
+                for (RouteCandidate routeNear : routeCandidate) {
+                    report.print_NearCSV(routeNear.reportCSV());
                 }
                 return false;
             }
         }
-        report.print("- Next Launch time: %s (epoch: %.0f), with speed: %g node:'%s'", dateString(startTime), startTime, speed, sLog);
+        report.print("- Next Launch time: %s (epoch: %.0f), with speed: %g node:'%s'", dateString(startTime), startTime, launchSpeed, sLog);
         newInitialConditionsLaunch = true;
         return true;
     }
@@ -247,10 +255,10 @@ public class Route {
         newInitialConditionsLaunch = false;
         // Direction to the target and the 3 distance proyections
         double directionM = direction.magnitude();
-        // Calculate the launch speed with the original speed and the vector ^direction normalized;
+        // Calculate the launch speed with the speed of the origin planet and the vector ^direction normalized;
         // ^relativeSpacecraftSpeed = ^direction * ( ||speedMagnitude|| / ||directionMagnitude||)
         // ^absoluteSpacecraftSpeed = ^relativeSpacecraftSpeed   + ^origin
-        spacecraft.loadSpeed(direction.scale(speed / directionM).plus(origin.vx, origin.vy, origin.vz));
+        spacecraft.loadSpeed(direction.scale(launchSpeed / directionM).plus(origin.vx, origin.vy, origin.vz));
 
         // Calculate the launch position as the origin body position that points to destination
         // ^launchPosition = ^direction * ( launchRadius / ||directionMagnitude||) + ^origin

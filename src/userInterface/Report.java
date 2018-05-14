@@ -56,17 +56,33 @@ public class Report {
     }
 
     private void partiallDump() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(reportFile, true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(reportFile + ".log", true))) {
             for (String line : reportList) {
                 writer.append(line);
             }
             reportList.clear();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
     public synchronized void dump() {
         partiallDump();
+    }
+
+    public void print_LandCSV(String csvLine) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(reportFile + "_land.csv", true))) {
+            writer.append(csvLine + "\n");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void print_NearCSV(String csvLine) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(reportFile + "_near.csv", true))) {
+            writer.append(csvLine + "\n");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

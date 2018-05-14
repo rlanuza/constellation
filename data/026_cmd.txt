@@ -1,4 +1,4 @@
-#Launch test conditions:
+#Launch test conditions:  Too slow approach to scan a wide range of landings in several days
   NAME:                         Sara            # Rocket name
   MASS:                         5E03            # Rocket mass (Kg)
   RADIUS:                       3               # Rocket Radius (m)

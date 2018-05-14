@@ -1,12 +1,12 @@
-#Launch test conditions:  Good approach to scan a wide range of landings in a few hours
+#Launch test conditions:  Good approach to scan a wide range of landings in a few hours with low energy
   NAME:                         Sara            # Rocket name
   MASS:                         5E03            # Rocket mass (Kg)
   RADIUS:                       3               # Rocket Radius (m)
   COLOR:                        255,255,255     # Rocket color in R,G,B
   ORIGIN:                       Earth           # Origin body
   TARGET:                       Mars            # Target body
-  MIN_SPEED:                    11600           # The minimum speed to test (m/s) >11170
-  MAX_SPEED:                    12100           # The maximum speed to test (m/s)
+  MIN_SPEED:                    11175           # The minimum speed to test (m/s) >11170
+  MAX_SPEED:                    11870           # The maximum speed to test (m/s)
   STEP_SPEED:                   10              # The steep used for each iteration of the test (m/s)
   MIN_LAUNCH_TIME:              1570400000      # The minimum Epoc time of the launch (1520294400==2018-Mar-06 00:00:00.0000 TDB.)
   MAX_LAUNCH_TIME:              1600000000      # The minimum Epoc time of the launch (1520294400==2018-Mar-06 00:00:00.0000 TDB.)

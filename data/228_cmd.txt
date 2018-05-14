@@ -1,4 +1,4 @@
-#Launch test conditions:
+#Launch test conditions: Small landing section from 227 to debug landing report on program
   NAME:                         Sara            # Rocket name
   MASS:                         5E03            # Rocket mass (Kg)
   RADIUS:                       3               # Rocket Radius (m)
