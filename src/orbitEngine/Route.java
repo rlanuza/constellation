@@ -8,6 +8,7 @@ package orbitEngine;
 import java.util.ArrayList;
 import static orbitEngine.Engine.dateEpoch;
 import static orbitEngine.Engine.dateString;
+import userInterface.Command;
 import userInterface.Report;
 
 public class Route {
@@ -29,9 +30,13 @@ public class Route {
     private double startTime;
     private final double stopTime;
     private final double stepTime;
+    private final double overStepTimeFactorOnFarTargets;
     private final double startSpeed;
     private final double stopSpeed;
     private final double stepSpeed;
+    private final double underStepSpeedFactorOnNearTargets;
+    private final double overStepSpeedFactorOnFarTargets;
+
     private boolean launched;
     private double launchSpeed;
     private double minTargetDistance;
@@ -52,13 +57,7 @@ public class Route {
     private ArrayList<RouteCandidate> routeCandidate = new ArrayList<>();
     private ArrayList<RouteCandidate> routeLandings = new ArrayList<>();
 
-    public Route(Report report, Body spacecraft, Body origin, Body target,
-            double startTime, double stopTime, double stepTime,
-            double startSpeed, double stopSpeed, double stepSpeed,
-            double LAUNCH_ELEVATION,
-            double OVERTAKE_DISTANCE_TOLERANCE,
-            double MAX_OVERTAKE_RADIUS,
-            int STEPS_LIMIT_ON_CANDIDATE) {
+    public Route(Report report, Body spacecraft, Body origin, Body target, Command cmd) {
         this.report = report;
         this.spacecraft = spacecraft;
         this.origin = origin;
@@ -66,19 +65,22 @@ public class Route {
         spacecraftIndex = spacecraft.getIndex();
         originIndex = origin.getIndex();
         targetIndex = target.getIndex();
-        this.startTime = startTime;
-        this.stopTime = stopTime;
-        this.stepTime = stepTime;
-        this.startSpeed = startSpeed;
-        this.stopSpeed = stopSpeed;
-        this.stepSpeed = stepSpeed;
-        this.OVERTAKE_DISTANCE_TOLERANCE = OVERTAKE_DISTANCE_TOLERANCE;
-        MAX_OVERTAKE_DISTANCE = MAX_OVERTAKE_RADIUS * target.radius;
+        this.startTime = cmd.MIN_LAUNCH_TIME;
+        this.stopTime = cmd.MAX_LAUNCH_TIME;
+        this.stepTime = cmd.STEP_LAUNCH_TIME;
+        this.overStepTimeFactorOnFarTargets = cmd.OVER_STEP_TIME_FACTOR;
+        this.startSpeed = cmd.MIN_SPEED;
+        this.stopSpeed = cmd.MAX_SPEED;
+        this.stepSpeed = cmd.STEP_SPEED;
+        this.underStepSpeedFactorOnNearTargets = cmd.UNDER_STEP_SPEED_FACTOR;
+        this.overStepSpeedFactorOnFarTargets = cmd.OVER_STEP_SPEED_FACTOR;
+        this.OVERTAKE_DISTANCE_TOLERANCE = cmd.OVERTAKE_DISTANCE_TOLERANCE;
+        MAX_OVERTAKE_DISTANCE = cmd.MAX_OVERTAKE_RADIUS * target.radius;
         MAX_OVERTAKE_DISTANCE_10 = MAX_OVERTAKE_DISTANCE * 10;
         MAX_OVERTAKE_DISTANCE_01 = MAX_OVERTAKE_DISTANCE / 10;
 
-        this.STEPS_LIMIT_ON_CANDIDATE = STEPS_LIMIT_ON_CANDIDATE;
-        this.LAUNCH_ELEVATION = LAUNCH_ELEVATION;
+        this.STEPS_LIMIT_ON_CANDIDATE = cmd.STEPS_LIMIT_ON_CANDIDATE;
+        this.LAUNCH_ELEVATION = cmd.LAUNCH_ELEVATION;
         launchSpeed = startSpeed;
         newInitialConditionsLaunch = true;
         farLaunch = false;
@@ -181,12 +183,12 @@ public class Route {
         String sLog;
         if (farLaunch) {
             farLaunch = false;
-            launchSpeed += stepSpeed * 10;
+            launchSpeed += stepSpeed * overStepSpeedFactorOnFarTargets;
             sLog = "far-launch";
         } else if (nearLaunch) {
             nearLaunch = false;
             nearLaunchOnSpeedScan = true;
-            launchSpeed += stepSpeed / 10;
+            launchSpeed += stepSpeed / underStepSpeedFactorOnNearTargets;
             sLog = "near-launch";
         } else {
             nearLaunchOnSpeedScan = true;
@@ -200,7 +202,7 @@ public class Route {
                 startTime += stepTime;
                 sLog = "time-std-launch";
             } else {
-                startTime += stepTime * 10;
+                startTime += stepTime * overStepTimeFactorOnFarTargets;
                 sLog = "time-far-launch";
             }
             launchSpeed = startSpeed;

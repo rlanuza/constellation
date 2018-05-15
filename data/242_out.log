@@ -1,0 +1,42 @@
++++++++++++++++++++++
+-Start a new simulation
+  Origin at x:6,05008e+10, y:-1,37574e+11, z:7,66448e+06
+ -> Far overtaking.  distance:3,535e+09 (1042,9-radius) [dx= 4,062e+08, dy= 1,272e+09, dz= 3,274e+09]. New temptative [  1 of 200] with speed vector correction
+  Origin at x:6,05008e+10, y:-1,37574e+11, z:7,66448e+06
+ -> Far overtaking.  distance:3,252e+09 ( 959,3-radius) [dx= 5,414e+08, dy= 9,976e+08, dz= 3,047e+09]. New temptative [  2 of 200] with speed vector correction
+  Origin at x:6,05008e+10, y:-1,37574e+11, z:7,66448e+06
+ -> Far overtaking.  distance:3,035e+09 ( 895,4-radius) [dx= 6,254e+08, dy= 8,202e+08, dz= 2,855e+09]. New temptative [  3 of 200] with speed vector correction
+  Origin at x:6,05008e+10, y:-1,37574e+11, z:7,66448e+06
+ -> Far overtaking.  distance:2,868e+09 ( 846,1-radius) [dx= 6,796e+08, dy= 7,088e+08, dz= 2,695e+09]. New temptative [  4 of 200] with speed vector correction
+  Origin at x:6,05008e+10, y:-1,37574e+11, z:7,66448e+06
+ -> Far overtaking.  distance:2,743e+09 ( 809,3-radius) [dx= 7,176e+08, dy= 6,441e+08, dz= 2,568e+09]. New temptative [  5 of 200] with speed vector correction
+  Origin at x:6,05008e+10, y:-1,37574e+11, z:7,66448e+06
+ -> Far overtaking.  distance:2,658e+09 ( 784,0-radius) [dx= 7,486e+08, dy= 6,149e+08, dz= 2,475e+09]. New temptative [  6 of 200] with speed vector correction
+  Origin at x:6,05008e+10, y:-1,37574e+11, z:7,66448e+06
+ -> Far overtaking.  distance:2,611e+09 ( 770,2-radius) [dx= 7,793e+08, dy= 6,152e+08, dz= 2,415e+09]. New temptative [  7 of 200] with speed vector correction
+  Origin at x:6,05008e+10, y:-1,37574e+11, z:7,66448e+06
+ -> Far overtaking.  distance:2,606e+09 ( 768,7-radius) [dx= 8,155e+08, dy= 6,428e+08, dz= 2,390e+09]. New temptative [  8 of 200] with speed vector correction
+  Origin at x:6,05008e+10, y:-1,37574e+11, z:7,66448e+06
+ -> Far overtaking.  distance:2,647e+09 ( 780,9-radius) [dx= 8,628e+08, dy= 6,993e+08, dz= 2,403e+09]. New temptative [  9 of 200] with speed vector correction
+  Origin at x:6,05008e+10, y:-1,37574e+11, z:7,66448e+06
+ -> Far overtaking.  distance:2,743e+09 ( 809,3-radius) [dx= 9,276e+08, dy= 7,901e+08, dz= 2,458e+09]. New temptative [ 10 of 200] with speed vector correction
+  Origin at x:6,05008e+10, y:-1,37574e+11, z:7,66448e+06
+ -> Far overtaking.  distance:2,909e+09 ( 858,0-radius) [dx= 1,019e+09, dy= 9,262e+08, dz= 2,562e+09]. New temptative [ 11 of 200] with speed vector correction
+  Origin at x:6,05008e+10, y:-1,37574e+11, z:7,66448e+06
+ -> Far overtaking.  distance:3,165e+09 ( 933,6-radius) [dx= 1,150e+09, dy= 1,126e+09, dz= 2,725e+09]. New temptative [ 12 of 200] with speed vector correction
+  Origin at x:6,05008e+10, y:-1,37574e+11, z:7,66448e+06
+ -> Far overtaking.  distance:3,548e+09 (1046,6-radius) [dx= 1,344e+09, dy= 1,421e+09, dz= 2,960e+09]. New temptative [ 13 of 200] with speed vector correction
+  Origin at x:6,05008e+10, y:-1,37574e+11, z:7,66448e+06
+ -> Far overtaking.  distance:4,113e+09 (1213,4-radius) [dx= 1,639e+09, dy= 1,860e+09, dz= 3,282e+09]. New temptative [ 14 of 200] with speed vector correction
+  Origin at x:6,05008e+10, y:-1,37574e+11, z:7,66448e+06
+ -> Far overtaking.  distance:4,948e+09 (1459,7-radius) [dx= 2,103e+09, dy= 2,523e+09, dz= 3,701e+09]. New temptative [ 15 of 200] with speed vector correction
+  Origin at x:6,05008e+10, y:-1,37574e+11, z:7,66448e+06
+ -> Far overtaking.  distance:6,177e+09 (1822,1-radius) [dx= 2,852e+09, dy= 3,509e+09, dz= 4,207e+09]. New temptative [ 16 of 200] with speed vector correction
+  Origin at x:6,05008e+10, y:-1,37574e+11, z:7,66448e+06
+ -> End test iteration: far target overtaking. (2341,9-radius) [distance: 7,938911e+09 > 6,779800e+09 :MAX_OVERTAKE_DISTANCE].
+
+=====================
+-Correct Landings
+
+~~~~~~~~~~~~~~~~~~~~~
+-Near Approachs

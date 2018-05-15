@@ -176,12 +176,6 @@ public class Engine {
             report.print("Error, the origin '%s' or the target '%s' is not in our constellation", cmd.ORIGIN, cmd.TARGET);
             System.exit(1);
         }
-        route = new Route(report, spacecraft, origin, target,
-                cmd.MIN_LAUNCH_TIME, cmd.MAX_LAUNCH_TIME, cmd.STEP_LAUNCH_TIME,
-                cmd.MIN_SPEED, cmd.MAX_SPEED, cmd.STEP_SPEED,
-                cmd.LAUNCH_ELEVATION,
-                cmd.OVERTAKE_DISTANCE_TOLERANCE,
-                cmd.MAX_OVERTAKE_RADIUS,
-                cmd.STEPS_LIMIT_ON_CANDIDATE);
+        route = new Route(report, spacecraft, origin, target, cmd);
     }
 }

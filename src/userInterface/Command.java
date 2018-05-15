@@ -21,9 +21,12 @@ public class Command extends LineConvert {
     public double MIN_SPEED = 1;
     public double MAX_SPEED = 1000;
     public double STEP_SPEED = 5;
+    public double UNDER_STEP_SPEED_FACTOR = 10.0;
+    public double OVER_STEP_SPEED_FACTOR = 10.0;
     public long MIN_LAUNCH_TIME = 1520294400;
     public long MAX_LAUNCH_TIME = 1551830400;
     public long STEP_LAUNCH_TIME = 3600;
+    public double OVER_STEP_TIME_FACTOR = 10.0;
     public int STEPS_LIMIT_ON_CANDIDATE = 50;
     public double LAUNCH_ELEVATION = 1;
     public double OVERTAKE_DISTANCE_TOLERANCE = 10000.0;
@@ -62,12 +65,20 @@ public class Command extends LineConvert {
                 MAX_SPEED = getDouble(line, MAX_SPEED);
             } else if (line.startsWith("STEP_SPEED:")) {
                 STEP_SPEED = getDouble(line, STEP_SPEED);
+            } else if (line.startsWith("UNDER_STEP_SPEED_FACTOR:")) {
+                UNDER_STEP_SPEED_FACTOR = getDouble(line, UNDER_STEP_SPEED_FACTOR);
+            } else if (line.startsWith("OVER_STEP_SPEED_FACTOR:")) {
+                OVER_STEP_SPEED_FACTOR = getDouble(line, OVER_STEP_SPEED_FACTOR);
+
             } else if (line.startsWith("MIN_LAUNCH_TIME:")) {
                 MIN_LAUNCH_TIME = getLong(line, MIN_LAUNCH_TIME); //Epoc of 2018-Mar-06 00:00:00.0000 TDB)
             } else if (line.startsWith("MAX_LAUNCH_TIME:")) {
                 MAX_LAUNCH_TIME = getLong(line, MAX_LAUNCH_TIME);
             } else if (line.startsWith("STEP_LAUNCH_TIME:")) {
                 STEP_LAUNCH_TIME = getLong(line, STEP_LAUNCH_TIME);
+            } else if (line.startsWith("OVER_STEP_TIME_FACTOR:")) {
+                OVER_STEP_TIME_FACTOR = getDouble(line, OVER_STEP_TIME_FACTOR);
+
             } else if (line.startsWith("STEPS_LIMIT_ON_CANDIDATE:")) {
                 STEPS_LIMIT_ON_CANDIDATE = (int) getLong(line, STEPS_LIMIT_ON_CANDIDATE);
             } else if (line.startsWith("LAUNCH_ELEVATION:")) {
