@@ -5,14 +5,14 @@
   COLOR:                        255,255,255     # Rocket color in R,G,B
   ORIGIN:                       Earth           # Origin body
   TARGET:                       Mars            # Target body
-  MIN_SPEED:                    11964.0         # The minimum speed to test (m/s) >11170
-  MAX_SPEED:                    11965.0         # The maximum speed to test (m/s)
-  STEP_SPEED:                   10.0            # The steep used for each iteration of the test (m/s)
+  MIN_SPEED:                    11950.0         # The minimum speed to test (m/s) >11170
+  MAX_SPEED:                    11970.0         # The maximum speed to test (m/s)
+  STEP_SPEED:                   1.0             # The steep used for each iteration of the test (m/s)
   UNDER_STEP_SPEED_FACTOR:      1.0             # In case of near launch the speed step can under-stepped with this factor
   OVER_STEP_SPEED_FACTOR:       1.0             # In case of far launch the speed step can over-stepped with this factor 
-  MIN_LAUNCH_TIME:              1594808000      # The minimum Epoc time of the launch (1520294400==2018-Mar-06 00:00:00.0000 TDB.)
-  MAX_LAUNCH_TIME:              1594816000      # The minimum Epoc time of the launch (1520294400==2018-Mar-06 00:00:00.0000 TDB.)
-  STEP_LAUNCH_TIME:             18000           # Seconds
+  MIN_LAUNCH_TIME:              1594700000      # The minimum Epoc time of the launch (1520294400==2018-Mar-06 00:00:00.0000 TDB.)
+  MAX_LAUNCH_TIME:              1594900000      # The minimum Epoc time of the launch (1520294400==2018-Mar-06 00:00:00.0000 TDB.)
+  STEP_LAUNCH_TIME:             10000           # Seconds
   OVER_STEP_TIME_FACTOR:        1.0             # In case of far launch the time can over overstepped with this factor
   STEPS_LIMIT_ON_CANDIDATE:     200             # Max iterations for the same initial conditions on good candidate
   LAUNCH_ELEVATION:             1.0             # Elevation of the launcher, necessary to avid immediate collision with origin
