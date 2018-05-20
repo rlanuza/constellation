@@ -8,3 +8,4 @@
 /data/*.bak
 /*.log
 /data/bak
+/data/200/250/*.log

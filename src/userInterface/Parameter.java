@@ -26,7 +26,7 @@ public class Parameter extends LineConvert {
     public static Color COLOR_SCALE = Color.ORANGE;
     public static Color COLOR_ANGLE = Color.YELLOW;
 
-    Parameter(String constellationFile) {
+    Parameter(String constellationFile, String calculusMethod) {
         String contents = "";
         try {
             contents = new String(Files.readAllBytes(Paths.get(constellationFile)));
@@ -87,6 +87,14 @@ public class Parameter extends LineConvert {
                     System.out.println("Line not processed: " + line);
                 }
             }
+        }
+        if (calculusMethod != null && !calculusMethod.isEmpty()) {
+            CALCULUS_METHOD = Integer.valueOf(calculusMethod);
+        }
+
+        if ((CALCULUS_METHOD < 0) || (3 < CALCULUS_METHOD)) {
+            System.out.println("Error, Invalid CALCULUS_METHOD");
+            System.exit(1);
         }
     }
 }
