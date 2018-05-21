@@ -90,6 +90,8 @@ public class Route {
         minTargetDistance = Double.MAX_VALUE;
         spacecraftLand = false;
 
+        report.print_LandCSV(RouteCandidate.reportCSV_landHead());
+        report.print_NearCSV(RouteCandidate.reportCSV_overtakeHead());
     }
 
     /**
@@ -112,7 +114,10 @@ public class Route {
         this.kineticLost = kineticLost;
         // @Todo Add and calculate collision angle
         double relativeLandSpeed = new Vector3d(spacecraft.vx, spacecraft.vy, spacecraft.vz).minus(landBody.vx, landBody.vy, landBody.vz).magnitude();
-        routeLandings.add(new RouteCandidate(startTime, dateEpoch(), launchSpeed, spacecraft.mass, relativeLandSpeed, kineticLost));
+
+        RouteCandidate routeLand = new RouteCandidate(landBody.name, startTime, dateEpoch(), launchSpeed, spacecraft.mass, relativeLandSpeed, kineticLost);
+        report.print_LandCSV(routeLand.reportCSV());
+        routeLandings.add(routeLand);
         report.print("****************\nSpacecraft Land on date: %s, in: %s.\n Energy lost on landing: %e Joules\n++++++++++++++++", dateString(), landBody.name, kineticLost);
     }
 
@@ -168,7 +173,9 @@ public class Route {
             return true;
         } else {
             report.print("%s %s The STEPS_LIMIT_ON_CANDIDATE = %d temptatives were consumed", sLog1, sLog2, STEPS_LIMIT_ON_CANDIDATE);
-            routeCandidate.add(new RouteCandidate(dSpacecraftToTarget, startTime, dateEpoch(), launchSpeed, spacecraft.mass));
+            RouteCandidate routeNear = new RouteCandidate(dSpacecraftToTarget, startTime, dateEpoch(), launchSpeed, spacecraft.mass);
+            routeCandidate.add(routeNear);
+            report.print_NearCSV(routeNear.reportCSV());
             newInitialConditionsLaunch = true;
             return true;
         }
@@ -216,6 +223,7 @@ public class Route {
                 for (RouteCandidate routeNear : routeCandidate) {
                     report.print(" Overtake: %s", routeNear.report());
                 }
+                /*
                 report.print_LandCSV(RouteCandidate.reportCSV_landHead());
                 for (RouteCandidate routeLand : routeLandings) {
                     report.print_LandCSV(routeLand.reportCSV());
@@ -224,6 +232,7 @@ public class Route {
                 for (RouteCandidate routeNear : routeCandidate) {
                     report.print_NearCSV(routeNear.reportCSV());
                 }
+                 */
                 return false;
             }
         }
@@ -240,7 +249,8 @@ public class Route {
     }
 
     /**
-     * Launch to the next target iteration point. We will use this to calculate the error if we miss the target and adjust next launch
+     * Launch to the next target iteration point. We will use this to calculate
+     * the error if we miss the target and adjust next launch
      */
     public void launchToNextTarget() {
         minTargetDistance = Double.MAX_VALUE;

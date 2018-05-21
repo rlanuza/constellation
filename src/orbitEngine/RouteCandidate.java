@@ -20,13 +20,13 @@ public class RouteCandidate {
                 launchTime, dateString(launchTime), overtakeTime, dateString(overtakeTime), launchSpeed, launchEnergy, distance).replace(",", ".").replace(";", ",");
     }
 
-    public RouteCandidate(double launchTime, double landTime, double launchSpeed, double mass, double landSpeed, double lostKineticEnergy) {
+    public RouteCandidate(String name, double launchTime, double landTime, double launchSpeed, double mass, double landSpeed, double lostKineticEnergy) {
         double launchEnergy = launchSpeed * launchSpeed * mass / 2.0;
         double landEnergy = landSpeed * landSpeed * mass / 2.0;
-        report = String.format("Launch time: (%.0f) %s; Land date: (%.0f) %s; Launch speed: %e; Launch energy: %e; Landing speed: %e; Land energy: %e; EnergyLost: %e",
-                launchTime, dateString(launchTime), landTime, dateString(landTime), launchSpeed, launchEnergy, landSpeed, landEnergy, lostKineticEnergy);
-        reportCSV = String.format("%.0f; %s; %.0f; %s; %e; %e; %e; %e; %e",
-                launchTime, dateString(launchTime), landTime, dateString(landTime), launchSpeed, launchEnergy, landSpeed, landEnergy, lostKineticEnergy).replace(",", ".").replace(";", ",");
+        report = String.format("name: %s;Launch time: (%.0f) %s; Land date: (%.0f) %s; Launch speed: %e; Launch energy: %e; Landing speed: %e; Land energy: %e; EnergyLost: %e",
+                name, launchTime, dateString(launchTime), landTime, dateString(landTime), launchSpeed, launchEnergy, landSpeed, landEnergy, lostKineticEnergy);
+        reportCSV = String.format("%s; %.0f; %s; %.0f; %s; %e; %e; %e; %e; %e",
+                name, launchTime, dateString(launchTime), landTime, dateString(landTime), launchSpeed, launchEnergy, landSpeed, landEnergy, lostKineticEnergy).replace(",", ".").replace(";", ",");
     }
 
     String report() {
@@ -38,7 +38,7 @@ public class RouteCandidate {
     }
 
     static String reportCSV_landHead() {
-        return "Launch epoch, Launch date, Land epoch, Land date, Launch speed, Launch energy, Landing speed, Land energy, EnergyLost";
+        return "Land body, NameLaunch epoch, Launch date, Land epoch, Land date, Launch speed, Launch energy, Landing speed, Land energy, EnergyLost";
     }
 
     static String reportCSV_overtakeHead() {
