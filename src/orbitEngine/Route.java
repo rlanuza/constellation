@@ -21,7 +21,6 @@ public class Route {
     private int originIndex;
     private int targetIndex;
     private boolean spacecraftLand;
-    private double kineticLost;
 
     private Vector3d spacecraftFail = null;
     private Vector3d targetFail = null;
@@ -91,6 +90,7 @@ public class Route {
         minTargetDistance = Double.MAX_VALUE;
         spacecraftLand = false;
 
+        RouteCandidate.setFormat(cmd);
         report.print_LandCSV(RouteCandidate.reportCSV_landHead());
         report.print_NearCSV(RouteCandidate.reportCSV_overtakeHead());
     }
@@ -112,7 +112,6 @@ public class Route {
             return;
         }
         spacecraftLand = true;
-        this.kineticLost = kineticLost;
         // @Todo Add and calculate collision angle
         double relativeLandSpeed = new Vector3d(spacecraft.vx, spacecraft.vy, spacecraft.vz).minus(landBody.vx, landBody.vy, landBody.vz).magnitude();
 
@@ -134,14 +133,13 @@ public class Route {
         if (dSpacecraftToTarget < minTargetDistance) {  // A new minimum distance --> Continue this
             minTargetDistance = dSpacecraftToTarget;
             return false;
-        } else if (dSpacecraftToTarget < (minTargetDistance + OVERTAKE_DISTANCE_TOLERANCE)) {
+        }
+        if (spacecraftFail == null) {
+            spacecraftFail = new Vector3d(spacecraft);
+            targetFail = new Vector3d(target);
+        }
+        if (dSpacecraftToTarget < (minTargetDistance + OVERTAKE_DISTANCE_TOLERANCE)) {
             // Distance growing but still into tolerance. Probably getting worse
-            //@Todo: Save position to do the correction in nearest approach - BEGIN
-            if (spacecraftFail == null) {
-                spacecraftFail = new Vector3d(spacecraft);
-                targetFail = new Vector3d(target);
-            }
-            //@Todo: Save position to do the correction in nearest approach - END
             return false;
         }
 
@@ -170,11 +168,6 @@ public class Route {
             // Heuristic c) Calculate a new taget based on the error compensation with a sinple iteration counter limit
             if (stepsLimitOnCandidate > 0) {    // Prepare a new iteration modifying the target with the last error
                 stepsLimitOnCandidate--;
-                // Store the position of the Spacecraft and Target on overtaking time to let us plan a new fine adjust launch
-                //@Todo: Save position to do the correction in nearest approach - BEGIN
-                //spacecraftFail = new Vector3d(spacecraft);
-                //targetFail = new Vector3d(target);
-                //@Todo: Save position to do the correction in nearest approach - END
                 report.printLog("%s %s New temptative [%3d of %3d] with speed vector correction", sLog1, sLog2,
                         STEPS_LIMIT_ON_CANDIDATE - stepsLimitOnCandidate, STEPS_LIMIT_ON_CANDIDATE);                //@Todo this NOT for release
             } else {

@@ -11,7 +11,7 @@
   UNDER_STEP_SPEED_FACTOR:      2.0             # (scale) In case of near launch the speed step can under-stepped with this factor
   OVER_STEP_SPEED_FACTOR:       2.0             # (scale) In case of far launch the speed step can over-stepped with this factor 
   MIN_LAUNCH_TIME:              1594700000      # (Unit s) The minimum Epoc time of the launch (1520294400==2018-Mar-06 00:00:00.0000 TDB.)
-  MAX_LAUNCH_TIME:              1673540000      # (Unit s) The minimum Epoc time of the launch (1520294400==2018-Mar-06 00:00:00.0000 TDB.)
+  MAX_LAUNCH_TIME:              1992831200      # (Unit s) The minimum Epoc time of the launch (1520294400==2018-Mar-06 00:00:00.0000 TDB.)
   STEP_LAUNCH_TIME:             345600          # (Unit s) Seconds
   OVER_STEP_TIME_FACTOR:        2.0             # (scale) In case of far launch the time can over overstepped with this factor
   STEPS_LIMIT_ON_CANDIDATE:     200             # (counts) Max iterations for the same initial conditions on good candidate
@@ -19,3 +19,5 @@
   LAUNCH_ELEVATION:             1.0             # (Unit m) Elevation of the launcher, necessary to avid immediate collision with origin
   OVERTAKE_TOLERANCE_RADIUS:    0.1             # (Unit target-radius) Tolerance to determine the a overtake has been produced, measured in n-target-radius scale.
   MAX_OVERTAKE_RADIUS:          2000            # (Unit target-radius) If this overtake distance to the target, measured in n-target-radius scale), is overcome the fine adjust is discarded
+  CSV_DELIMITER:                ;               # By default ,
+  CSV_DECIMAL_POINT:            ,               # By default .

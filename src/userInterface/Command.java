@@ -32,6 +32,8 @@ public class Command extends LineConvert {
     public double LAUNCH_ELEVATION = 1;
     public double OVERTAKE_TOLERANCE_RADIUS = 40.0;
     public double MAX_OVERTAKE_RADIUS = 1000.0;
+    public String CSV_DELIMITER = ",";
+    public String CSV_DECIMAL_POINT = ".";
 
     Command(String commandFile) {
         String contents = "";
@@ -70,7 +72,6 @@ public class Command extends LineConvert {
                 UNDER_STEP_SPEED_FACTOR = getDouble(line, UNDER_STEP_SPEED_FACTOR);
             } else if (line.startsWith("OVER_STEP_SPEED_FACTOR:")) {
                 OVER_STEP_SPEED_FACTOR = getDouble(line, OVER_STEP_SPEED_FACTOR);
-
             } else if (line.startsWith("MIN_LAUNCH_TIME:")) {
                 MIN_LAUNCH_TIME = getLong(line, MIN_LAUNCH_TIME); //Epoc of 2018-Mar-06 00:00:00.0000 TDB)
             } else if (line.startsWith("MAX_LAUNCH_TIME:")) {
@@ -89,6 +90,10 @@ public class Command extends LineConvert {
                 OVERTAKE_TOLERANCE_RADIUS = getDouble(line, OVERTAKE_TOLERANCE_RADIUS);
             } else if (line.startsWith("MAX_OVERTAKE_RADIUS:")) {
                 MAX_OVERTAKE_RADIUS = getDouble(line, MAX_OVERTAKE_RADIUS);
+            } else if (line.startsWith("CSV_DELIMITER:")) {
+                CSV_DELIMITER = getStringWithComma(line, CSV_DELIMITER);
+            } else if (line.startsWith("CSV_DECIMAL_POINT:")) {
+                CSV_DECIMAL_POINT = getStringWithComma(line, CSV_DECIMAL_POINT);
             } else {
                 System.out.println("Line not processed: " + line);
             }

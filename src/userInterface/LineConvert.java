@@ -54,6 +54,15 @@ public class LineConvert {
         }
     }
 
+    protected static String getStringWithComma(String line, String defaultValue) {
+        String[] fields = line.split(":")[1].split("#");
+        if (fields != null) {
+            return fields[0].trim();
+        } else {
+            return defaultValue;
+        }
+    }
+
     protected static Color getColor(String line, Color defaultColor) {
         String[] fields = getdata(line);
         if ((fields != null) && (fields.length == 3)) {

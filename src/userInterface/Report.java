@@ -37,7 +37,7 @@ public class Report {
 
     public synchronized void print(String strFormat, Object... args) {
         String result = String.format(strFormat, args);
-        String[] lines = result.split("\\r?\\n|\\r");;
+        String[] lines = result.split("\\r?\\n|\\r");
         for (String line : lines) {
             System.out.println(line);
             reportList.add(line + "\n");
