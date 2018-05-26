@@ -37,6 +37,7 @@ Notes:
         public void keyTyped(KeyEvent e) { c = e.getKeyChar();  }
 
 4) References
+    http://danielmarin.naukas.com/2011/10/24/como-viajar-a-marte
     http://www.sc.ehu.es/sbweb/fisica_/celeste/kepler2/kepler2.html
     http://www.sc.ehu.es/sbweb/fisica/celeste/kepler3/kepler3.html
     https://astrojem.com/teorias/marte.html

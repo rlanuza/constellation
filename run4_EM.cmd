@@ -1,8 +1,18 @@
-@SET file=200\250\250
-
-start java -jar dist\constellation.jar --parameters:data\%file%_em.txt --command:data\%file%_cmd.txt --output:data\%file%0_out  --method:0
-start java -jar dist\constellation.jar --parameters:data\%file%_em.txt --command:data\%file%_cmd.txt --output:data\%file%1_out  --method:1
-start java -jar dist\constellation.jar --parameters:data\%file%_em.txt --command:data\%file%_cmd.txt --output:data\%file%2_out  --method:2
-start java -jar dist\constellation.jar --parameters:data\%file%_em.txt --command:data\%file%_cmd.txt --output:data\%file%3_out  --method:3
+rem call :launch 200 280
+rem call :launch 200 281
+call :launch 200 290
 
 @timeout 60
+
+:: end doing things!
+goto:eof
+
+:launch basePath,test,out)
+    set "basePath=%~1"
+    set "test=%~2"
+    set "realPath=\%basePath%\%test%
+    start java -jar dist\constellation.jar --parameters:data\%realPath%\%test%_em.txt --command:data\%realPath%\%test%_cmd.txt --output:data\%realPath%\%test%_0_out  --method:0
+    start java -jar dist\constellation.jar --parameters:data\%realPath%\%test%_em.txt --command:data\%realPath%\%test%_cmd.txt --output:data\%realPath%\%test%_1_out  --method:1
+    start java -jar dist\constellation.jar --parameters:data\%realPath%\%test%_em.txt --command:data\%realPath%\%test%_cmd.txt --output:data\%realPath%\%test%_2_out  --method:2
+    start java -jar dist\constellation.jar --parameters:data\%realPath%\%test%_em.txt --command:data\%realPath%\%test%_cmd.txt --output:data\%realPath%\%test%_3_out  --method:3
+    goto:eof

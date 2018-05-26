@@ -27,10 +27,11 @@ public class Command extends LineConvert {
     public long MAX_LAUNCH_TIME = 1551830400;
     public long STEP_LAUNCH_TIME = 3600;
     public double OVER_STEP_TIME_FACTOR = 10.0;
-    public int STEPS_LIMIT_ON_CANDIDATE = 50;
+    public int STEPS_LIMIT_ON_CANDIDATE = 200;
+    public double LAUNCH_CORRECTION_FACTOR = 3.0;
     public double LAUNCH_ELEVATION = 1;
-    public double OVERTAKE_DISTANCE_TOLERANCE = 10000.0;
-    public double MAX_OVERTAKE_RADIUS = 10;
+    public double OVERTAKE_TOLERANCE_RADIUS = 40.0;
+    public double MAX_OVERTAKE_RADIUS = 1000.0;
 
     Command(String commandFile) {
         String contents = "";
@@ -78,13 +79,14 @@ public class Command extends LineConvert {
                 STEP_LAUNCH_TIME = getLong(line, STEP_LAUNCH_TIME);
             } else if (line.startsWith("OVER_STEP_TIME_FACTOR:")) {
                 OVER_STEP_TIME_FACTOR = getDouble(line, OVER_STEP_TIME_FACTOR);
-
             } else if (line.startsWith("STEPS_LIMIT_ON_CANDIDATE:")) {
                 STEPS_LIMIT_ON_CANDIDATE = (int) getLong(line, STEPS_LIMIT_ON_CANDIDATE);
+            } else if (line.startsWith("LAUNCH_CORRECTION_FACTOR:")) {
+                LAUNCH_CORRECTION_FACTOR = getDouble(line, LAUNCH_CORRECTION_FACTOR);
             } else if (line.startsWith("LAUNCH_ELEVATION:")) {
                 LAUNCH_ELEVATION = getDouble(line, LAUNCH_ELEVATION);
-            } else if (line.startsWith("OVERTAKE_DISTANCE_TOLERANCE:")) {
-                OVERTAKE_DISTANCE_TOLERANCE = getDouble(line, OVERTAKE_DISTANCE_TOLERANCE);
+            } else if (line.startsWith("OVERTAKE_TOLERANCE_RADIUS:")) {
+                OVERTAKE_TOLERANCE_RADIUS = getDouble(line, OVERTAKE_TOLERANCE_RADIUS);
             } else if (line.startsWith("MAX_OVERTAKE_RADIUS:")) {
                 MAX_OVERTAKE_RADIUS = getDouble(line, MAX_OVERTAKE_RADIUS);
             } else {
