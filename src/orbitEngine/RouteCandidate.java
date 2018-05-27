@@ -23,7 +23,7 @@ public class RouteCandidate {
         reportCSV = String.format("%.0f# %s# %.0f# %s# %g# %g# %g",
                 launchTime, dateString(launchTime), overtakeTime,
                 dateString(overtakeTime), launchSpeed, launchEnergy, distance
-        ).replace(",", ".").replace(",", CSV_DECIMAL_POINT).replace(";", CSV_DELIMITER);
+        ).replace(",", ".").replace(".", CSV_DECIMAL_POINT).replace("#", CSV_DELIMITER);
     }
 
     public RouteCandidate(String name, double launchTime, double landTime, double launchSpeed, double mass, double landSpeed, double lostKineticEnergy) {
@@ -35,7 +35,7 @@ public class RouteCandidate {
         reportCSV = String.format("%s# %.0f# %s# %.0f# %s# %g# %g# %g# %g# %g",
                 name, launchTime, dateString(launchTime), landTime, dateString(landTime),
                 launchSpeed, launchEnergy, landSpeed, landEnergy, lostKineticEnergy
-        ).replace(",", ".").replace(",", CSV_DECIMAL_POINT).replace("#", CSV_DELIMITER);
+        ).replace(",", ".").replace(".", CSV_DECIMAL_POINT).replace("#", CSV_DELIMITER);
     }
 
     String report() {
