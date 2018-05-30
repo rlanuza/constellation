@@ -226,7 +226,8 @@ public class Route {
                 return false;
             }
         }
-        report.print("- Next Launch time: %s (epoch: %.0f), with speed: %g node:'%s'", dateString(startTime), startTime, launchSpeed, sLog);
+        report.print("- Next Launch time: %s (epoch: %.0f), with speed: %g node:'%s'",
+                dateString(startTime), startTime, launchSpeed, sLog);
         newInitialConditionsLaunch = true;
         return true;
     }
@@ -239,7 +240,8 @@ public class Route {
     }
 
     /**
-     * Launch to the next target iteration point. We will use this to calculate the error if we miss the target and adjust next launch
+     * Launch to the next target iteration point. We will use this to calculate
+     * the error if we miss the target and adjust next launch
      */
     public void launchToNextTarget() {
         minTargetDistance = Double.MAX_VALUE;
@@ -250,25 +252,27 @@ public class Route {
             launchVector = new Vector3d(origin.vx, origin.vy, origin.vz);
         } else {
             // ^directionCorrection = (^targetFail - ^spacecraftFail) * (||launchVector|| / distance(origin, targetFail) * LAUNCH_CORRECTION_FACTOR??
-            Vector3d directionCorrection = targetFail.minus(spacecraftFail).scale(LAUNCH_CORRECTION_FACTOR * launchSpeed / distance(origin, targetFail));
+            Vector3d directionCorrection = targetFail
+                    .minus(spacecraftFail)
+                    .scale(LAUNCH_CORRECTION_FACTOR * launchSpeed
+                            / distance(origin, targetFail));
             launchVector = launchVector.plus(directionCorrection);
         }
         newInitialConditionsLaunch = false;
         // Direction to the target and the 3 distance proyections
         launchVector = launchVector.scale(launchSpeed / launchVector.magnitude());
         // Calculate the launch speed with the speed of the origin planet and the vector ^launchVector normalized;
-        // ^relativeSpacecraftSpeed = ^launchVector * ( ||speedMagnitude|| / ||directionMagnitude||)
-        // ^absoluteSpacecraftSpeed = ^relativeSpacecraftSpeed   + ^origin
+        // ^relativeSpacecraftSpeed = ^launchVector * (||speedMagnitude|| / ||directionMagnitude||)
+        // ^absoluteSpacecraftSpeed = ^relativeSpacecraftSpeed + ^origin
         spacecraft.loadSpeed(launchVector.plus(origin.vx, origin.vy, origin.vz));
 
         // Calculate the launch position as the origin body position that points to destination
-        // ^launchPosition = ^launchVector * ( launchRadius / ||directionMagnitude||) + ^origin
+        // ^launchPosition = ^launchVector *(launchRadius / ||directionMagnitude||) + ^origin
         double launchRadius = origin.getRadius() + LAUNCH_ELEVATION + spacecraft.getRadius();
         spacecraft.loadPosition(launchVector.scale(launchRadius / launchSpeed).plus(origin));
         report.printLog("  Origin at x:%g, y:%g, z:%g", origin.x, origin.y, origin.z);
 
         // Store the last launch parameters
-        /// @Todo choice a best option: lastSpacecraft = (Body) spacecraft.clone();
         spacecraftFail = null;
         targetFail = null;
         spacecraftLand = false;
