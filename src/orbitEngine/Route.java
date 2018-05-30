@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package orbitEngine;
 
 import java.util.ArrayList;
@@ -240,8 +235,7 @@ public class Route {
     }
 
     /**
-     * Launch to the next target iteration point. We will use this to calculate
-     * the error if we miss the target and adjust next launch
+     * Launch to the next target iteration point. We will use this to calculate the error if we miss the target and adjust next launch
      */
     public void launchToNextTarget() {
         minTargetDistance = Double.MAX_VALUE;

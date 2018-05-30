@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package orbitEngine;
 
 import static orbitEngine.Engine.dateString;
@@ -94,5 +89,4 @@ public class RouteCandidate {
                 + " Launch speed# Launch energy# Overtake distance";
         return s.replace("#", CSV_DELIMITER);
     }
-
 }

@@ -25,7 +25,7 @@ public class GraphOrbit {
         if (proyectionPointList.size() > Parameter.MAX_ORBIT_POINTS) {
             proyectionPointList.remove(0);
         }
-        Vector3d p_xyz = new Vector3d();
+        Vector3d p_xyz = new Vector3d(body);
         p_xyz.x = body.x;
         p_xyz.y = body.y;
         p_xyz.z = body.z;

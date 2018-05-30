@@ -123,7 +123,7 @@ public class Vector3d {
     }
 
     /**
-     * Returns the magnitude of this vector.
+     * Magnitude of this vector.
      *
      * @return the magnitude of this vector
      */
@@ -136,10 +136,8 @@ public class Vector3d {
      *
      * @param that the other vector
      * @return the Euclidean distance between this vector and that vector
-     * @throws IllegalArgumentException if the dimensions of the two vectors are not equal
      */
     public double distanceTo(Vector3d that) {
         return this.minus(that).magnitude();
     }
-
 }
