@@ -39,6 +39,7 @@ public class Route {
     private boolean nearLaunch;
     private boolean nearLaunchOnSpeedScan;
     private int stepsLimitOnCandidate;
+    private double lowDistanceSpacecraftToTarget;
 
     private final int STEPS_LIMIT_ON_CANDIDATE;
     private final double LAUNCH_ELEVATION;
@@ -158,20 +159,30 @@ public class Route {
             } else {
                 sLog1 = " -> Far overtaking. ";
             }
+            if (dSpacecraftToTarget < lowDistanceSpacecraftToTarget) {
+                lowDistanceSpacecraftToTarget = dSpacecraftToTarget;
+            }
             String sLog2 = String.format("distance:%.3e (%6.1f-radius) [dx=% .3e, dy=% .3e, dz=% .3e].",
                     dSpacecraftToTarget, dSpacecraftToTarget / target.radius, target.x - spacecraft.x, target.y - spacecraft.y, target.z - spacecraft.z);
             // Heuristic c) Calculate a new taget based on the error compensation with a sinple iteration counter limit
             if (stepsLimitOnCandidate > 0) {    // Prepare a new iteration modifying the target with the last error
-                stepsLimitOnCandidate--;
-                report.printLog("%s %s New temptative [%3d of %3d] with speed vector correction", sLog1, sLog2,
-                        STEPS_LIMIT_ON_CANDIDATE - stepsLimitOnCandidate, STEPS_LIMIT_ON_CANDIDATE);                //@Todo this NOT for release
+                if (dSpacecraftToTarget < (2 * lowDistanceSpacecraftToTarget)) {
+                    stepsLimitOnCandidate--;
+                    report.printLog("%s %s New temptative [%3d of %3d] with speed vector correction", sLog1, sLog2,
+                            STEPS_LIMIT_ON_CANDIDATE - stepsLimitOnCandidate, STEPS_LIMIT_ON_CANDIDATE);
+                    return true;
+                } else {
+                    report.print("%s %s No more temptatives because the correction heuristic is failing", sLog1, sLog2);
+
+                }
             } else {
                 report.print("%s %s The STEPS_LIMIT_ON_CANDIDATE = %d temptatives were consumed", sLog1, sLog2, STEPS_LIMIT_ON_CANDIDATE);
-                RouteCandidate routeNear = new RouteCandidate(dSpacecraftToTarget, startTime, dateEpoch(), launchSpeed, spacecraft.mass);
-                routeCandidate.add(routeNear);
-                report.print_NearCSV(routeNear.reportCSV());
-                newInitialConditionsLaunch = true;
+
             }
+            RouteCandidate routeNear = new RouteCandidate(dSpacecraftToTarget, startTime, dateEpoch(), launchSpeed, spacecraft.mass);
+            routeCandidate.add(routeNear);
+            report.print_NearCSV(routeNear.reportCSV());
+            newInitialConditionsLaunch = true;
         }
         return true;
     }
@@ -267,6 +278,7 @@ public class Route {
         report.printLog("  Origin at x:%g, y:%g, z:%g", origin.x, origin.y, origin.z);
 
         // Store the last launch parameters
+        lowDistanceSpacecraftToTarget = Double.MAX_VALUE;
         spacecraftFail = null;
         targetFail = null;
         spacecraftLand = false;
