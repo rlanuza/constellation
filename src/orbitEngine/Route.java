@@ -108,10 +108,10 @@ public class Route {
             return;
         }
         spacecraftLand = true;
-        // @Todo Add and calculate collision angle
+        // @Todo Can be improved with collision angle
         double relativeLandSpeed = new Vector3d(spacecraft.vx, spacecraft.vy, spacecraft.vz).minus(landBody.vx, landBody.vy, landBody.vz).magnitude();
 
-        RouteCandidate routeLand = new RouteCandidate(landBody.name, startTime, dateEpoch(), launchSpeed, spacecraft.mass, relativeLandSpeed, kineticLost, launchVector);
+        RouteCandidate routeLand = new RouteCandidate(landBody.name, startTime, dateEpoch(), launchSpeed, spacecraft.mass, relativeLandSpeed, launchVector);
         report.print_LandCSV(routeLand.reportCSV());
         routeLandings.add(routeLand);
         report.print("****************\nSpacecraft Land on date: %s, in: %s.\n Energy lost on landing: %e Joules\n++++++++++++++++", dateString(), landBody.name, kineticLost);
@@ -119,8 +119,6 @@ public class Route {
 
     /**
      * Check if the target has been overtaken
-     *
-     * @Todo Think if a heuristic by independent axis can help
      */
     boolean overtaking() {
         double dSpacecraftToTarget = Constellation.dist[targetIndex][spacecraftIndex];

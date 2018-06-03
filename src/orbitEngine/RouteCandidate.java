@@ -32,19 +32,20 @@ public class RouteCandidate {
 
     public RouteCandidate(String name, double launchTime, double landTime,
             double launchSpeed, double mass, double landSpeed,
-            double lostKineticEnergy, Vector3d launchVector) {
+            Vector3d launchVector) {
         double launchEnergy = launchSpeed * launchSpeed * mass / 2.0;
         double landEnergy = landSpeed * landSpeed * mass / 2.0;
+        double totalEnergy = launchEnergy + landEnergy;
 
         report = adaptDelimiters(
                 String.format("name: %s;Launch time: (%.0f) %s;"
                         + " Land date: (%.0f) %s; Launch speed: %e;"
                         + " Launch energy: %e; Landing speed: %e;"
-                        + " Land energy: %e; EnergyLost: %e Launch Vx: %e;"
+                        + " Land energy: %e; Energy: %e Launch Vx: %e;"
                         + " Launch Vy: %e; Launch Vz: %e",
                         name, launchTime, dateString(launchTime), landTime,
                         dateString(landTime), launchSpeed, launchEnergy,
-                        landSpeed, landEnergy, lostKineticEnergy,
+                        landSpeed, landEnergy, totalEnergy,
                         launchVector.x, launchVector.y, launchVector.z)
         );
         reportCSV = adaptDelimiters(
@@ -52,7 +53,7 @@ public class RouteCandidate {
                         + " %.12g# %.12g# %.12g# %.12g# %.12g",
                         name, launchTime, dateString(launchTime), landTime,
                         dateString(landTime), launchSpeed, launchEnergy,
-                        landSpeed, landEnergy, lostKineticEnergy,
+                        landSpeed, landEnergy, totalEnergy,
                         launchVector.x, launchVector.y, launchVector.z)
         );
     }
@@ -80,7 +81,7 @@ public class RouteCandidate {
     static String reportCSV_landHead() {
         String s = "Land body name# Launch epoch# Launch date# Land epoch#"
                 + " Land date# Launch speed# Launch energy# Landing speed#"
-                + " Land energy# EnergyLost# Launch Vx# Launch Vy# Launch Vz";
+                + " Land energy# Energy# Launch Vx# Launch Vy# Launch Vz";
         return s.replace("#", CSV_DELIMITER);
     }
 
