@@ -171,11 +171,9 @@ public class Route {
                     return true;
                 } else {
                     report.print("%s %s No more temptatives because the correction heuristic is failing", sLog1, sLog2);
-
                 }
             } else {
                 report.print("%s %s The STEPS_LIMIT_ON_CANDIDATE = %d temptatives were consumed", sLog1, sLog2, STEPS_LIMIT_ON_CANDIDATE);
-
             }
             RouteCandidate routeNear = new RouteCandidate(dSpacecraftToTarget, startTime, dateEpoch(), launchSpeed, spacecraft.mass);
             routeCandidate.add(routeNear);

@@ -17,9 +17,6 @@ public class Report {
     }
 
     public synchronized void printLog(String strFormat, Object... args) {
-        /* DEBUG_MODE
-            print(strFormat, args);    return;
-         */
         String result = String.format(strFormat, args);
         String[] lines = result.split("\\r?\\n|\\r");;
         for (String line : lines) {
