@@ -5,29 +5,76 @@ import java.awt.Color;
 import java.util.logging.Logger;
 import static userInterface.Parameter.bodyList;
 
+/**
+ * Represents the essential information that characterize a constellation of bodies
+ *
+ * @author Roberto Lanuza rolf2000@gmail.com
+ * @version 1.0
+ */
 public class Constellation {
 
-    public static final int ASTRO_STRING_FIELDS = 12;
-    static final double C = 299792458;
-    public static final double G_UNIVERSAL = 6.6740831e-11; // m^3/(Kg*s^2)
-    static final double C2 = C * C;
-    static final Logger LOG = Logger.getLogger(Constellation.class.getName());
+    /**
+     * Speed of light in vacuum. Units m/s.
+     */
+    private static final double C = 299792458;
+    /**
+     * Square of speed of light in vacuum.
+     */
+    private static final double C2 = C * C;
 
-    // Once we'll have all data loaded we'll convert o array and implement 2 copies to store old and new position each step
+    /**
+     * Constellation bodies in current position.
+     */
     private Body[] body;
+    /**
+     * Constellation bodies backup position. Used to optimize landing search iterations restart.
+     */
     private Body[] bodyBackup;
+    /**
+     * Optimized table of current distances between bodies. Only store distance from low to high body index to avoid redundant calculus.
+     */
     static double[][] dist;
+    /**
+     * Optimized table of current cube of distances between bodies. Used to optimize calculus.
+     */
     private static double[][] dist3;
+    /**
+     * Optimized table of current x axis distances between bodies. Used to optimize calculus.
+     */
     private static double[][] dist_x;
+    /**
+     * Optimized table of current y axis distances between bodies. Used to optimize calculus.
+     */
     private static double[][] dist_y;
+    /**
+     * Optimized table of current z axis distances between bodies. Used to optimize calculus.
+     */
     private static double[][] dist_z;
+    /**
+     * Memory to store the x axis gravity during internal calculus.
+     */
     private double gx;
+    /**
+     * Memory to store the y axis gravity during internal calculus.
+     */
     private double gy;
+    /**
+     * Memory to store the z axis gravity during internal calculus.
+     */
     private double gz;
 
+    /**
+     * Link to the related graphical constellation class.
+     */
     private GraphConstellation graphConstellation;
+    /**
+     * Link to the route on a route calculation execution.
+     */
     private Route route = null;
 
+    /**
+     * Create a new bodies constellation.
+     */
     Constellation() {
         int n = bodyList.size();
         // Now we'll generate array copies (faster) of the ArrayList and left the ArrayList to let us recover initial positions
@@ -54,6 +101,9 @@ public class Constellation {
         }
     }
 
+    /**
+     * Restore the last constellation position stored
+     */
     void recoverConstellation() {
         int n = bodyList.size();
         body = new Body[n];
@@ -67,6 +117,9 @@ public class Constellation {
         initGravity();
     }
 
+    /**
+     * Order reset to the graphical constellation.
+     */
     void resetGrConstellation() {
         graphConstellation.initConstellation(body);
     }
@@ -320,7 +373,7 @@ public class Constellation {
     }
 
     /**
-     * @Returns the body with the given name or null
+     * @return the body with the given name or null
      */
     Body getBody(String bodyName) {
         for (int i = 0; i < body.length; i++) {
@@ -332,7 +385,7 @@ public class Constellation {
     }
 
     /**
-     * @Returns the body with the given index
+     * @return the body with the given index
      */
     Body getBody(int index) {
         return body[index];

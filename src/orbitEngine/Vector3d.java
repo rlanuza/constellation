@@ -111,7 +111,7 @@ public class Vector3d {
     /**
      * Returns the scalar product of this vector3d and the specified vector3d.
      *
-     * @param that the Vector3d to add to this Vector3d
+     * @param alpha coefficient to scale this Vector3d
      * @return the Vector3d whose value is {@code (this * that)}
      */
     public Vector3d scale(double alpha) {

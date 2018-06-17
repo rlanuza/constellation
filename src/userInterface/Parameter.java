@@ -6,10 +6,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import orbitEngine.Body;
-import static orbitEngine.Constellation.ASTRO_STRING_FIELDS;
 
 public class Parameter extends LineConvert {
 
+    private static final int ASTRO_STRING_FIELDS = 12;
     public static int CALCULUS_METHOD = 1;
     public static boolean ONLY_2D_DATA = false;
     public static long SIMULATION_STEPS = 1440 * 10000;

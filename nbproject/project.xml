@@ -17,5 +17,12 @@
         <libraries xmlns="http://www.netbeans.org/ns/ant-project-libraries/1">
             <definitions>.\lib\nblibraries.properties</definitions>
         </libraries>
+        <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+            <word>barycenter</word>
+            <word>dt</word>
+            <word>Kg</word>
+            <word>vx</word>
+            <word>vz</word>
+        </spellchecker-wordlist>
     </configuration>
 </project>
