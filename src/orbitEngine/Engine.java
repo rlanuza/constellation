@@ -9,28 +9,66 @@ import userInterface.Command;
 import userInterface.Parameter;
 import userInterface.Report;
 
+/**
+ * Represents the essential information that characterize a gravitational engine.
+ *
+ * @author Roberto Lanuza rolf2000@gmail.com
+ * @version 1.0
+ */
 public class Engine {
 
+    /**
+     * Time step of each calculus approximation. Units seconds.
+     */
     private final double stepTime;
+    /**
+     * Current time of simulation. Units seconds.
+     */
     private static double seconds;
+    /**
+     * Instant when save the constellation to recover later. Units seconds.
+     */
     private static double secondsToRecover;
+    /**
+     * Confirm that constellation is saved.
+     */
     private static boolean secondsToRecoverStored;
+    /**
+     * Constellation to move.
+     */
     private final Constellation constellation;
+    /**
+     * Route to use in the launch.
+     */
     private Route route;
+    /**
+     * Link to the related graphical screen class.
+     */
     private GraphScreen screen;
 
+    /**
+     * Create a new engine.
+     */
     public Engine() {
         constellation = new Constellation();
         stepTime = Parameter.STEP_TIME;
         seconds = Parameter.START_EPOCH_TIME;
     }
 
+    /**
+     * Save the current engine state.
+     */
     private void saveEngine() {
         constellation.saveConstellation();
         secondsToRecover = seconds;
         secondsToRecoverStored = true;
     }
 
+    /**
+     * Save the current last engine state saved.
+     *
+     * @Todo This is the documentation job line $$$$$$$$$$$$$$$$$$$$
+     */
     private void recoverEngine() {
         constellation.recoverConstellation();
         constellation.resetGrConstellation();

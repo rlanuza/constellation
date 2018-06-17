@@ -77,7 +77,7 @@ public class Constellation {
      */
     Constellation() {
         int n = bodyList.size();
-        // Now we'll generate array copies (faster) of the ArrayList and left the ArrayList to let us recover initial positions
+        // Now we'll generate array copies (faster) of the ArrayList and left the ArrayList to let us recover initial positions.
         body = new Body[n];
         int i = 0;
         for (Body b : bodyList) {
@@ -85,13 +85,13 @@ public class Constellation {
         }
         Body.nextIndex = body.length;
         resizeDistanceArrays(n);
-        // Calculate the initial gravity of the system
+        // Calculate the initial gravity of the system.
         initGravity();
         saveConstellation();
     }
 
     /**
-     * Save the constellation when a simulation is active before a launch to let us save calculus
+     * Save the constellation when a simulation is active before a launch to let us save calculus.
      */
     void saveConstellation() {
         int n = bodyList.size();
@@ -102,7 +102,7 @@ public class Constellation {
     }
 
     /**
-     * Restore the last constellation position stored
+     * Restore the last constellation position stored.
      */
     void recoverConstellation() {
         int n = bodyList.size();
@@ -113,7 +113,7 @@ public class Constellation {
 
         Body.nextIndex = body.length;
         resizeDistanceArrays(n);
-        // Calculate the initial gravity of the system
+        // Calculate the initial gravity of the system.
         initGravity();
     }
 
@@ -124,6 +124,11 @@ public class Constellation {
         graphConstellation.initConstellation(body);
     }
 
+    /**
+     * Resize the distance arrays.
+     *
+     * @param n New array dimension.
+     */
     private void resizeDistanceArrays(int n) {
         dist = new double[n][n];
         dist3 = new double[n][n];
@@ -132,12 +137,23 @@ public class Constellation {
         dist_z = new double[n][n];
     }
 
+    /**
+     * Link constellation to the related graphical constellation class.
+     *
+     * @param graphConstellation graphical constellation reference.
+     */
     public void link(GraphConstellation graphConstellation) {
         this.graphConstellation = graphConstellation;
-        // Prepare the graphical info
+        // Reset the graphical constellation.
         resetGrConstellation();
     }
 
+    /**
+     * Merge two bodies on collision.
+     *
+     * @param b1 first body in collision.
+     * @param b2 second body in collision.
+     */
     private void mergeBodies(Body b1, Body b2) {
         Body[] bodyTmp = new Body[body.length - 1];
         int j = 0;
@@ -161,6 +177,7 @@ public class Constellation {
         double z = b1.z + ((b2.z - b1.z) * b2.mass / mass);
         // The new speed vf = [ m1 v1 + m2 v2 ] / (m1 + m2)
         // [Assumption:the collision is inelastic and direct without modification in rotation of th]
+        // @Todo probably this calculus is nor accurate because the potential enegy also changes.
         double vx = ((b1.mass * b1.vx) + (b2.mass * b2.vx)) / mass;
         double vy = ((b1.mass * b1.vy) + (b2.mass * b2.vy)) / mass;
         double vz = ((b1.mass * b1.vz) + (b2.mass * b2.vz)) / mass;
@@ -180,7 +197,9 @@ public class Constellation {
         graphConstellation.reindexConstellation(body);
     }
 
-    // Calculate diatances and give a factor to reduce the delta time to get best accuracy on short distances
+    /**
+     * Calculate current distance matrix and order merge bodies in collision.
+     */
     void calculateDistances() {
         double dx, dy, dz, d2, d;
         for (int i = 0; i < body.length; i++) {
@@ -206,6 +225,13 @@ public class Constellation {
         }
     }
 
+    /**
+     * Calculate current gravity accelerations for one body.
+     * <p>
+     * It use the Newton physical
+     *
+     * @param i Body index to calculate gravity acceleration.
+     */
     void calculateGravity(int i) {
         // F=G*(m1*m2)/d^2; g1=F/m1;  g2=F/m2;
         //   where: G is gravitation constant, F is force between the masses
@@ -234,6 +260,12 @@ public class Constellation {
         }
     }
 
+    /**
+     * Calculate current gravity accelerations for one body.<p>
+     * It use the relativist correction with Schwarzschild solution.
+     *
+     * @param i Body index to calculate gravity acceleration.
+     */
     void calculateGravity_Schwarzschild(int i) {
         //   where: G is gravitation constant, F is force between the masses
         //          m1 & m2 are mass 1 and mass 2
@@ -264,6 +296,9 @@ public class Constellation {
         }
     }
 
+    /**
+     * Initialize the initial gravity acceleration of each constellation body.
+     */
     void initGravity() {
         calculateDistances();
         for (int i = 0; i < body.length; i++) {
@@ -272,6 +307,13 @@ public class Constellation {
         }
     }
 
+    /**
+     * Step the constellation a delta time.
+     * <p>
+     * It use the Newton solution adding jerk = derivate(gravity)/dt.
+     *
+     * @param deltaTime The delta time in seconds.
+     */
     void step_jerk(double deltaTime) {
         double delT_2 = deltaTime / 2;          // deltaTime/2
         double delT2_2 = deltaTime * delT_2;    // deltaTime^2/2
@@ -298,6 +340,13 @@ public class Constellation {
         }
     }
 
+    /**
+     * Step the constellation a delta time.
+     * <p>
+     * It use the Newton solution.
+     *
+     * @param deltaTime The delta time in seconds.
+     */
     void step_basic(double deltaTime) {
         double delT_2 = deltaTime / 2;          // deltaTime/2
         double delT2_2 = deltaTime * delT_2;    // deltaTime^2/2
@@ -320,6 +369,13 @@ public class Constellation {
         }
     }
 
+    /**
+     * Step the constellation a delta time.
+     * <p>
+     * It use the relativist correction with Schwarzschild solution, adding jerk as derivate(gravity)/dt.
+     *
+     * @param deltaTime The delta time in seconds.
+     */
     void step_jerk_Schwarzschild(double deltaTime) {
         double delT_2 = deltaTime / 2;          // deltaTime/2
         double delT2_2 = deltaTime * delT_2;    // deltaTime^2/2
@@ -346,6 +402,13 @@ public class Constellation {
         }
     }
 
+    /**
+     * Step the constellation a delta time.
+     * <p>
+     * It use the relativist correction with Schwarzschild solution.
+     *
+     * @param deltaTime The delta time in seconds.
+     */
     void step_basic_Schwarzschild(double deltaTime) {
         double delT_2 = deltaTime / 2;          // deltaTime/2
         double delT2_2 = deltaTime * delT_2;    // deltaTime^2/2
@@ -368,12 +431,17 @@ public class Constellation {
         }
     }
 
+    /**
+     * Push to graphic the current body position.
+     */
     void pushToGraphic() {
         graphConstellation.updateGrConstellation(body);
     }
 
     /**
-     * @return the body with the given name or null
+     * Get body index from a body name.
+     *
+     * @return the body index.
      */
     Body getBody(String bodyName) {
         for (int i = 0; i < body.length; i++) {
@@ -385,12 +453,17 @@ public class Constellation {
     }
 
     /**
-     * @return the body with the given index
+     * @return the body with the given index.
      */
     Body getBody(int index) {
         return body[index];
     }
 
+    /**
+     * Add a rocket to the constellation.
+     *
+     * @param route route of the new launch.
+     */
     void addRocket(Route route) {
         int i;
         this.route = route;
