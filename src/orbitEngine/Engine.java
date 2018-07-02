@@ -65,9 +65,7 @@ public class Engine {
     }
 
     /**
-     * Save the current last engine state saved.
-     *
-     * @Todo This is the documentation job line $$$$$$$$$$$$$$$$$$$$
+     * Recover the current last engine state saved.
      */
     private void recoverEngine() {
         constellation.recoverConstellation();
@@ -77,28 +75,52 @@ public class Engine {
         secondsToRecoverStored = false;
     }
 
+    /**
+     * Links the engine with the graphical screen manager
+     */
     public void link(GraphScreen screen) {
         this.screen = screen;
         constellation.link(screen.getGraphConstellation());
         constellation.pushToGraphic();
     }
 
+    /**
+     * Current date Epoch.
+     *
+     * @return date in seconds.
+     */
     static public double dateEpoch() {
         return seconds;
     }
 
+    /**
+     * Current date formated.
+     *
+     * @return date string.
+     */
     static public String dateString() {
         LocalDateTime dateTime = LocalDateTime.ofEpochSecond((long) seconds, 0, ZoneOffset.UTC);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/LL/dd-HH:mm:ss", Locale.ENGLISH);
         return dateTime.format(formatter);
     }
 
+    /**
+     * Date formated.
+     *
+     * @param seconds_time a date in seconds.
+     * @return date string.
+     */
     static public String dateString(double seconds_time) {
         LocalDateTime dateTime = LocalDateTime.ofEpochSecond((long) seconds_time, 0, ZoneOffset.UTC);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/LL/dd-HH:mm:ss", Locale.ENGLISH);
         return dateTime.format(formatter);
     }
 
+    /**
+     * Run a section the gravitational engine simulation and periodic graph refresh.
+     *
+     * @param steepsPerPlot number of steeps to execute by each graphical refresh.
+     */
     private void run(long steepsPerPlot) {
         switch (Parameter.CALCULUS_METHOD) {
             case 0:
@@ -127,6 +149,9 @@ public class Engine {
         constellation.pushToGraphic();
     }
 
+    /**
+     * Run the complete gravitational engine simulation.
+     */
     public void runSimulation() {
         long simulationPlots = Parameter.SIMULATION_STEPS / Parameter.STEPS_PER_PLOT;
         for (long i = 0; i < simulationPlots; i++) {
@@ -136,6 +161,10 @@ public class Engine {
     }
 
     /**
+     *
+     * Run a section the gravitational engine route simulation and periodic graph refresh.
+     *
+     * @param steepsPerPlot number of steeps to execute by each graphical refresh.
      * @return true when the spacecraft land or lost the target
      */
     private boolean runRoute(long steepsPerPlot) {
@@ -179,6 +208,12 @@ public class Engine {
         return false;
     }
 
+    /**
+     * Run the complete gravitational engine route simulation.
+     *
+     * @param cmd command route parameters.
+     * @param report report class user to log the route results
+     */
     public void runSimulationTravel(Command cmd, Report report) {
         setRoute(cmd, report);
         report.print("+++++++++++++++++++++\n-Start a new simulation");
@@ -201,6 +236,12 @@ public class Engine {
         report.dump();
     }
 
+    /**
+     * Define a route to calculate.
+     *
+     * @param cmd command route parameters.
+     * @param report report class user to log the route results
+     */
     private void setRoute(Command cmd, Report report) {
         Body spacecraft = new Body(cmd.NAME, cmd.MASS, cmd.RADIUS, cmd.COLOR);
         Body origin = constellation.getBody(cmd.ORIGIN);

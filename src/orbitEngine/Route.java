@@ -6,44 +6,146 @@ import static orbitEngine.Engine.dateString;
 import userInterface.Command;
 import userInterface.Report;
 
+/**
+ * Represents the essential information methods that characterize a route.
+ *
+ * @author Roberto Lanuza rolf2000@gmail.com
+ * @version 1.0
+ */
 public class Route {
 
+    /**
+     * Spacecraft body.
+     */
     private final Body spacecraft;
+    /**
+     * Spacecraft origin body.
+     */
     private Body origin;
+    /**
+     * Spacecraft target body.
+     */
     private Body target;
+    /**
+     * Spacecraft real land body.
+     */
     private Body landBody;
+    /**
+     * Spacecraft body index.
+     */
     private final int spacecraftIndex;
+    /**
+     * Spacecraft origin body index.
+     */
     private final int originIndex;
+    /**
+     * Spacecraft target body index.
+     */
     private final int targetIndex;
+    /**
+     * Confirm that spacecraft is landed.
+     */
     private boolean spacecraftLand;
-
+    /**
+     * Spacecraft position on target fail.
+     */
     private Vector3d spacecraftFail = null;
+    /**
+     * Target position on target fail.
+     */
     private Vector3d targetFail = null;
+    /**
+     * Launch vector.
+     */
     private Vector3d launchVector;
-
+    /**
+     * Start or initial launch time.
+     */
     private double startTime;
+    /**
+     * Stop or maximum launch time.
+     */
     private final double stopTime;
+    /**
+     * Step launch time.
+     */
     private final double stepTime;
+    /**
+     * Over-step coarse time optimization factor used when lasts target land fails with far distances.
+     */
     private final double overStepTimeFactorOnFarTargets;
+    /**
+     * Start or initial launch speed.
+     */
     private final double startSpeed;
+    /**
+     * Start or final launch speed.
+     */
     private final double stopSpeed;
+    /**
+     * Steep launch speed.
+     */
     private final double stepSpeed;
+    /**
+     * Under-step fine speed optimization factor used when lasts target land fails are in near distances.
+     */
     private final double underStepSpeedFactorOnNearTargets;
+    /**
+     * Over-step coarse speed optimization factor used when lasts target land fails are in far distances.
+     */
     private final double overStepSpeedFactorOnFarTargets;
-
+    /**
+     * Confirm that spacecraft is launched.
+     */
     private boolean launched;
+    /**
+     * Current launch speed.
+     */
     private double launchSpeed;
+    /**
+     * Minimum distance to target in current route.
+     */
     private double minTargetDistance;
+    /**
+     * Request new initial conditions for the new launch, this means no more iterations.
+     */
     private boolean newInitialConditionsLaunch;
+    /**
+     * Request a far launch conditions for the new launch, this means our routes are far from target.
+     */
     private boolean farLaunch;
+    /**
+     * Request a near launch conditions for the new launch, this means our routes are near to the target.
+     */
     private boolean nearLaunch;
+    /**
+     * Boolean used to detect if a overStepTimeFactorOnFarTargets will be used or not.
+     */
     private boolean nearLaunchOnSpeedScan;
+    /**
+     * Counter that limits the iterations on the same initial planet conditions with different launch angle adjust.
+     */
     private int stepsLimitOnCandidate;
+    /**
+     * Lower distance to the target obtained in the current iteration of the same initial condition.
+     */
     private double lowDistanceSpacecraftToTarget;
 
+    /**
+     * Steps accepted to iterate on a candidate route with same initial planet conditions with different launch angle adjust.
+     */
     private final int STEPS_LIMIT_ON_CANDIDATE;
+    /**
+     * Launcher elevation or distance to ground of origin to avoid collision detection on launch time.
+     */
     private final double LAUNCH_ELEVATION;
+    /**
+     * Tolerance that we accept to continue route iteration calculus when the rocket seems to get distance from a failed target.
+     */
     private final double OVERTAKE_DISTANCE_TOLERANCE;
+    /**
+     * @TODO ESTOY AQUI
+     */
     private final double MAX_OVERTAKE_DISTANCE;
     private final double MAX_OVERTAKE_DISTANCE_10;
     private final double MAX_OVERTAKE_DISTANCE_01;
