@@ -144,17 +144,37 @@ public class Route {
      */
     private final double OVERTAKE_DISTANCE_TOLERANCE;
     /**
-     * @TODO ESTOY AQUI
+     * Max overtake distance. When it is exceeded the iterations with different launch angle are finished.
      */
     private final double MAX_OVERTAKE_DISTANCE;
+    /**
+     * Max overtake distance with a factor 10. this program a far launch optimization because the target is difficult.
+     */
     private final double MAX_OVERTAKE_DISTANCE_10;
+    /**
+     * Max overtake distance with a factor 1/10. this program a near launch optimization because the target is probable.
+     */
     private final double MAX_OVERTAKE_DISTANCE_01;
+    /**
+     * Launch correction factor to increase the iteration adjust.
+     */
     private final double LAUNCH_CORRECTION_FACTOR;
+    /**
+     * Link to class used to log reports.
+     */
     private final Report report;
-
+    /**
+     * List of route candidates discarded. Potential targets with some extra adjust.
+     */
     private final ArrayList<RouteCandidate> routeCandidate = new ArrayList<>(0);
+    /**
+     * List of route landings.
+     */
     private final ArrayList<RouteCandidate> routeLandings = new ArrayList<>(0);
 
+    /**
+     * @TODO ESTOY AQUI
+     */
     public Route(Report report, Body spacecraft, Body origin, Body target, Command cmd) {
         this.report = report;
         this.spacecraft = spacecraft;
