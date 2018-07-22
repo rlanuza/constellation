@@ -166,14 +166,20 @@ public class Route {
     /**
      * List of route candidates discarded. Potential targets with some extra adjust.
      */
-    private final ArrayList<RouteCandidate> routeCandidate = new ArrayList<>(0);
+    private final ArrayList<RouteCandidateReport> routeCandidate = new ArrayList<>(0);
     /**
      * List of route landings.
      */
-    private final ArrayList<RouteCandidate> routeLandings = new ArrayList<>(0);
+    private final ArrayList<RouteCandidateReport> routeLandings = new ArrayList<>(0);
 
     /**
-     * @TODO ESTOY AQUI
+     * Create a new route
+     *
+     * @param report link to report class.
+     * @param spacecraft reference to the spacecraft.
+     * @param origin reference to the origin planet to launch the spacecraft.
+     * @param target reference to the target planet to be reach by the spacecraft.
+     * @param cmd reference to the command input to get the route calculus requirements.
      */
     public Route(Report report, Body spacecraft, Body origin, Body target, Command cmd) {
         this.report = report;
@@ -208,19 +214,28 @@ public class Route {
         minTargetDistance = Double.MAX_VALUE;
         spacecraftLand = false;
 
-        RouteCandidate.setFormat(cmd);
-        report.print_LandCSV(RouteCandidate.reportCSV_landHead());
-        report.print_NearCSV(RouteCandidate.reportCSV_overtakeHead());
+        RouteCandidateReport.setFormat(cmd);
+        report.print_LandCSV(RouteCandidateReport.reportCSV_landHead());
+        report.print_NearCSV(RouteCandidateReport.reportCSV_overtakeHead());
     }
 
     /**
-     * Reset Origin and destination bodies for a new calculus
+     * Reset Origin and destination bodies to start a new calculus
+     *
+     * @param constellation constellation state to recover.
      */
     void resetBodyValues(Constellation constellation) {
         origin = constellation.getBody(originIndex);
         target = constellation.getBody(targetIndex);
     }
 
+    /**
+     * Merge spacecraft and a planet bodies
+     *
+     * @param b1 fist body
+     * @param b1 second body
+     * @param kineticLost kinetic lost
+     */
     void mergeBodies(Body b1, Body b2, double kineticLost) {
         if (b2 == spacecraft) {
             landBody = b1;
@@ -233,7 +248,7 @@ public class Route {
         // @Todo Can be improved with collision angle
         double relativeLandSpeed = new Vector3d(spacecraft.vx, spacecraft.vy, spacecraft.vz).minus(landBody.vx, landBody.vy, landBody.vz).magnitude();
 
-        RouteCandidate routeLand = new RouteCandidate(landBody.name, startTime, dateEpoch(), launchSpeed, spacecraft.mass, relativeLandSpeed, launchVector);
+        RouteCandidateReport routeLand = new RouteCandidateReport(landBody.name, startTime, dateEpoch(), launchSpeed, spacecraft.mass, relativeLandSpeed, launchVector);
         report.print_LandCSV(routeLand.reportCSV());
         routeLandings.add(routeLand);
         report.print("****************\nSpacecraft Land on date: %s, in: %s.\n Energy lost on landing: %e Joules\n++++++++++++++++", dateString(), landBody.name, kineticLost);
@@ -241,6 +256,8 @@ public class Route {
 
     /**
      * Check if the target has been overtaken
+     *
+     * @return true when a valid overtaken is detected
      */
     boolean overtaking() {
         double dSpacecraftToTarget = Constellation.dist[targetIndex][spacecraftIndex];
@@ -297,7 +314,7 @@ public class Route {
             } else {
                 report.print("%s %s The STEPS_LIMIT_ON_CANDIDATE = %d temptatives were consumed", sLog1, sLog2, STEPS_LIMIT_ON_CANDIDATE);
             }
-            RouteCandidate routeNear = new RouteCandidate(dSpacecraftToTarget, startTime, dateEpoch(), launchSpeed, spacecraft.mass);
+            RouteCandidateReport routeNear = new RouteCandidateReport(dSpacecraftToTarget, startTime, dateEpoch(), launchSpeed, spacecraft.mass);
             routeCandidate.add(routeNear);
             report.print_NearCSV(routeNear.reportCSV());
             newInitialConditionsLaunch = true;
@@ -306,7 +323,8 @@ public class Route {
     }
 
     /**
-     * Program next launch conditions
+     * Program next launch conditions depending the next iteration step parameters and last overtaken measures. Also detect the end of the
+     * program and order the conclusion report
      *
      * @return true until no new conditions programmed
      */
@@ -338,13 +356,13 @@ public class Route {
             }
             launchSpeed = startSpeed;
             if (startTime > stopTime) {
-                //@Todo report all routecandidates
+                // Report all routecandidates
                 report.print("\n=====================\n-Correct Landings");
-                for (RouteCandidate routeLand : routeLandings) {
+                for (RouteCandidateReport routeLand : routeLandings) {
                     report.print(" Landing: %s", routeLand.report());
                 }
                 report.print("\n~~~~~~~~~~~~~~~~~~~~~\n-Near Approachs");
-                for (RouteCandidate routeNear : routeCandidate) {
+                for (RouteCandidateReport routeNear : routeCandidate) {
                     report.print(" Overtake: %s", routeNear.report());
                 }
                 return false;
@@ -358,6 +376,9 @@ public class Route {
 
     /**
      * Time to launch check
+     *
+     * @param seconds time in seconds to detect the launch time
+     * @return true when launch time
      */
     boolean timeToLaunch(double seconds) {
         return (seconds >= startTime);
@@ -369,7 +390,6 @@ public class Route {
     public void launchToNextTarget() {
         minTargetDistance = Double.MAX_VALUE;
         if (newInitialConditionsLaunch) {
-            // Old approach: correction.reset();
             stepsLimitOnCandidate = STEPS_LIMIT_ON_CANDIDATE;
             // Straight launch using the planet speed vector
             launchVector = new Vector3d(origin.vx, origin.vy, origin.vz);
@@ -403,6 +423,13 @@ public class Route {
         launched = true;
     }
 
+    /**
+     * Distance between a body and a vector3d point
+     *
+     * @param a Body to get position
+     * @param b Vector3d point
+     * @return distance between both elements. Unit m.
+     */
     private double distance(Body a, Vector3d b) {
         double dabx = b.x - a.x;
         double daby = b.y - a.y;
@@ -411,21 +438,27 @@ public class Route {
     }
 
     /**
-     * @return the spacecraft
+     * Route spacecraft
+     *
+     * @return the spacecraft reference
      */
     public Body getSpacecraft() {
         return spacecraft;
     }
 
     /**
-     * @return if spacecraft land
+     * Landing confirmation
+     *
+     * @return true if spacecraft land
      */
     public boolean spacecraftLand() {
         return spacecraftLand;
     }
 
     /**
-     * @return if the rocket is launched
+     * Launching confirmation
+     *
+     * @return true if the rocket is launched
      */
     public boolean isLaunched() {
         return this.launched;

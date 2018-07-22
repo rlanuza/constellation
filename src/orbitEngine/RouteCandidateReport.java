@@ -3,15 +3,42 @@ package orbitEngine;
 import static orbitEngine.Engine.dateString;
 import userInterface.Command;
 
-public class RouteCandidate {
+/**
+ * Represents the essential information methods that characterize a route candidate reporter.
+ *
+ * @author Roberto Lanuza rolf2000@gmail.com
+ * @version 1.0
+ */
+public class RouteCandidateReport {
 
+    /**
+     * CSV field delimiter
+     */
     private static String CSV_DELIMITER = ",";
+    /**
+     * float point delimiter
+     */
     private static String CSV_DECIMAL_POINT = ".";
 
+    /**
+     * Report line in string format
+     */
     private final String report;
+    /**
+     * Report line in CSV string format
+     */
     private final String reportCSV;
 
-    public RouteCandidate(double distance, double launchTime,
+    /**
+     * Create a new head report line for potential candidate rejected.
+     *
+     * @param distance when rocket overtake the target. Unit m.
+     * @param launchTime launch time. Units seconds.
+     * @param overtakeTime overtake time. Units seconds.
+     * @param launchSpeed launch speed. Units m/s.
+     * @param mass spacecraft mass. Units Kg.
+     */
+    public RouteCandidateReport(double distance, double launchTime,
             double overtakeTime, double launchSpeed, double mass) {
         double launchEnergy = launchSpeed * launchSpeed * mass / 2.0;
         report = adaptDelimiters(
@@ -30,7 +57,18 @@ public class RouteCandidate {
         );
     }
 
-    public RouteCandidate(String name, double launchTime, double landTime,
+    /**
+     * Create a new report line for real landing.
+     *
+     * @param name land planet name.
+     * @param launchTime launch time. Units seconds.
+     * @param landTime landing time. Units seconds.
+     * @param launchSpeed launch speed. Units m/s.
+     * @param mass spacecraft mass. Units Kg.
+     * @param landSpeed landing speed. Units m/s.
+     * @param launchVector launch vector with normalized direction.
+     */
+    public RouteCandidateReport(String name, double launchTime, double landTime,
             double launchSpeed, double mass, double landSpeed,
             Vector3d launchVector) {
         double launchEnergy = launchSpeed * launchSpeed * mass / 2.0;
@@ -58,6 +96,11 @@ public class RouteCandidate {
         );
     }
 
+    /**
+     * Change default delimiters by the required in log
+     *
+     * @param sRaw string with raw delimiters.
+     */
     private String adaptDelimiters(String sRaw) {
         return sRaw
                 .replace(",", ".")
@@ -65,19 +108,38 @@ public class RouteCandidate {
                 .replace("#", CSV_DELIMITER);
     }
 
+    /**
+     * String format report line
+     *
+     * @return formated report line.
+     */
     String report() {
         return report;
     }
 
+    /**
+     * CSV-String format report line
+     *
+     * @return CSV-formated report line.
+     */
     String reportCSV() {
         return reportCSV;
     }
 
+    /**
+     * Load required CSV and float point delimiters
+     *
+     * @param cmd command to read the CSV delimiters.
+     *
+     */
     static void setFormat(Command cmd) {
-        RouteCandidate.CSV_DELIMITER = cmd.CSV_DELIMITER;
-        RouteCandidate.CSV_DECIMAL_POINT = cmd.CSV_DECIMAL_POINT;
+        RouteCandidateReport.CSV_DELIMITER = cmd.CSV_DELIMITER;
+        RouteCandidateReport.CSV_DECIMAL_POINT = cmd.CSV_DECIMAL_POINT;
     }
 
+    /**
+     * Create a new head report line for real landing.
+     */
     static String reportCSV_landHead() {
         String s = "Land body name# Launch epoch# Launch date# Land epoch#"
                 + " Land date# Launch speed# Launch energy# Landing speed#"
@@ -85,6 +147,9 @@ public class RouteCandidate {
         return s.replace("#", CSV_DELIMITER);
     }
 
+    /**
+     * Create a new head report line for potential candidate rejected.
+     */
     static String reportCSV_overtakeHead() {
         String s = "Launch epoch# Launch date# Overtake epoch# Overtake date#"
                 + " Launch speed# Launch energy# Overtake distance";

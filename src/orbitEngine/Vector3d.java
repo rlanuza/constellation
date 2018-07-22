@@ -1,17 +1,36 @@
 package orbitEngine;
 
+/**
+ * Represents the essential information methods that characterize a vector 3d values and operations.
+ *
+ * @author Roberto Lanuza rolf2000@gmail.com
+ * @version 1.0
+ */
 public class Vector3d {
 
-    // Vector3d by axis r(t)
+    /**
+     * Axis position: x. Unit m.
+     */
     public double x;
+    /**
+     * Axis position: y. Unit m.
+     */
     public double y;
+    /**
+     * Axis position: z. Unit m.
+     */
     public double z;
 
+    /**
+     * Create a new Vector3d.
+     */
     public Vector3d() {
     }
 
     /**
-     * Clone the position of a Body
+     * Clone the position of Vector3d or a Body that inherits Vector3d
+     *
+     * @param that Vector3d to clone position.
      */
     Vector3d(Vector3d that) {
         this.x = that.x;
@@ -19,6 +38,13 @@ public class Vector3d {
         this.z = that.z;
     }
 
+    /**
+     * Create a new Vector3d from coordinates
+     *
+     * @param x x position. Unit m.
+     * @param y y position. Unit m.
+     * @param z z position. Unit m.
+     */
     Vector3d(double x, double y, double z) {
         this.x = x;
         this.y = y;
