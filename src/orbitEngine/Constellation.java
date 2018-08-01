@@ -441,6 +441,8 @@ public class Constellation {
     /**
      * Get body index from a body name.
      *
+     * @param bodyName Name of the body.
+     *
      * @return the body index.
      */
     Body getBody(String bodyName) {
@@ -453,6 +455,7 @@ public class Constellation {
     }
 
     /**
+     * @param index index of the body to get.
      * @return the body with the given index.
      */
     Body getBody(int index) {

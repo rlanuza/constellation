@@ -5,31 +5,109 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+/**
+ * Capture the command file requirements.
+ *
+ * @author Roberto Lanuza rolf2000@gmail.com
+ * @version 1.0
+ */
 public class Command extends LineConvert {
 
+    /**
+     * Rocket name.
+     */
     public String NAME = "Rocket";
+    /**
+     * Rocket mass. Unit Kg.
+     */
     public double MASS = 1000;
+    /**
+     * Rocket radius. Unit m.
+     */
     public double RADIUS = 5.0;
+    /**
+     * Rocket orbit color.
+     */
     public Color COLOR = Color.ORANGE;
+    /**
+     * Rocket planet origin.
+     */
     public String ORIGIN = "Earth";
+    /**
+     * Rocket planet target.
+     */
     public String TARGET = "Mars";
+    /**
+     * Rocket minimum iteration speed. Unit m/s.
+     */
     public double MIN_SPEED = 1;
+    /**
+     * Rocket maximum iteration speed. Unit m/s.
+     */
     public double MAX_SPEED = 1000;
+    /**
+     * Rocket step iteration speed. Unit m/s.
+     */
     public double STEP_SPEED = 5;
+    /**
+     * Under-step fine speed optimization factor used when lasts target land fails are in near distances.
+     */
     public double UNDER_STEP_SPEED_FACTOR = 10.0;
+    /**
+     * Over-step coarse speed optimization factor used when lasts target land fails are in far distances.
+     */
     public double OVER_STEP_SPEED_FACTOR = 10.0;
+    /**
+     * Rocket minimum launch time. Unit epoch seconds.
+     */
     public long MIN_LAUNCH_TIME = 1520294400;
+    /**
+     * Rocket maximum launch time. Unit epoch seconds.
+     */
     public long MAX_LAUNCH_TIME = 1551830400;
+    /**
+     * Rocket iteration speed time. Unit seconds.
+     */
     public long STEP_LAUNCH_TIME = 3600;
+    /**
+     * Over-step coarse time optimization factor used when lasts target land fails with far distances.
+     */
     public double OVER_STEP_TIME_FACTOR = 10.0;
+    /**
+     * Steps accepted to iterate on a candidate route with same initial planet conditions with different launch angle adjust.
+     */
     public int STEPS_LIMIT_ON_CANDIDATE = 200;
+    /**
+     * Launch correction factor to increase the iteration adjust.
+     */
     public double LAUNCH_CORRECTION_FACTOR = 3.0;
+    /**
+     * Launcher elevation or distance to ground of origin to avoid collision detection on launch time.
+     */
     public double LAUNCH_ELEVATION = 1;
+    /**
+     * Tolerance that we accept to continue route iteration calculus when the rocket seems to get distance from a failed target. Unit target
+     * planet radius.
+     */
     public double OVERTAKE_TOLERANCE_RADIUS = 40.0;
+    /**
+     * Max overtake distance. When it is exceeded the iterations with different launch angle are finished. Unit target planet radius.
+     */
     public double MAX_OVERTAKE_RADIUS = 1000.0;
+    /**
+     * CSV output files field delimiter.
+     */
     public String CSV_DELIMITER = ",";
+    /**
+     * CSV output files float point.
+     */
     public String CSV_DECIMAL_POINT = ".";
 
+    /**
+     * Load a command setup from the given file
+     *
+     * @param commandFile command file name.
+     */
     Command(String commandFile) {
         String contents = "";
         try {

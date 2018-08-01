@@ -130,7 +130,6 @@ public class Route {
      * Lower distance to the target obtained in the current iteration of the same initial condition.
      */
     private double lowDistanceSpacecraftToTarget;
-
     /**
      * Steps accepted to iterate on a candidate route with same initial planet conditions with different launch angle adjust.
      */
@@ -233,7 +232,7 @@ public class Route {
      * Merge spacecraft and a planet bodies
      *
      * @param b1 fist body
-     * @param b1 second body
+     * @param b2 second body
      * @param kineticLost kinetic lost
      */
     void mergeBodies(Body b1, Body b2, double kineticLost) {

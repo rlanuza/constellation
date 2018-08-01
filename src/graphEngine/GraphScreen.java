@@ -25,6 +25,7 @@ import userInterface.Parameter;
  *
  * @author rlanuza
  */
+/*@Todo: comentar fichero $$$$$$$$$ESTOY COMENTANDO AQUI $$$$$$$$$*/
 public class GraphScreen extends JComponent implements KeyListener {
 
     public static int screenWidth;

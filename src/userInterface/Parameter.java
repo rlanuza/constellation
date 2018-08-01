@@ -7,25 +7,89 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import orbitEngine.Body;
 
+/**
+ * Capture the parameters file requirements.
+ *
+ * @author Roberto Lanuza rolf2000@gmail.com
+ * @version 1.0
+ */
 public class Parameter extends LineConvert {
 
+    /**
+     * Number of body parameters by line.
+     */
     private static final int ASTRO_STRING_FIELDS = 12;
+    /**
+     * Gravitational model methods:<br>
+     * &emsp;0: step_basic<br>
+     * &emsp;1: step_jerk (Includes gravity derivate correction)<br>
+     * &emsp;2: step_basic_Schwarzschild (Includes relativity Schwarzschild corrections)<br>
+     * &emsp;3: step_jerk_Schwarzschild (Includes gravity derivate and relativity Schwarzschild corrections)
+     */
     public static int CALCULUS_METHOD = 1;
+    /**
+     * Consider only 2D rejecting z-axis data
+     */
     public static boolean ONLY_2D_DATA = false;
-    public static long SIMULATION_STEPS = 1440 * 10000;
-    public static long STEPS_PER_PLOT = 1440;
-    public static long START_EPOCH_TIME = 1520294400; //Epoc of 2018-Mar-06 00:00:00.0000 TDB)
+    /**
+     * Maximum simulation steps
+     */
+    public static long SIMULATION_STEPS = 288000000;
+    /**
+     * Steps calculated for every screen plot
+     */
+    public static long STEPS_PER_PLOT = 2880;
+    /**
+     * Start Epoch time in seconds. Epoch of 2018-Mar-06 00:00:00.0000 TDB)
+     */
+    public static long START_EPOCH_TIME = 1520294400;
+    /**
+     * Step time in seconds
+     */
     public static double STEP_TIME = 60.0;
-    public static double METERS_PER_PIXEL = 1.3e-10;
-    public static long MAX_ORBIT_POINTS = 1000;
+    /**
+     * Screen scale in meters by pixel
+     */
+    public static double METERS_PER_PIXEL = 1.0e-10;
+    /**
+     * Maximum graphical orbit points memorized
+     */
+    public static long MAX_ORBIT_POINTS = 50000;
+    /**
+     * Program window size in percent of screen
+     */
     public static int SCREEN_PERCENT = 50;
+    /**
+     * Array list of bodies
+     */
     public static ArrayList<Body> bodyList = new ArrayList<Body>();
-    public static boolean SCREEN_RESIZABLE = false;
+    /**
+     * Enable or disable resize program window
+     */
+    public static boolean SCREEN_RESIZABLE = true;
+    /**
+     * Color of program screen
+     */
     public static Color COLOR_SCREEN = Color.BLACK;
+    /**
+     * Color of date print on screen
+     */
     public static Color COLOR_DATE = Color.RED;
+    /**
+     * Color of scale print on screen
+     */
     public static Color COLOR_SCALE = Color.ORANGE;
+    /**
+     * Color of angles print on screen
+     */
     public static Color COLOR_ANGLE = Color.YELLOW;
 
+    /**
+     * Load a parameter setup from the given file
+     *
+     * @param constellationFile parameter file name.
+     * @param calculusMethod optional gravitational model method given by command-line.
+     */
     Parameter(String constellationFile, String calculusMethod) {
         String contents = "";
         try {

@@ -2,6 +2,7 @@ package graphEngine;
 
 import java.awt.Color;
 
+/*@Todo: comentar fichero $$$$$$$$$ESTOY COMENTANDO AQUI $$$$$$$$$*/
 public final class GraphBody {
 
     int index;

@@ -5,6 +5,7 @@ import java.awt.Point;
 import orbitEngine.Body;
 import userInterface.Parameter;
 
+/*@Todo: comentar fichero $$$$$$$$$ESTOY COMENTANDO AQUI $$$$$$$$$*/
 public class GraphConstellation {
 
     // Orbit list points

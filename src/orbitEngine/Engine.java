@@ -77,6 +77,8 @@ public class Engine {
 
     /**
      * Links the engine with the graphical screen manager
+     *
+     * @param screen graphic screen reference.
      */
     public void link(GraphScreen screen) {
         this.screen = screen;

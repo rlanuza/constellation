@@ -100,6 +100,7 @@ public class RouteCandidateReport {
      * Change default delimiters by the required in log
      *
      * @param sRaw string with raw delimiters.
+     * @return string with the required delimiters
      */
     private String adaptDelimiters(String sRaw) {
         return sRaw
@@ -130,7 +131,6 @@ public class RouteCandidateReport {
      * Load required CSV and float point delimiters
      *
      * @param cmd command to read the CSV delimiters.
-     *
      */
     static void setFormat(Command cmd) {
         RouteCandidateReport.CSV_DELIMITER = cmd.CSV_DELIMITER;
@@ -139,6 +139,8 @@ public class RouteCandidateReport {
 
     /**
      * Create a new head report line for real landing.
+     *
+     * @return head string for CSV land report
      */
     static String reportCSV_landHead() {
         String s = "Land body name# Launch epoch# Launch date# Land epoch#"
@@ -149,6 +151,8 @@ public class RouteCandidateReport {
 
     /**
      * Create a new head report line for potential candidate rejected.
+     *
+     * @return head string for CSV overtake report
      */
     static String reportCSV_overtakeHead() {
         String s = "Launch epoch# Launch date# Overtake epoch# Overtake date#"
