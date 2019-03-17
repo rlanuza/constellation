@@ -96,7 +96,7 @@ public class Engine {
     }
 
     /**
-     * Current date formated.
+     * Current date formatted.
      *
      * @return date string.
      */
@@ -107,7 +107,7 @@ public class Engine {
     }
 
     /**
-     * Date formated.
+     * Date formatted.
      *
      * @param seconds_time a date in seconds.
      * @return date string.

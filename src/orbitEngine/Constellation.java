@@ -176,8 +176,8 @@ public class Constellation {
         double y = b1.y + ((b2.y - b1.y) * b2.mass / mass);
         double z = b1.z + ((b2.z - b1.z) * b2.mass / mass);
         // The new speed vf = [ m1 v1 + m2 v2 ] / (m1 + m2)
-        // [Assumption:the collision is inelastic and direct without modification in rotation of th]
-        // @Todo probably this calculus is nor accurate because the potential enegy also changes.
+        // [Assumption:the collision is inelastic and direct without modification in rotation of the bodies]
+        // @Todo probably this calculus is nor accurate because the potential energy also changes.
         double vx = ((b1.mass * b1.vx) + (b2.mass * b2.vx)) / mass;
         double vy = ((b1.mass * b1.vy) + (b2.mass * b2.vy)) / mass;
         double vz = ((b1.mass * b1.vz) + (b2.mass * b2.vz)) / mass;
@@ -310,7 +310,7 @@ public class Constellation {
     /**
      * Step the constellation a delta time.
      * <p>
-     * It use the Newton solution adding jerk = derivate(gravity)/dt.
+     * It use the Newton solution adding jerk = d(gravity)/dt.
      *
      * @param deltaTime The delta time in seconds.
      */

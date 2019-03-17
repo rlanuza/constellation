@@ -27,7 +27,7 @@ public final class GraphBody {
      */
     int radius_i;
     /**
-     * Color asigned to the body.
+     * Color assigned to the body.
      */
     Color color;
     /**
@@ -41,7 +41,7 @@ public final class GraphBody {
      * @param Index of the body used to let us indexed access.
      * @param name Name of the body.
      * @param radius Average radius of the body. Unit m.
-     * @param Color asigned to the body.
+     * @param Color assigned to the body.
      * @param orbit body orbit.
      * @param scale scale used to convert to graphical.
      */

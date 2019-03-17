@@ -20,11 +20,11 @@ public class Parameter extends LineConvert {
      */
     private static final int ASTRO_STRING_FIELDS = 12;
     /**
-     * Gravitational model methods:<br>
-     * &emsp;0: step_basic<br>
-     * &emsp;1: step_jerk (Includes gravity derivate correction)<br>
-     * &emsp;2: step_basic_Schwarzschild (Includes relativity Schwarzschild corrections)<br>
-     * &emsp;3: step_jerk_Schwarzschild (Includes gravity derivate and relativity Schwarzschild corrections)
+     * Gravitational model methods:
+     * 0: step_basic
+     * 1: step_jerk (Includes gravity derivative correction)
+     * 2: step_basic_Schwarzschild (Includes relativity Schwarzschild corrections)
+     * 3: step_jerk_Schwarzschild (Includes gravity derivative and relativity Schwarzschild corrections)
      */
     public static int CALCULUS_METHOD = 1;
     /**
@@ -85,7 +85,7 @@ public class Parameter extends LineConvert {
     public static Color COLOR_ANGLE = Color.YELLOW;
 
     /**
-     * Load a parameter setup from the given file
+     * Load a parameter set-up from the given file
      *
      * @param constellationFile parameter file name.
      * @param calculusMethod optional gravitational model method given by command-line.

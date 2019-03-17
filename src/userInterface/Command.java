@@ -104,7 +104,7 @@ public class Command extends LineConvert {
     public String CSV_DECIMAL_POINT = ".";
 
     /**
-     * Load a command setup from the given file
+     * Load a command set-up from the given file
      *
      * @param commandFile command file name.
      */
@@ -146,7 +146,7 @@ public class Command extends LineConvert {
             } else if (line.startsWith("OVER_STEP_SPEED_FACTOR:")) {
                 OVER_STEP_SPEED_FACTOR = getDouble(line, OVER_STEP_SPEED_FACTOR);
             } else if (line.startsWith("MIN_LAUNCH_TIME:")) {
-                MIN_LAUNCH_TIME = getLong(line, MIN_LAUNCH_TIME); //Epoc of 2018-Mar-06 00:00:00.0000 TDB)
+                MIN_LAUNCH_TIME = getLong(line, MIN_LAUNCH_TIME);
             } else if (line.startsWith("MAX_LAUNCH_TIME:")) {
                 MAX_LAUNCH_TIME = getLong(line, MAX_LAUNCH_TIME);
             } else if (line.startsWith("STEP_LAUNCH_TIME:")) {

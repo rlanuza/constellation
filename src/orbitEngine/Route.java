@@ -261,7 +261,7 @@ public class Route {
     boolean overtaking() {
         double dSpacecraftToTarget = Constellation.dist[targetIndex][spacecraftIndex];
 
-        // Aproaching to the target
+        // Approaching to the target
         if (dSpacecraftToTarget < minTargetDistance) {  // A new minimum distance --> Continue this
             minTargetDistance = dSpacecraftToTarget;
             return false;
@@ -300,18 +300,18 @@ public class Route {
             }
             String sLog2 = String.format("distance:%.3e (%6.1f-radius) [dx=% .3e, dy=% .3e, dz=% .3e].",
                     dSpacecraftToTarget, dSpacecraftToTarget / target.radius, target.x - spacecraft.x, target.y - spacecraft.y, target.z - spacecraft.z);
-            // Heuristic c) Calculate a new taget based on the error compensation with a sinple iteration counter limit
+            // Heuristic c) Calculate a new target based on the error compensation with a simple iteration counter limit
             if (stepsLimitOnCandidate > 0) {    // Prepare a new iteration modifying the target with the last error
                 if (dSpacecraftToTarget < (2 * lowDistanceSpacecraftToTarget)) {
                     stepsLimitOnCandidate--;
-                    report.printLog("%s %s New temptative [%3d of %3d] with speed vector correction", sLog1, sLog2,
+                    report.printLog("%s %s New tentative [%3d of %3d] with speed vector correction", sLog1, sLog2,
                             STEPS_LIMIT_ON_CANDIDATE - stepsLimitOnCandidate, STEPS_LIMIT_ON_CANDIDATE);
                     return true;
                 } else {
-                    report.print("%s %s No more temptatives because the correction heuristic is failing", sLog1, sLog2);
+                    report.print("%s %s No more tentative because the correction heuristic is failing", sLog1, sLog2);
                 }
             } else {
-                report.print("%s %s The STEPS_LIMIT_ON_CANDIDATE = %d temptatives were consumed", sLog1, sLog2, STEPS_LIMIT_ON_CANDIDATE);
+                report.print("%s %s The STEPS_LIMIT_ON_CANDIDATE = %d tentative were consumed", sLog1, sLog2, STEPS_LIMIT_ON_CANDIDATE);
             }
             RouteCandidateReport routeNear = new RouteCandidateReport(dSpacecraftToTarget, startTime, dateEpoch(), launchSpeed, spacecraft.mass);
             routeCandidate.add(routeNear);
@@ -355,12 +355,12 @@ public class Route {
             }
             launchSpeed = startSpeed;
             if (startTime > stopTime) {
-                // Report all routecandidates
+                // Report all route candidates
                 report.print("\n=====================\n-Correct Landings");
                 for (RouteCandidateReport routeLand : routeLandings) {
                     report.print(" Landing: %s", routeLand.report());
                 }
-                report.print("\n~~~~~~~~~~~~~~~~~~~~~\n-Near Approachs");
+                report.print("\n~~~~~~~~~~~~~~~~~~~~~\n-Near Approaches");
                 for (RouteCandidateReport routeNear : routeCandidate) {
                     report.print(" Overtake: %s", routeNear.report());
                 }
@@ -401,7 +401,7 @@ public class Route {
             launchVector = launchVector.plus(directionCorrection);
         }
         newInitialConditionsLaunch = false;
-        // Direction to the target and the 3 distance proyections
+        // Direction to the target and the 3 distance projections
         launchVector = launchVector.scale(launchSpeed / launchVector.magnitude());
         // Calculate the launch speed with the speed of the origin planet and the vector ^launchVector normalized;
         // ^relativeSpacecraftSpeed = ^launchVector * (||speedMagnitude|| / ||directionMagnitude||)

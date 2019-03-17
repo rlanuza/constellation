@@ -112,7 +112,7 @@ public class RouteCandidateReport {
     /**
      * String format report line
      *
-     * @return formated report line.
+     * @return formatted report line.
      */
     String report() {
         return report;
@@ -121,7 +121,7 @@ public class RouteCandidateReport {
     /**
      * CSV-String format report line
      *
-     * @return CSV-formated report line.
+     * @return CSV-formatted report line.
      */
     String reportCSV() {
         return reportCSV;

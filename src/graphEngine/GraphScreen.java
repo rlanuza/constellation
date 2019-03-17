@@ -22,40 +22,89 @@ import orbitEngine.Engine;
 import userInterface.Parameter;
 
 /**
+ * Represents the essential information that characterize a graphical screen
  *
- * @author rlanuza
+ * @author Roberto Lanuza rolf2000@gmail.com
+ * @version 1.0
  */
-/*@Todo: comentar fichero $$$$$$$$$ESTOY COMENTANDO AQUI $$$$$$$$$*/
 public class GraphScreen extends JComponent implements KeyListener {
 
+    /**
+     * Width of the graphical screen in pixels.
+     */
     public static int screenWidth;
+    /**
+     * Height of the graphical screen in pixels.
+     */
     public static int screenHeight;
+    /**
+     * Avoid Eclipse issues warnings about serialized data.
+     */
     private static final long serialVersionUID = 1L;
+    /**
+     * Graphical x center.
+     */
     private double anchorX;
+    /**
+     * Graphical y center.
+     */
     private double anchorY;
+    /**
+     * Graphical zoom.
+     */
     private double zoom = 1.0;
+    /**
+     * Graphical zoom step.
+     */
     private double ZOOM_FACTOR = 1.125;
-
+    /**
+     * Graphical rotation tooling.
+     */
     private GraphRotation rotation;
-
+    /**
+     * Graphical constellation.
+     */
     private GraphConstellation gc;
 
+    /**
+     * Link getter for graphical constellation.
+     *
+     * @return graphical constellation.
+     */
     public GraphConstellation getGraphConstellation() {
         return this.gc;
     }
 
+    /**
+     * Shift the graphical center anchor and repaint the graphical screen. Designed to move with arrow keys.
+     *
+     * @param shiftCenterX x anchor shift.
+     * @param shiftCenterY y anchor shift.
+     */
     private void moveCenter(double shiftCenterX, double shiftCenterY) {
         anchorX -= shiftCenterX;
         anchorY -= shiftCenterY;
         repaint();
     }
 
+    /**
+     * Move the graphical center anchor and repaint the graphical screen. Designed to move to mouse position
+     * click
+     *
+     * @param newCenterX new x center coordinate.
+     * @param newCenterY new y center coordinate.
+     */
     private void center(double newCenterX, double newCenterY) {
         anchorX += (screenWidth / 2) - newCenterX;
         anchorY += (screenHeight / 2) - newCenterY;
         repaint();
     }
 
+    /**
+     * Zoom and repaint the graphical screen.
+     *
+     * @param factor zoom factor.
+     */
     private synchronized void zoom(double factor) {
         zoom *= factor;
         gc.rescaleGrConstellation(zoom);
@@ -64,28 +113,49 @@ public class GraphScreen extends JComponent implements KeyListener {
         repaint();
     }
 
+    /**
+     * 3D pitch rotation and repaint the graphical screen.
+     *
+     * @param steps angle rotation steps.
+     */
     private synchronized void pitch(int steps) {
         rotation.updateCoeficients(steps, 0, 0);
         gc.rotateGrConstellation();
         repaint();
     }
 
+    /**
+     * 3D yaw rotation and repaint the graphical screen.
+     *
+     * @param steps angle rotation steps.
+     */
     private synchronized void yaw(int steps) {
         rotation.updateCoeficients(0, steps, 0);
         gc.rotateGrConstellation();
         repaint();
     }
 
+    /**
+     * 3D roll rotation and repaint the graphical screen.
+     *
+     * @param steps angle rotation steps.
+     */
     private synchronized void roll(int steps) {
         rotation.updateCoeficients(0, 0, steps);
         gc.rotateGrConstellation();
         repaint();
     }
 
+    /**
+     * Repaint the graphical screen.
+     */
     public synchronized void updateConstellation() {
         repaint();
     }
 
+    /**
+     * Reset the graphical to initial conditions and repaint the graphical screen.
+     */
     private void reset() {
         zoom = 1;
         gc.rescaleGrConstellation(zoom);
@@ -96,6 +166,11 @@ public class GraphScreen extends JComponent implements KeyListener {
         repaint();
     }
 
+    /**
+     * Implement the paintComponent method for the graphical screen.
+     *
+     * @param g graphics class.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -121,76 +196,107 @@ public class GraphScreen extends JComponent implements KeyListener {
         }
     }
 
+    /**
+     * Connects the AWT world to the native windowing world.
+     */
     @Override
     public void addNotify() {
         super.addNotify();
         requestFocus();
     }
 
+    /**
+     * Key comes up callback.
+     *
+     * @param e key event.
+     */
     @Override
     public void keyReleased(KeyEvent e) {
     }
 
+    /**
+     * Unicode character represented by this key is sent by the keyboard to system input callback.
+     *
+     * @param e key event.
+     */
     @Override
     public void keyTyped(KeyEvent e) {
     }
 
+    /**
+     * Key goes down keyReleased callback.
+     *
+     * @param e key event.
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
         switch (code) {
             case KeyEvent.VK_DOWN:
                 if (e.isControlDown()) {
+                    // Key arrow down with control moves down.
                     moveCenter(0, -10);
                 } else {
+                    // Key arrow down pitch down a angle step.
                     pitch(-1);
                 }
                 break;
             case KeyEvent.VK_UP:
                 if (e.isControlDown()) {
+                    // Key arrow up with control moves up.
                     moveCenter(0, 10);
                 } else {
+                    // Key arrow up pitch up a angle step.
                     pitch(1);
                 }
                 break;
             case KeyEvent.VK_LEFT:
                 if (e.isControlDown()) {
+                    // Key arrow left with control moves left.
                     moveCenter(10, 0);
                 } else {
                     if (e.isAltDown()) {
+                        // Key arrow left with alternate roll up a angle step.
                         roll(1);
                     } else {
+                        // Key arrow left yaw up a angle step.
                         yaw(1);
                     }
                 }
                 break;
             case KeyEvent.VK_RIGHT:
                 if (e.isControlDown()) {
+                    // Key arrow right with control moves left.
                     moveCenter(-10, 0);
                 } else {
                     if (e.isAltDown()) {
+                        // Key arrow right with alternate roll down a angle step.
                         roll(-1);
                     } else {
+                        // Key arrow right yaw down a angle step.
                         yaw(-1);
                     }
                 }
                 break;
             case KeyEvent.VK_PLUS:
             case KeyEvent.VK_ADD:
+                // Key plus or key add zoom in a step.
                 zoom(ZOOM_FACTOR);
                 break;
             case KeyEvent.VK_MINUS:
             case KeyEvent.VK_SUBTRACT:
+                // Key minus of key substract zoom out a step.
                 zoom(1 / ZOOM_FACTOR);
                 break;
             case KeyEvent.VK_R:
+                // Key R reset the graphical to initial conditions.
                 reset();
                 break;
             default:
-            //System.out.println(code);
         }
     }
 
+    /*@Todo: comentar fichero $$$$$$$$$ESTOY COMENTANDO AQUI $$$$$$$$$*/
     public GraphScreen(Engine eng) {
         addKeyListener(this);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
