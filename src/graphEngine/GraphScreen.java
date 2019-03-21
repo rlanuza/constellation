@@ -206,7 +206,7 @@ public class GraphScreen extends JComponent implements KeyListener {
     }
 
     /**
-     * Key comes up callback.
+     * Key released callback.
      *
      * @param e key event.
      */
@@ -224,7 +224,7 @@ public class GraphScreen extends JComponent implements KeyListener {
     }
 
     /**
-     * Key goes down keyReleased callback.
+     * Key pressed callback.
      *
      * @param e key event.
      */
@@ -296,27 +296,34 @@ public class GraphScreen extends JComponent implements KeyListener {
         }
     }
 
-    /*@Todo: comentar fichero $$$$$$$$$ESTOY COMENTANDO AQUI $$$$$$$$$*/
+    /**
+     * Create a new GraphScreen
+     *
+     * @param eng Engine.
+     */
     public GraphScreen(Engine eng) {
         addKeyListener(this);
+        // Get the Screen size
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        // Adjust the portion of screen to use
         double screenPortion = Parameter.SCREEN_PERCENT / 100.0;
         if (screenPortion > 1.0) {
             screenPortion = 0.5;
         }
+        // Get dimensions and center of screen
         screenHeight = (int) (screenSize.height * screenPortion);
         screenWidth = (int) (screenSize.width * screenPortion);
         anchorX = screenWidth / 2;
         anchorY = screenHeight / 2;
+        // Create the screen as a new JFrame and configure the main characteristics
         JFrame screen = new JFrame();
         screen.setTitle("Constellation");
         screen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         setPreferredSize(new Dimension(screenWidth, screenHeight));
         screen.setResizable(Parameter.SCREEN_RESIZABLE);
         screen.getContentPane().setBackground(Parameter.COLOR_SCREEN);
-
         screen.getContentPane().add(this, BorderLayout.CENTER);
+        // Create the buttons
         JPanel buttonsPanel = new JPanel();
         JButton resetButton = new JButton("R");
         JButton inButton = new JButton("+");
@@ -327,7 +334,7 @@ public class GraphScreen extends JComponent implements KeyListener {
         JButton goRightButton = new JButton("►");
         JButton goClockWiseButton = new JButton("↻");
         JButton goAntiClockWiseButton = new JButton("↺");
-
+        // Configure the buttons focus
         resetButton.setFocusable(false);
         inButton.setFocusable(false);
         outButton.setFocusable(false);
@@ -337,7 +344,7 @@ public class GraphScreen extends JComponent implements KeyListener {
         goRightButton.setFocusable(false);
         goClockWiseButton.setFocusable(false);
         goAntiClockWiseButton.setFocusable(false);
-
+        // Add the buttons to the panel
         buttonsPanel.add(resetButton);
         buttonsPanel.add(inButton);
         buttonsPanel.add(outButton);
@@ -347,8 +354,9 @@ public class GraphScreen extends JComponent implements KeyListener {
         buttonsPanel.add(goRightButton);
         buttonsPanel.add(goClockWiseButton);
         buttonsPanel.add(goAntiClockWiseButton);
-
+        // Add the panel to the screen
         screen.getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
+        // Add the listener to the screen
         screen.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent evt) {
                 screenWidth = screen.getWidth();
@@ -357,7 +365,7 @@ public class GraphScreen extends JComponent implements KeyListener {
                 anchorY = screenHeight / 2;
             }
         });
-
+        // Add the listeners to the buttons
         goUpButton.addActionListener((ActionEvent e) -> {
             pitch(1);
         });
@@ -385,7 +393,7 @@ public class GraphScreen extends JComponent implements KeyListener {
         outButton.addActionListener((ActionEvent e) -> {
             zoom(1.0 / ZOOM_FACTOR);
         });
-
+        // Add the mouse events
         addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 System.out.println("Number of click: " + e.getClickCount());
@@ -397,11 +405,13 @@ public class GraphScreen extends JComponent implements KeyListener {
                 }
             }
         });
-
+        // Show the screen
         screen.pack();
         screen.setVisible(true);
 
+        // Create the rotation engine
         rotation = new GraphRotation();
+        // Create the graphic constellation engine
         gc = new GraphConstellation(rotation);
 
         // Double link to let callback graphicEngine from orbitEngine events
