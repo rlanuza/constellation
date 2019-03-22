@@ -107,7 +107,7 @@ public class GraphScreen extends JComponent implements KeyListener {
      */
     private synchronized void zoom(double factor) {
         zoom *= factor;
-        gc.rescaleGrConstellation(zoom);
+        gc.rescaleGraphicConstellation(zoom);
         anchorX += (anchorX - (screenWidth / 2)) * (factor - 1.0);
         anchorY += (anchorY - (screenHeight / 2)) * (factor - 1.0);
         repaint();
@@ -120,7 +120,7 @@ public class GraphScreen extends JComponent implements KeyListener {
      */
     private synchronized void pitch(int steps) {
         rotation.updateCoeficients(steps, 0, 0);
-        gc.rotateGrConstellation();
+        gc.rotateGraphicConstellation();
         repaint();
     }
 
@@ -131,7 +131,7 @@ public class GraphScreen extends JComponent implements KeyListener {
      */
     private synchronized void yaw(int steps) {
         rotation.updateCoeficients(0, steps, 0);
-        gc.rotateGrConstellation();
+        gc.rotateGraphicConstellation();
         repaint();
     }
 
@@ -142,7 +142,7 @@ public class GraphScreen extends JComponent implements KeyListener {
      */
     private synchronized void roll(int steps) {
         rotation.updateCoeficients(0, 0, steps);
-        gc.rotateGrConstellation();
+        gc.rotateGraphicConstellation();
         repaint();
     }
 
@@ -158,11 +158,11 @@ public class GraphScreen extends JComponent implements KeyListener {
      */
     private void reset() {
         zoom = 1;
-        gc.rescaleGrConstellation(zoom);
+        gc.rescaleGraphicConstellation(zoom);
         anchorX = screenWidth / 2;
         anchorY = screenHeight / 2;
         rotation.resetCoeficients();
-        gc.rotateGrConstellation();
+        gc.rotateGraphicConstellation();
         repaint();
     }
 

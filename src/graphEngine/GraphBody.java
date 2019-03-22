@@ -38,10 +38,10 @@ public final class GraphBody {
     /**
      * Create a new graphical body.
      *
-     * @param Index of the body used to let us indexed access.
+     * @param index of the body used to let us indexed access.
      * @param name Name of the body.
      * @param radius Average radius of the body. Unit m.
-     * @param Color assigned to the body.
+     * @param color assigned to the body.
      * @param orbit body orbit.
      * @param scale scale used to convert to graphical.
      */
@@ -57,6 +57,8 @@ public final class GraphBody {
 
     /**
      * Recalculate the scaled radius of the body with the scale.
+     *
+     * @param scale scale used to convert to graphical.
      */
     public void recalculateGrRadius(double scale) {
         radius_i = (int) (radius * scale);

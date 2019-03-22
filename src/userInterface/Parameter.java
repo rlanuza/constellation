@@ -20,11 +20,9 @@ public class Parameter extends LineConvert {
      */
     private static final int ASTRO_STRING_FIELDS = 12;
     /**
-     * Gravitational model methods:
-     * 0: step_basic
-     * 1: step_jerk (Includes gravity derivative correction)
-     * 2: step_basic_Schwarzschild (Includes relativity Schwarzschild corrections)
-     * 3: step_jerk_Schwarzschild (Includes gravity derivative and relativity Schwarzschild corrections)
+     * Gravitational model methods: 0: step_basic 1: step_jerk (Includes gravity derivative correction) 2:
+     * step_basic_Schwarzschild (Includes relativity Schwarzschild corrections) 3: step_jerk_Schwarzschild
+     * (Includes gravity derivative and relativity Schwarzschild corrections)
      */
     public static int CALCULUS_METHOD = 1;
     /**

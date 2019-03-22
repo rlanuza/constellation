@@ -8,6 +8,13 @@ import orbitEngine.Engine;
  * @author Roberto Lanuza
  */
 /*@Todo: comentar fichero $$$$$$$$$ESTOY COMENTANDO AQUI $$$$$$$$$*/
+/**
+ * @Todo: comentar fichero $$$$$$$$$$$$$$$$$$$$$$$$$$$ ESTOY COMENTANDO AQUI $$$$$$$$$$$$$$$$$$$$$$$$$$$
+ * Re-scale the graphical constellation.
+ *
+ * @param zoom new zoom to re-scale.
+ * @return true when launch time
+ */
 public class main {
 
     private static GraphScreen screen;

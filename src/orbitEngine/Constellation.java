@@ -434,8 +434,8 @@ public class Constellation {
     /**
      * Push to graphic the current body position.
      */
-    void pushToGraphic() {
-        graphConstellation.updateGrConstellation(body);
+    void pushOrbitPointToGraphic() {
+        graphConstellation.pushOrbitPointToGraphicConstellation(body);
     }
 
     /**

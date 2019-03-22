@@ -83,7 +83,7 @@ public class Engine {
     public void link(GraphScreen screen) {
         this.screen = screen;
         constellation.link(screen.getGraphConstellation());
-        constellation.pushToGraphic();
+        constellation.pushOrbitPointToGraphic();
     }
 
     /**
@@ -148,7 +148,7 @@ public class Engine {
             default:
         }
         seconds += stepTime * steepsPerPlot;
-        constellation.pushToGraphic();
+        constellation.pushOrbitPointToGraphic();
     }
 
     /**
@@ -173,10 +173,10 @@ public class Engine {
         for (int i = 0; i < steepsPerPlot; i++) {
             if (route.isLaunched()) {
                 if (route.spacecraftLand()) {
-                    constellation.pushToGraphic();
+                    constellation.pushOrbitPointToGraphic();
                     return true;
                 } else if (route.overtaking()) {
-                    constellation.pushToGraphic();
+                    constellation.pushOrbitPointToGraphic();
                     return true;
                 }
             } else {
@@ -206,7 +206,7 @@ public class Engine {
             }
             seconds += stepTime;
         }
-        constellation.pushToGraphic();
+        constellation.pushOrbitPointToGraphic();
         return false;
     }
 
