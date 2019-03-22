@@ -4,30 +4,59 @@ import graphEngine.GraphScreen;
 import orbitEngine.Engine;
 
 /**
+ * Entry class to the constellation viewer and interplanetary rout calculator
  *
- * @author Roberto Lanuza
- */
-/*@Todo: comentar fichero $$$$$$$$$ESTOY COMENTANDO AQUI $$$$$$$$$*/
-/**
- * @Todo: comentar fichero $$$$$$$$$$$$$$$$$$$$$$$$$$$ ESTOY COMENTANDO AQUI $$$$$$$$$$$$$$$$$$$$$$$$$$$
- * Re-scale the graphical constellation.
- *
- * @param zoom new zoom to re-scale.
- * @return true when launch time
+ * @author Roberto Lanuza rolf2000@gmail.com
+ * @version 1.0
  */
 public class main {
 
+    /**
+     * Graphic screen handler.
+     */
     private static GraphScreen screen;
+    /**
+     * Orbital physics engine.
+     */
     public static Engine eng;
+    /**
+     * Long argument string for parameters.
+     */
     private static final String ARG_PARAM1 = "--parameters:";
+    /**
+     * Short argument string for parameters.
+     */
     private static final String ARG_PARAM2 = "-p";
+    /**
+     * Long argument string for method.
+     */
     private static final String ARG_METHOD1 = "--method:";
+    /**
+     * Short argument string for method.
+     */
     private static final String ARG_METHOD2 = "-m";
+    /**
+     * Long argument string for command.
+     */
     private static final String ARG_COMMAND1 = "--command:";
+    /**
+     * Short argument string for command.
+     */
     private static final String ARG_COMMAND2 = "-c";
+    /**
+     * Long argument string for output file.
+     */
     private static final String ARG_OUT1 = "--output:";
+    /**
+     * Short argument string for output file.
+     */
     private static final String ARG_OUT2 = "-o";
 
+    /**
+     * Entry point
+     *
+     * @param args command line arguments.
+     */
     public static void main(String[] args) {
         String parametersFile = null;
         String calculusMethod = null;
