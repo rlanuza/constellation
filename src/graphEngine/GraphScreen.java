@@ -334,6 +334,17 @@ public class GraphScreen extends JComponent implements KeyListener {
         JButton goRightButton = new JButton("►");
         JButton goClockWiseButton = new JButton("↻");
         JButton goAntiClockWiseButton = new JButton("↺");
+        // Tooltips for the keys
+        resetButton.setToolTipText("Reset graphic position");
+        inButton.setToolTipText("Zoom In");
+        outButton.setToolTipText("Zoom Out");
+        goUpButton.setToolTipText("Pitch up (Up_key)  [Ctrl+Up_key: move up]");
+        goDownButton.setToolTipText("Pitch down (Down_key)  [Ctrl+Down_key: move down]");
+        goLeftButton.setToolTipText("Yaw up (Left_Key)  [Ctrl+Left_Key: move left]");
+        goRightButton.setToolTipText("Yaw down (Right_Key)  [Ctrl+Right_Key: move right]");
+        goClockWiseButton.setToolTipText("Roll up (Alt+Left_Key)");
+        goAntiClockWiseButton.setToolTipText("Roll down (Alt+Right_Key)");
+
         // Configure the buttons focus
         resetButton.setFocusable(false);
         inButton.setFocusable(false);
