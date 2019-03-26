@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
@@ -15,11 +16,14 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import orbitEngine.Body;
 import orbitEngine.Engine;
 import userInterface.Parameter;
+import static userInterface.Parameter.bodyList;
 
 /**
  * Represents the essential information that characterize a graphical screen
@@ -158,6 +162,20 @@ public class GraphScreen extends JComponent implements KeyListener {
      */
     private void reset() {
         zoom = 1;
+        gc.rescaleGraphicConstellation(zoom);
+        anchorX = screenWidth / 2;
+        anchorY = screenHeight / 2;
+        rotation.resetCoeficients();
+        gc.rotateGraphicConstellation();
+        repaint();
+    }
+
+    /**
+     * Change the center of the graphical screen.
+     */
+    private void newGraphicalCenter(String bodyCenter) {
+        zoom = 1;
+        // @TODO: Change the center of the constellation to this point
         gc.rescaleGraphicConstellation(zoom);
         anchorX = screenWidth / 2;
         anchorY = screenHeight / 2;
@@ -310,11 +328,13 @@ public class GraphScreen extends JComponent implements KeyListener {
         if (screenPortion > 1.0) {
             screenPortion = 0.5;
         }
+
         // Get dimensions and center of screen
         screenHeight = (int) (screenSize.height * screenPortion);
         screenWidth = (int) (screenSize.width * screenPortion);
         anchorX = screenWidth / 2;
         anchorY = screenHeight / 2;
+
         // Create the screen as a new JFrame and configure the main characteristics
         JFrame screen = new JFrame();
         screen.setTitle("Constellation");
@@ -323,6 +343,7 @@ public class GraphScreen extends JComponent implements KeyListener {
         screen.setResizable(Parameter.SCREEN_RESIZABLE);
         screen.getContentPane().setBackground(Parameter.COLOR_SCREEN);
         screen.getContentPane().add(this, BorderLayout.CENTER);
+
         // Create the buttons
         JPanel buttonsPanel = new JPanel();
         JButton resetButton = new JButton("R");
@@ -334,7 +355,8 @@ public class GraphScreen extends JComponent implements KeyListener {
         JButton goRightButton = new JButton("►");
         JButton goClockWiseButton = new JButton("↻");
         JButton goAntiClockWiseButton = new JButton("↺");
-        // Tooltips for the keys
+
+        // Tooltips for the buttons
         resetButton.setToolTipText("Reset graphic position");
         inButton.setToolTipText("Zoom In");
         outButton.setToolTipText("Zoom Out");
@@ -355,6 +377,7 @@ public class GraphScreen extends JComponent implements KeyListener {
         goRightButton.setFocusable(false);
         goClockWiseButton.setFocusable(false);
         goAntiClockWiseButton.setFocusable(false);
+
         // Add the buttons to the panel
         buttonsPanel.add(resetButton);
         buttonsPanel.add(inButton);
@@ -365,8 +388,20 @@ public class GraphScreen extends JComponent implements KeyListener {
         buttonsPanel.add(goRightButton);
         buttonsPanel.add(goClockWiseButton);
         buttonsPanel.add(goAntiClockWiseButton);
+
         // Add the panel to the screen
         screen.getContentPane().add(buttonsPanel, BorderLayout.SOUTH);
+
+        // Add JComboBox with bodies
+        JComboBox<String> comboBody = new JComboBox<String>();
+        comboBody.addItem("Baricenter");
+        for (Body b : bodyList) {
+            comboBody.addItem(b.getName());
+        }
+
+        // Add the combo the screen
+        screen.getContentPane().add(comboBody, BorderLayout.NORTH);
+
         // Add the listener to the screen
         screen.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent evt) {
@@ -376,6 +411,7 @@ public class GraphScreen extends JComponent implements KeyListener {
                 anchorY = screenHeight / 2;
             }
         });
+
         // Add the listeners to the buttons
         goUpButton.addActionListener((ActionEvent e) -> {
             pitch(1);
@@ -404,6 +440,7 @@ public class GraphScreen extends JComponent implements KeyListener {
         outButton.addActionListener((ActionEvent e) -> {
             zoom(1.0 / ZOOM_FACTOR);
         });
+
         // Add the mouse events
         addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
@@ -416,6 +453,14 @@ public class GraphScreen extends JComponent implements KeyListener {
                 }
             }
         });
+
+        // Add ComboBox listener for JComboBox<String> comboBody
+        comboBody.addActionListener((ActionEvent event) -> {
+            @SuppressWarnings("unchecked")
+            JComboBox<String> combo = (JComboBox<String>) event.getSource();
+            newGraphicalCenter((String) combo.getSelectedItem());
+        });
+
         // Show the screen
         screen.pack();
         screen.setVisible(true);

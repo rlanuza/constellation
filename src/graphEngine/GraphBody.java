@@ -38,12 +38,12 @@ public final class GraphBody {
     /**
      * Create a new graphical body.
      *
-     * @param index of the body used to let us indexed access.
-     * @param name Name of the body.
+     * @param index  of the body used to let us indexed access.
+     * @param name   Name of the body.
      * @param radius Average radius of the body. Unit m.
-     * @param color assigned to the body.
-     * @param orbit body orbit.
-     * @param scale scale used to convert to graphical.
+     * @param color  assigned to the body.
+     * @param orbit  body orbit.
+     * @param scale  scale used to convert to graphical.
      */
     public GraphBody(int index, String name, double radius, Color color, GraphOrbit orbit, double scale) {
         this.index = index;
