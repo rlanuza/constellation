@@ -2,6 +2,7 @@ package graphEngine;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.ArrayList;
 import orbitEngine.Body;
 import userInterface.Parameter;
 
@@ -22,6 +23,11 @@ public class GraphConstellation {
      * Graphical scale in meters by pixel.
      */
     private double scale;
+
+    /**
+     * Graphical center.
+     */
+    GraphBody grBodyCenter = null;
 
     /**
      * Graphical rotation engine.
@@ -103,11 +109,11 @@ public class GraphConstellation {
     }
 
     /**
-     * Re-scale the graphical constellation.
+     * Re-scale And Rotate the graphical constellation.
      *
      * @param zoom new zoom to re-scale.
      */
-    synchronized void rescaleGraphicConstellation(double zoom) {
+    synchronized void rescaleAndRotateGraphicConstellation(double zoom) {
         scale = Parameter.METERS_PER_PIXEL * zoom;
         for (GraphBody grB : grBody) {
             grB.recalculateGrRadius(scale);
@@ -125,11 +131,25 @@ public class GraphConstellation {
     }
 
     /**
+     * New Graphical center of constellation.
+     *
+     * @param bodyCenter new bodyCenter.
+     */
+    synchronized void newGraphicalConstellationCenter(String bodyCenter) {
+        grBodyCenter = null;
+        for (GraphBody grB : grBody) {
+            if (grB.name.equals(bodyCenter)) {
+                grBodyCenter = grB;
+            }
+        }
+    }
+
+    /**
      * Draw a circle to show a graphical body.
      *
-     * @param g2d graphic 2d object.
-     * @param x coordenate x.
-     * @param y coordenate y.
+     * @param g2d    graphic 2d object.
+     * @param x      coordenate x.
+     * @param y      coordenate y.
      * @param radius circle radius.
      */
     private void drawCircle(Graphics2D g2d, int x, int y, int radius) {
@@ -144,15 +164,24 @@ public class GraphConstellation {
      */
     synchronized void paintConstellation(Graphics2D g2d) {
         if (grBody != null) {
+            // Get the center of the Graphical projection.
+            int xc = 0;
+            int yc = 0;
+            if (grBodyCenter != null) {
+                ArrayList<Point> p = grBodyCenter.orbit.projectionPointList;
+                xc = p.get(p.size() - 1).x;
+                yc = p.get(p.size() - 1).y;
+            }
+            // Plot the projected body constellation.
             for (GraphBody grB : grBody) {
                 g2d.setColor(grB.color);
                 if (!grB.orbit.projectionPointList.isEmpty()) {
-                    int x0 = grB.orbit.projectionPointList.get(0).x;
-                    int y0 = grB.orbit.projectionPointList.get(0).y;
+                    int x0 = grB.orbit.projectionPointList.get(0).x - xc;
+                    int y0 = grB.orbit.projectionPointList.get(0).y - yc;
                     // Plot the body orbit.
                     for (Point orbitPoint : grB.orbit.projectionPointList) {
-                        int x1 = orbitPoint.x;
-                        int y1 = orbitPoint.y;
+                        int x1 = orbitPoint.x - xc;;
+                        int y1 = orbitPoint.y - yc;;
                         g2d.drawLine(x0, y0, x1, y1);
                         x0 = x1;
                         y0 = y1;

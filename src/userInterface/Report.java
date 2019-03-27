@@ -37,7 +37,7 @@ public class Report {
      * Buffered formatted print to log file.
      *
      * @param strFormat print with formatted arguments string.
-     * @param args variable number arguments to print.
+     * @param args      variable number arguments to print.
      */
     public synchronized void printLog(String strFormat, Object... args) {
         String result = String.format(strFormat, args);
@@ -54,7 +54,7 @@ public class Report {
      * Buffered formatted print to log file and stdout.
      *
      * @param strFormat print with formatted arguments string.
-     * @param args variable number arguments to print.
+     * @param args      variable number arguments to print.
      */
     public synchronized void print(String strFormat, Object... args) {
         String result = String.format(strFormat, args);
@@ -104,6 +104,8 @@ public class Report {
 
     /**
      * Print landing line to CSV file.
+     *
+     * @param csvLine line in csv format.
      */
     public void print_LandCSV(String csvLine) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(reportFile + "_land.csv", true))) {
@@ -115,6 +117,8 @@ public class Report {
 
     /**
      * Print near approach line to CSV file.
+     *
+     * @param csvLine line in csv format.
      */
     public void print_NearCSV(String csvLine) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(reportFile + "_near.csv", true))) {

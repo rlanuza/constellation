@@ -111,7 +111,7 @@ public class GraphScreen extends JComponent implements KeyListener {
      */
     private synchronized void zoom(double factor) {
         zoom *= factor;
-        gc.rescaleGraphicConstellation(zoom);
+        gc.rescaleAndRotateGraphicConstellation(zoom);
         anchorX += (anchorX - (screenWidth / 2)) * (factor - 1.0);
         anchorY += (anchorY - (screenHeight / 2)) * (factor - 1.0);
         repaint();
@@ -162,26 +162,21 @@ public class GraphScreen extends JComponent implements KeyListener {
      */
     private void reset() {
         zoom = 1;
-        gc.rescaleGraphicConstellation(zoom);
         anchorX = screenWidth / 2;
         anchorY = screenHeight / 2;
         rotation.resetCoeficients();
-        gc.rotateGraphicConstellation();
+        gc.rescaleAndRotateGraphicConstellation(zoom);
         repaint();
     }
 
     /**
      * Change the center of the graphical screen.
+     *
+     * @param bodyCenter new body center.
      */
-    private void newGraphicalCenter(String bodyCenter) {
-        zoom = 1;
-        // @TODO: Change the center of the constellation to this point
-        gc.rescaleGraphicConstellation(zoom);
-        anchorX = screenWidth / 2;
-        anchorY = screenHeight / 2;
-        rotation.resetCoeficients();
-        gc.rotateGraphicConstellation();
-        repaint();
+    private synchronized void newGraphicalCenter(String bodyCenter) {
+        gc.newGraphicalConstellationCenter(bodyCenter);
+        reset();
     }
 
     /**
@@ -398,6 +393,8 @@ public class GraphScreen extends JComponent implements KeyListener {
         for (Body b : bodyList) {
             comboBody.addItem(b.getName());
         }
+        // Configure the combo focus
+        comboBody.setFocusable(false);
 
         // Add the combo the screen
         screen.getContentPane().add(comboBody, BorderLayout.NORTH);
