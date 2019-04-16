@@ -10,3 +10,5 @@
 /data/bak
 /data/200/250/*.log
 *.bak
+/data/generator/constellation_data/__pycache__
+/data/generator/constellation_data/__pycache__/*.pyc
