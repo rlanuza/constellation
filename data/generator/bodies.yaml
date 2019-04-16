@@ -1,0 +1,2593 @@
+bodies:
+- 10:
+    mass: -1.0
+    name: SUN
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 199:
+    mass: -1.0
+    name: MERCURY
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 299:
+    mass: -1.0
+    name: VENUS
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 399:
+    mass: -1.0
+    name: EARTH
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 301:
+    mass: -1.0
+    name: MOON
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 499:
+    mass: -1.0
+    name: MARS
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 401:
+    mass: -1.0
+    name: PHOBOS
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 402:
+    mass: -1.0
+    name: DEIMOS
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 599:
+    mass: -1.0
+    name: JUPITER
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 501:
+    mass: -1.0
+    name: IO
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 502:
+    mass: -1.0
+    name: EUROPA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 503:
+    mass: -1.0
+    name: GANYMEDE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 504:
+    mass: -1.0
+    name: CALLISTO
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 505:
+    mass: -1.0
+    name: AMALTHEA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 506:
+    mass: -1.0
+    name: HIMALIA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 507:
+    mass: -1.0
+    name: ELARA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 508:
+    mass: -1.0
+    name: PASIPHAE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 509:
+    mass: -1.0
+    name: SINOPE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 510:
+    mass: -1.0
+    name: LYSITHEA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 511:
+    mass: -1.0
+    name: CARME
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 512:
+    mass: -1.0
+    name: ANANKE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 513:
+    mass: -1.0
+    name: LEDA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 514:
+    mass: -1.0
+    name: THEBE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 515:
+    mass: -1.0
+    name: ADRASTEA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 516:
+    mass: -1.0
+    name: METIS
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 517:
+    mass: -1.0
+    name: CALLIRRHOE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 518:
+    mass: -1.0
+    name: THEMISTO
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 519:
+    mass: -1.0
+    name: MAGACLITE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 520:
+    mass: -1.0
+    name: TAYGETE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 521:
+    mass: -1.0
+    name: CHALDENE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 522:
+    mass: -1.0
+    name: HARPALYKE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 523:
+    mass: -1.0
+    name: KALYKE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 524:
+    mass: -1.0
+    name: IOCASTE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 525:
+    mass: -1.0
+    name: ERINOME
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 526:
+    mass: -1.0
+    name: ISONOE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 527:
+    mass: -1.0
+    name: PRAXIDIKE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 528:
+    mass: -1.0
+    name: AUTONOE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 529:
+    mass: -1.0
+    name: THYONE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 530:
+    mass: -1.0
+    name: HERMIPPE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 531:
+    mass: -1.0
+    name: AITNE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 532:
+    mass: -1.0
+    name: EURYDOME
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 533:
+    mass: -1.0
+    name: EUANTHE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 534:
+    mass: -1.0
+    name: EUPORIE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 535:
+    mass: -1.0
+    name: ORTHOSIE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 536:
+    mass: -1.0
+    name: SPONDE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 537:
+    mass: -1.0
+    name: KALE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 538:
+    mass: -1.0
+    name: PASITHEE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 539:
+    mass: -1.0
+    name: HEGEMONE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 540:
+    mass: -1.0
+    name: MNEME
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 541:
+    mass: -1.0
+    name: AOEDE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 542:
+    mass: -1.0
+    name: THELXINOE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 543:
+    mass: -1.0
+    name: ARCHE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 544:
+    mass: -1.0
+    name: KALLICHORE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 545:
+    mass: -1.0
+    name: HELIKE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 546:
+    mass: -1.0
+    name: CARPO
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 547:
+    mass: -1.0
+    name: EUKELADE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 548:
+    mass: -1.0
+    name: CYLLENE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 549:
+    mass: -1.0
+    name: KORE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 550:
+    mass: -1.0
+    name: HERSE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 553:
+    mass: -1.0
+    name: DIA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 699:
+    mass: -1.0
+    name: SATURN
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 601:
+    mass: -1.0
+    name: MIMAS
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 602:
+    mass: -1.0
+    name: ENCELADUS
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 603:
+    mass: -1.0
+    name: TETHYS
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 604:
+    mass: -1.0
+    name: DIONE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 605:
+    mass: -1.0
+    name: RHEA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 606:
+    mass: -1.0
+    name: TITAN
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 607:
+    mass: -1.0
+    name: HYPERION
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 608:
+    mass: -1.0
+    name: IAPETUS
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 609:
+    mass: -1.0
+    name: PHOEBE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 610:
+    mass: -1.0
+    name: JANUS
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 611:
+    mass: -1.0
+    name: EPIMETHEUS
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 612:
+    mass: -1.0
+    name: HELENE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 613:
+    mass: -1.0
+    name: TELESTO
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 614:
+    mass: -1.0
+    name: CALYPSO
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 615:
+    mass: -1.0
+    name: ATLAS
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 616:
+    mass: -1.0
+    name: PROMETHEUS
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 617:
+    mass: -1.0
+    name: PANDORA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 618:
+    mass: -1.0
+    name: PAN
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 619:
+    mass: -1.0
+    name: YMIR
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 620:
+    mass: -1.0
+    name: PAALIAQ
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 621:
+    mass: -1.0
+    name: TARVOS
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 622:
+    mass: -1.0
+    name: IJIRAQ
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 623:
+    mass: -1.0
+    name: SUTTUNGR
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 624:
+    mass: -1.0
+    name: KIVIUQ
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 625:
+    mass: -1.0
+    name: MUNDILFARI
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 626:
+    mass: -1.0
+    name: ALBIORIX
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 627:
+    mass: -1.0
+    name: SKATHI
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 628:
+    mass: -1.0
+    name: ERRIAPUS
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 629:
+    mass: -1.0
+    name: SIARNAQ
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 630:
+    mass: -1.0
+    name: THRYMR
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 631:
+    mass: -1.0
+    name: NARVI
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 632:
+    mass: -1.0
+    name: METHONE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 633:
+    mass: -1.0
+    name: PALLENE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 634:
+    mass: -1.0
+    name: POLYDEUCES
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 635:
+    mass: -1.0
+    name: DAPHNIS
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 636:
+    mass: -1.0
+    name: AEGIR
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 637:
+    mass: -1.0
+    name: BEBHIONN
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 638:
+    mass: -1.0
+    name: BERGELMIR
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 639:
+    mass: -1.0
+    name: BESTLA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 640:
+    mass: -1.0
+    name: FARBAUTI
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 641:
+    mass: -1.0
+    name: FENRIR
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 642:
+    mass: -1.0
+    name: FORNJOT
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 643:
+    mass: -1.0
+    name: HATI
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 644:
+    mass: -1.0
+    name: HYRROKKIN
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 645:
+    mass: -1.0
+    name: KARI
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 646:
+    mass: -1.0
+    name: LOGE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 647:
+    mass: -1.0
+    name: SKOLL
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 648:
+    mass: -1.0
+    name: SURTUR
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 649:
+    mass: -1.0
+    name: ANTHE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 650:
+    mass: -1.0
+    name: JARNSAXA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 651:
+    mass: -1.0
+    name: GREIP
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 652:
+    mass: -1.0
+    name: TARQEQ
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 653:
+    mass: -1.0
+    name: AEGAEON
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 799:
+    mass: -1.0
+    name: URANUS
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 701:
+    mass: -1.0
+    name: ARIEL
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 702:
+    mass: -1.0
+    name: UMBRIEL
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 703:
+    mass: -1.0
+    name: TITANIA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 704:
+    mass: -1.0
+    name: OBERON
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 705:
+    mass: -1.0
+    name: MIRANDA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 706:
+    mass: -1.0
+    name: CORDELIA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 707:
+    mass: -1.0
+    name: OPHELIA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 708:
+    mass: -1.0
+    name: BIANCA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 709:
+    mass: -1.0
+    name: CRESSIDA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 710:
+    mass: -1.0
+    name: DESDEMONA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 711:
+    mass: -1.0
+    name: JULIET
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 712:
+    mass: -1.0
+    name: PORTIA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 713:
+    mass: -1.0
+    name: ROSALIND
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 714:
+    mass: -1.0
+    name: BELINDA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 715:
+    mass: -1.0
+    name: PUCK
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 716:
+    mass: -1.0
+    name: CALIBAN
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 717:
+    mass: -1.0
+    name: SYCORAX
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 718:
+    mass: -1.0
+    name: PROSPERO
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 719:
+    mass: -1.0
+    name: SETEBOS
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 720:
+    mass: -1.0
+    name: STEPHANO
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 721:
+    mass: -1.0
+    name: TRINCULO
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 722:
+    mass: -1.0
+    name: FRANCISCO
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 723:
+    mass: -1.0
+    name: MARGARET
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 724:
+    mass: -1.0
+    name: FERDINAND
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 725:
+    mass: -1.0
+    name: PERDITA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 726:
+    mass: -1.0
+    name: MAB
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 727:
+    mass: -1.0
+    name: CUPID
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 899:
+    mass: -1.0
+    name: NEPTUNE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 801:
+    mass: -1.0
+    name: TRITON
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 802:
+    mass: -1.0
+    name: NEREID
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 803:
+    mass: -1.0
+    name: NAIAD
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 804:
+    mass: -1.0
+    name: THALASSA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 805:
+    mass: -1.0
+    name: DESPINA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 806:
+    mass: -1.0
+    name: GALATEA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 807:
+    mass: -1.0
+    name: LARISSA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 808:
+    mass: -1.0
+    name: PROTEUS
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 809:
+    mass: -1.0
+    name: HALIMEDE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 810:
+    mass: -1.0
+    name: PSAMATHE
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 811:
+    mass: -1.0
+    name: SAO
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 812:
+    mass: -1.0
+    name: LAOMEDEIA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 813:
+    mass: -1.0
+    name: NESO
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 999:
+    mass: -1.0
+    name: PLUTO
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 901:
+    mass: -1.0
+    name: CHARON
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 902:
+    mass: -1.0
+    name: NIX
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 903:
+    mass: -1.0
+    name: HYDRA
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 904:
+    mass: -1.0
+    name: KERBEROS
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
+- 905:
+    mass: -1.0
+    name: STYX
+    position:
+    - 0.0
+    - 0.0
+    - 0.0
+    radius: -1.0
+    rgb:
+    - 0
+    - 0
+    - 0
+    speed:
+    - 0.0
+    - 0.0
+    - 0.0
