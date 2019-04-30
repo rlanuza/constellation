@@ -103,8 +103,14 @@ public class GraphConstellation {
      * @param body array of physical bodies to represent on graphically.
      */
     public synchronized void pushOrbitPointToGraphicConstellation(Body[] body) {
+        Body bodyCenter;
+        if (grBodyCenter != null) {
+            bodyCenter = body[grBodyCenter.index];
+        } else {
+            bodyCenter = null;
+        }
         for (int i = 0; i < body.length; i++) {
-            grBody[body[i].getIndex()].orbit.addOrbitPoint(scale, body[i]);
+            grBody[body[i].getIndex()].orbit.addOrbitPoint(scale, body[i], bodyCenter);
         }
     }
 
@@ -142,6 +148,9 @@ public class GraphConstellation {
                 grBodyCenter = grB;
             }
         }
+        for (int i = 0; i < grBody.length; i++) {
+            grBody[i].orbit.clearOrbitPoints();
+        }
     }
 
     /**
@@ -167,11 +176,11 @@ public class GraphConstellation {
             // Get the center of the Graphical projection.
             int xc = 0;
             int yc = 0;
-            if (grBodyCenter != null) {
-                ArrayList<Point> p = grBodyCenter.orbit.projectionPointList;
-                xc = p.get(p.size() - 1).x;
-                yc = p.get(p.size() - 1).y;
-            }
+//            if (grBodyCenter != null) {
+//                ArrayList<Point> p = grBodyCenter.orbit.projectionPointList;
+//                xc = p.get(p.size() - 1).x;
+//                yc = p.get(p.size() - 1).y;
+//            }
             // Plot the projected body constellation.
             for (GraphBody grB : grBody) {
                 g2d.setColor(grB.color);
