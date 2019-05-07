@@ -2,7 +2,7 @@
     CALCULUS_METHOD:    1               # 0: basic, 1: jerk, 2:basic_Schwarzschild, 3: jerk_Schwarzschild
     SIMULATION_STEPS:   288000000
     STEPS_PER_PLOT:     2880            # 24*60*2
-    STEP_TIME:          60              # Seconds
+    STEP_TIME:          6              # Seconds
     START_EPOCH_TIME:   1520294400      # Epoc of 2018-Mar-06 00:00:00.0000 TDB. 
     METERS_PER_PIXEL:   1.0e-10         # UNIX Epoch time is the number of seconds that have elapsed since 
                                         # 00:00:00 Coordinated Universal Time (UTC), Thursday, 1 January 1970. 
@@ -16,7 +16,7 @@
     COLOR_ANGLE:        102,255,255     # Screen color in R,G,B
 #   SYSTEM_SPEED_X:     0               # System speed x in (km/s)
 #   SYSTEM_SPEED_Y:     0               # System speed y in (km/s)
-#   SYSTEM_SPEED_Z:     -200            # System speed z in (km/s)
+    SYSTEM_SPEED_Z:     -200            # System speed z in (km/s)
     
 
 #   Name,    mass (Kg),   radio(m),               x0 (km) ,               y0 (km) ,                z0 (km),             vx0 (km/s),             vy0 (km/s),             vz0 (km/s),   R,   G,   B

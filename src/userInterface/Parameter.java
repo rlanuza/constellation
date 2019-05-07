@@ -86,10 +86,13 @@ public class Parameter extends LineConvert {
      * Load a parameter set-up from the given file
      *
      * @param constellationFile parameter file name.
-     * @param calculusMethod optional gravitational model method given by command-line.
+     * @param calculusMethod    optional gravitational model method given by command-line.
      */
     Parameter(String constellationFile, String calculusMethod) {
         String contents = "";
+        double systemSpeed_X = 0;
+        double systemSpeed_Y = 0;
+        double systemSpeed_Z = 0;
         try {
             contents = new String(Files.readAllBytes(Paths.get(constellationFile)));
         } catch (IOException ex) {
@@ -130,6 +133,12 @@ public class Parameter extends LineConvert {
                 COLOR_SCALE = getColor(line, COLOR_SCALE);
             } else if (line.startsWith("COLOR_ANGLE:")) {
                 COLOR_ANGLE = getColor(line, COLOR_ANGLE);
+            } else if (line.startsWith("SYSTEM_SPEED_X:")) {
+                systemSpeed_X = getDouble(line, systemSpeed_X);
+            } else if (line.startsWith("SYSTEM_SPEED_Y:")) {
+                systemSpeed_Y = getDouble(line, systemSpeed_Y);
+            } else if (line.startsWith("SYSTEM_SPEED_Z:")) {
+                systemSpeed_Z = getDouble(line, systemSpeed_Z);
             } else {
                 String[] datas = line.split(",");
                 if (datas.length == ASTRO_STRING_FIELDS) {
@@ -139,9 +148,9 @@ public class Parameter extends LineConvert {
                     double x = Double.valueOf(datas[3].trim()) * 1000;
                     double y = Double.valueOf(datas[4].trim()) * 1000;
                     double z = ONLY_2D_DATA ? 0.0 : Double.valueOf(datas[5].trim()) * 1000;
-                    double vx = Double.valueOf(datas[6].trim()) * 1000;
-                    double vy = Double.valueOf(datas[7].trim()) * 1000;
-                    double vz = ONLY_2D_DATA ? 0.0 : Double.valueOf(datas[8].trim()) * 1000;
+                    double vx = (Double.valueOf(datas[6].trim()) + systemSpeed_X) * 1000;
+                    double vy = (Double.valueOf(datas[7].trim()) + systemSpeed_Y) * 1000;
+                    double vz = ONLY_2D_DATA ? 0.0 : (Double.valueOf(datas[8].trim()) + systemSpeed_Z) * 1000;
                     Color astroColor = getColor(":" + datas[9] + "," + datas[10] + "," + datas[11], Color.YELLOW);
                     Body new_body = new Body(name, mass, radius, x, y, z, vx, vy, vz, astroColor);
                     bodyList.add(new_body);

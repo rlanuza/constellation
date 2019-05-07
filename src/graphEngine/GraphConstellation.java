@@ -176,11 +176,7 @@ public class GraphConstellation {
             // Get the center of the Graphical projection.
             int xc = 0;
             int yc = 0;
-//            if (grBodyCenter != null) {
-//                ArrayList<Point> p = grBodyCenter.orbit.projectionPointList;
-//                xc = p.get(p.size() - 1).x;
-//                yc = p.get(p.size() - 1).y;
-//            }
+
             // Plot the projected body constellation.
             for (GraphBody grB : grBody) {
                 g2d.setColor(grB.color);
