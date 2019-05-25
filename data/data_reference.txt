@@ -3338,3 +3338,126 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+*******************************************************************************
+JPL/HORIZONS                  66391 (1999 KW4)             2019-May-25 12:11:29
+Rec #:   66391 (+COV) Soln.date: 2019-May-24_12:32:31   # obs: 3359 (1998-2019)
+ 
+IAU76/J2000 helio. ecliptic osc. elements (au, days, deg., period=Julian yrs):
+ 
+  EPOCH=  2456066.5 ! 2012-May-19.00 (TDB)         Residual RMS= .36646
+   EC= .6884466222247956   QR= .2001149369008608   TP= 2456120.8795244917
+   OM= 244.9251659962101   W=  192.6082875797541   IN= 38.88822340582539
+   A= .6423134883976448    MA= 255.8836543964883   ADIST= 1.084512039894429
+   PER= .51479             N= 1.914624             ANGMOM= .009999190999999999
+   DAN= 1.02965            DDN= .2021              L= 74.8016579
+   B= -7.8765811           MOID= .0133192          TP= 2012-Jul-12.3795244917
+ 
+Asteroid physical parameters (km, seconds, rotational period in hours):
+   GM= n.a.                RAD= .6585              ROTPER= 2.7645
+   H= 16.5                 G= .150                 B-V= n.a.
+                           ALBEDO= n.a.            STYP= S:
+ 
+ASTEROID comments: 
+1: soln ref.= JPL#269, PHA  OCC=0       radar(35 delay, 0 Dop.)
+2: source=ORB
+*******************************************************************************
+ 
+  
+*******************************************************************************
+Ephemeris / WWW_USER Sat May 25 12:11:29 2019 Pasadena, USA      / Horizons    
+*******************************************************************************
+Target body name: 66391 (1999 KW4)                {source: JPL#269}
+Center body name: Solar System Barycenter (0)     {source: DE431}
+Center-site name: BODY CENTER
+*******************************************************************************
+Start time      : A.D. 2018-Mar-06 00:00:00.0000 TDB
+Stop  time      : A.D. 2018-Mar-16 00:00:00.0000 TDB
+Step-size       : 2880 minutes
+*******************************************************************************
+Center geodetic : 0.00000000,0.00000000,0.0000000 {E-lon(deg),Lat(deg),Alt(km)}
+Center cylindric: 0.00000000,0.00000000,0.0000000 {E-lon(deg),Dxy(km),Dz(km)}
+Center radii    : (undefined)                                                  
+Small perturbers: Yes                             {source: SB431-N16}
+Output units    : KM-S                                                         
+Output type     : GEOMETRIC cartesian states
+Output format   : 2 (position and velocity)
+Reference frame : ICRF/J2000.0                                                 
+Coordinate systm: Ecliptic and Mean Equinox of Reference Epoch                 
+*******************************************************************************
+Initial IAU76/J2000 heliocentric ecliptic osculating elements (au, days, deg.):
+  EPOCH=  2456066.5 ! 2012-May-19.00 (TDB)         Residual RMS= .36646        
+   EC= .6884466222247956   QR= .2001149369008608   TP= 2456120.8795244917      
+   OM= 244.9251659962101   W=  192.6082875797541   IN= 38.88822340582539       
+  Equivalent ICRF heliocentric equatorial cartesian coordinates (au, au/d):
+   X= 3.749506168588346E-02  Y=-9.417251114423434E-01  Z=-4.923451238649434E-02
+  VX= 8.412911396599171E-03 VY= 7.373070213488537E-03 VZ= 6.423219920936573E-03
+Asteroid physical parameters (km, seconds, rotational period in hours):        
+   GM= n.a.                RAD= .6585              ROTPER= 2.7645              
+   H= 16.5                 G= .150                 B-V= n.a.                   
+                           ALBEDO= n.a.            STYP= S:                    
+*******************************************************************************
+JDTDB
+   X     Y     Z
+   VX    VY    VZ
+*******************************************************************************
+$$SOE
+2458183.500000000 = A.D. 2018-Mar-06 00:00:00.0000 TDB 
+ X = 3.220678582357675E+07 Y = 1.233930971323699E+07 Z = 1.946210422361711E+07
+ VX=-3.236652808348558E+01 VY= 5.149882012367752E+01 VZ=-4.123773893632937E+01
+2458185.500000000 = A.D. 2018-Mar-08 00:00:00.0000 TDB 
+ X = 2.547620394287596E+07 Y = 2.068596010345747E+07 Z = 1.169417591733329E+07
+ VX=-4.593628217410261E+01 VY= 4.393276034430823E+01 VZ=-4.856171679794578E+01
+2458187.500000000 = A.D. 2018-Mar-10 00:00:00.0000 TDB 
+ X = 1.628689928096567E+07 Y = 2.702924495653258E+07 Z = 2.815462187071420E+06
+ VX=-6.011490996050591E+01 VY= 2.793411416026335E+01 VZ=-5.344705794946798E+01
+2458189.500000000 = A.D. 2018-Mar-12 00:00:00.0000 TDB 
+ X = 5.012715120655581E+06 Y = 2.989796114739164E+07 Z =-6.397943572258344E+06
+ VX=-6.891804619058180E+01 VY= 4.586357196347862E+00 VZ=-5.189339009149206E+01
+2458191.500000000 = A.D. 2018-Mar-14 00:00:00.0000 TDB 
+ X =-6.961319217348284E+06 Y = 2.867435853093969E+07 Z =-1.472322145457294E+07
+ VX=-6.815052560544244E+01 VY=-1.781169336409438E+01 VZ=-4.367427016316824E+01
+2458193.500000000 = A.D. 2018-Mar-16 00:00:00.0000 TDB 
+ X =-1.816586203154296E+07 Y = 2.418939039624356E+07 Z =-2.137132544554080E+07
+ VX=-6.091821483648769E+01 VY=-3.272915144549572E+01 VZ=-3.329124714903342E+01
+$$EOE
+*******************************************************************************
+Coordinate system description:
+
+  Ecliptic and Mean Equinox of Reference Epoch
+
+    Reference epoch: J2000.0
+    XY-plane: plane of the Earth's orbit at the reference epoch
+              Note: obliquity of 84381.448 arcseconds wrt ICRF equator (IAU76)
+    X-axis  : out along ascending node of instantaneous plane of the Earth's
+              orbit and the Earth's mean equator at the reference epoch
+    Z-axis  : perpendicular to the xy-plane in the directional (+ or -) sense
+              of Earth's north pole at the reference epoch.
+
+  Symbol meaning:
+
+    JDTDB    Julian Day Number, Barycentric Dynamical Time
+      X      X-component of position vector (km)                               
+      Y      Y-component of position vector (km)                               
+      Z      Z-component of position vector (km)                               
+      VX     X-component of velocity vector (km/sec)                           
+      VY     Y-component of velocity vector (km/sec)                           
+      VZ     Z-component of velocity vector (km/sec)                           
+
+Geometric states/elements have no aberrations applied.
+
+ Computations by ...
+     Solar System Dynamics Group, Horizons On-Line Ephemeris System
+     4800 Oak Grove Drive, Jet Propulsion Laboratory
+     Pasadena, CA  91109   USA
+     Information: http://ssd.jpl.nasa.gov/
+     Connect    : telnet://ssd.jpl.nasa.gov:6775  (via browser)
+                  http://ssd.jpl.nasa.gov/?horizons
+                  telnet ssd.jpl.nasa.gov 6775    (via command-line)
+     Author     : Jon.D.Giorgini@jpl.nasa.gov
+*******************************************************************************
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
